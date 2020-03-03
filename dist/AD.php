@@ -288,8 +288,8 @@ public $settings = '';
         }
 
         function readUserTemplatesFile() {
-          $userTemplatesFile = fopen("..\..\usertemplates.data", "r") or die("Unable to open user templates.");
-          $userTemplates = fread($userTemplatesFile,filesize("..\..\usertemplates.data"));
+          $userTemplatesFile = fopen("C:\Program Files\ADDog\usertemplates.data", "r") or die("Unable to open user templates.");
+          $userTemplates = fread($userTemplatesFile,filesize("C:\Program Files\ADDog\usertemplates.data"));
           $userTemplates = $this->decryptData($userTemplates);
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
@@ -307,7 +307,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
-          $userTemplatesFile = fopen("..\..\usertemplates.data", "w") or die("Unable to open user templates.");
+          $userTemplatesFile = fopen("C:\Program Files\ADDog\usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
         }
@@ -317,16 +317,16 @@ public $settings = '';
           unset($userTemplates[$userTemplate]);
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
-          $userTemplatesFile = fopen("..\..\usertemplates.data", "w") or die("Unable to open user templates.");
+          $userTemplatesFile = fopen("C:\Program Files\ADDog\usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
         }
 
         function readSettingsFile() {
           $settings = json_decode('{"Server":"","Domain":"","Username":"","Password":"","SearchOU":""}');
-          $settingsFile = fopen("..\..\settings.data", "r") or die("Unable to open settings.");
-          if(filesize("..\..\settings.data") > 0) {
-          $settings = fread($settingsFile,filesize("..\..\settings.data"));
+          $settingsFile = fopen("C:\Program Files\ADDog\settings.data", "r") or die("Unable to open settings.");
+          if(filesize("C:\Program Files\ADDog\settings.data") > 0) {
+          $settings = fread($settingsFile,filesize("C:\Program Files\ADDog\settings.data"));
           $settings = $this->decryptData($settings);
           $settings = json_decode($settings);
           fclose($settingsFile);
@@ -336,7 +336,7 @@ public $settings = '';
 
         function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials") {
           if($loginMessage === "") { $loginMessage = "Please login with your network credentials"; }
-          $settingsFile = fopen("..\..\settings.data", "w") or die("Unable to open settings.");
+          $settingsFile = fopen("C:\Program Files\ADDog\settings.data", "w") or die("Unable to open settings.");
           $settings = new \stdClass;
           $searchOU = explode("\r\n",$searchOU);
           $settings->Server = $dc;
@@ -353,9 +353,9 @@ public $settings = '';
         }
 
         function readActivityLogFile() {
-          $activityLogFile = fopen("..\..\activity.log", "r") or die("Unable to open log.");
-          if(filesize("..\..\activity.log") > 0) {
-          $activities = fread($activityLogFile,filesize("..\..\activity.log"));
+          $activityLogFile = fopen("C:\Program Files\ADDog\activity.log", "r") or die("Unable to open log.");
+          if(filesize("C:\Program Files\ADDog\activity.log") > 0) {
+          $activities = fread($activityLogFile,filesize("C:\Program Files\ADDog\activity.log"));
           $activities = explode("\n",$activities);
           return $activities;
           fclose($activityLogFile);
@@ -372,7 +372,7 @@ public $settings = '';
           array_unshift($activities, $entry);
           $activities = implode("\r\n",$activities);
           }
-          $activityLogFile = fopen("..\..\activity.log", "w") or die("Unable to open log.");
+          $activityLogFile = fopen("C:\Program Files\ADDog\activity.log", "w") or die("Unable to open log.");
           fwrite($activityLogFile, $activities);
           fclose($activityLogFile);
         }
@@ -402,7 +402,7 @@ public $settings = '';
         }
 
         function getKey() {
-          $filename = '..\..\set.data';
+          $filename = 'C:\Program Files\ADDog\set.data';
           if(file_exists($filename)) {
             return file_get_contents($filename, true);
           } else {
@@ -419,9 +419,9 @@ public $settings = '';
 
         function resetPrintQueue() {
             shell_exec('whoami');
-            shell_exec('sc \\\\GAFF-FS stop spooler');
+            shell_exec('sc \\\\%COMPUTERNAME% stop spooler');
             shell_exec('del %windir%\system32\spool\printers\*.* /q');
-            shell_exec('sc \\\\GAFF-FS start spooler');
+            shell_exec('sc \\\\%COMPUTERNAME% start spooler');
         }
 
         function login() {
@@ -454,9 +454,9 @@ public $settings = '';
 
         function readAuthFile() {
           $auth = array();
-          if(filesize("..\..\auth.data") > 0) {
-          $authFile = fopen("..\..\auth.data", "r");
-          $auth = fread($authFile,filesize("..\..\auth.data"));
+          if(filesize("C:\Program Files\ADDog\auth.data") > 0) {
+          $authFile = fopen("C:\Program Files\ADDog\auth.data", "r");
+          $auth = fread($authFile,filesize("C:\Program Files\ADDog\auth.data"));
           $auth = explode("\n",$auth);
           $auth = array_map('trim', $auth);
           $auth = array_map('strtolower', $auth);
@@ -466,21 +466,21 @@ public $settings = '';
         }
 
         function writeAuthFile($authList) {
-          $authFile = '..\..\auth.data';
+          $authFile = 'C:\Program Files\ADDog\auth.data';
           file_put_contents($authFile, $authList);
         }
 
         function writeAdminsFile($admins) {
-          $adminsFile = '..\..\admins.data';
+          $adminsFile = 'C:\Program Files\ADDog\admins.data';
           file_put_contents($adminsFile, $admins);
         }
 
 
         function readAdminsFile() {
           $admins = array();
-          if(filesize("..\..\admins.data") > 0) {
-          $adminsFile = fopen("..\..\admins.data", "r");
-          $admins = fread($adminsFile,filesize("..\..\admins.data"));
+          if(filesize("C:\Program Files\ADDog\admins.data") > 0) {
+          $adminsFile = fopen("C:\Program Files\ADDog\admins.data", "r");
+          $admins = fread($adminsFile,filesize("C:\Program Files\ADDog\admins.data"));
           $admins = explode("\n",$admins);
           $admins = array_map('trim', $admins);
           $admins = array_map('strtolower', $admins);
