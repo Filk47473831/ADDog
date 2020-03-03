@@ -79,8 +79,8 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                 <?php
 
                 if(isset($_POST['updateApp'])) {
-                  shell_exec("C:\Program Files\ADDog\git\bin\git.exe -c http.sslVerify=false reset --hard 2>&1");
-                  $outputs = shell_exec("C:\Program Files\ADDog\git\bin\git.exe -c http.sslVerify=false pull https://b47ce1f940d20badca903c57add8be34ab2f6abc@github.com/Filk47473831/ADDog.git 2>&1");
+                  shell_exec("'C:\Program Files\ADDog\git\bin\git.exe' -c http.sslVerify=false reset --hard 2>&1");
+                  $outputs = shell_exec("'C:\Program Files\ADDog\git\bin\git.exe' -c http.sslVerify=false pull https://b47ce1f940d20badca903c57add8be34ab2f6abc@github.com/Filk47473831/ADDog.git 2>&1");
                   echo "ADDog Updated";
                   echo "<p class='small'>$outputs</p>";
                 }
