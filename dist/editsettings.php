@@ -13,7 +13,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
         <li class="breadcrumb-item active">Settings</li>
       </ol>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-      <div class="card shadow-lg border-0 rounded-lg mb-5">
+      <div class="card shadow-lg border-0 rounded-lg mb-2">
           <div class="card-body">
               <p>Current Version: 0.2</p>
               <?php
@@ -33,7 +33,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
         </div>
       </div>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-      <div class="card shadow-lg border-0 rounded-lg mt-3">
+      <div class="card shadow-lg border-0 rounded-lg mt-3 mb-5">
           <div class="card-body">
                 <form action="editsettings.php" method="POST">
                   <div class="form-group">
