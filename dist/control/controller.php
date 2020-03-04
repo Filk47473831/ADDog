@@ -9,4 +9,11 @@ if(isset($_POST['getUserData'])) {
   echo json_encode($AD->getUserData($data,$_POST['getUserData']));
 }
 
+if(isset($_POST['chosenUserTemplate'])) {
+  $AD->connect();
+  $AD->bind();
+  $data = $AD->chooseUserTemplate($_POST['chosenUserTemplate'],null);
+  echo json_encode($data);
+}
+
  ?>

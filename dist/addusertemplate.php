@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label class="small mb-1" for="inputUser">Create Template From User</label>
-                    <input required class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>
+                    <input class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>
                     <input name="inputUser" type="hidden" id="inputUser-id">
                 </div>
                 <div class="form-group">
@@ -48,9 +48,8 @@
                   <div id="OUTree">
                     <?php $AD->showOUTree(); ?>
                   </div>
-                  <p class="mt-2" id="selectedOU"></p>
+                  <input style="border:0px" required class="form-control mt-3" name="inputUserOU" id="inputUserOU" value="" placeholder="Select Target OU from Tree">
                 </div>
-                <input required hidden name="inputUserOU" id="inputUserOU" value="">
                 <div class="form-group">
                   <label class="small mb-1" for="inputGroupDN">Member Group DN's (1 Per Line)</label>
                   <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g. CN=Staff,OU=Groups,OU=Arunside,DC=ASDOMAIN,DC=local"><?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
@@ -122,7 +121,6 @@ function getUserData(chosenUser){
         document.getElementById("inputScriptPath").value = response.scriptpath;
         document.getElementById("inputProfilePath").value = response.profilepath;
         document.getElementById("inputUserOU").value = response.ou;
-        document.getElementById("selectedOU").innerText = response.ou;
         document.getElementById("inputGroupDN").value = response.groups;
       }
     }
@@ -132,7 +130,35 @@ function getUserData(chosenUser){
   xmlhttp.send("getUserData=" + chosenUser);
 }
 
-document.getElementById("inputUser").addEventListener("change", function() {
+function getTemplateData(chosenTemplate){
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      if(response !== null) {
+        document.getElementById("inputHomeDirectory").value = response[0].homeDirectory;
+        document.getElementById("inputHomeDrive").value = response[0].homeDrive;
+        document.getElementById("inputScriptPath").value = response[0].scriptPath;
+        document.getElementById("inputProfilePath").value = response[0].profilePath;
+        document.getElementById("inputUserOU").value = response[1];
+        document.getElementById("inputGroupDN").value = response[2];
+      }
+    }
+  }
+  xmlhttp.open("POST", "control/controller.php", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("chosenUserTemplate=" + chosenTemplate);
+}
+
+document.getElementById("inputUserTemplateName").addEventListener("focusout", function() {
+  getTemplateData(document.getElementById("inputUserTemplateName").value);
+});
+
+document.getElementById("inputUser").addEventListener("focusout", function() {
   getUserData(document.getElementById("inputUser").value);
 });
 
@@ -142,7 +168,7 @@ $('#OUTree').on('changed.jstree', function (e, data) {
     for(i = 0, j = data.selected.length; i < j; i++) {
       r.push(data.instance.get_node(data.selected[i]).li_attr.value);
     }
-    $('#selectedOU').html(r.join(', '));
+    $('#inputUserOU').html(r.join(', '));
     $('#inputUserOU').attr('value', r.join(', '));
   });
 </script>

@@ -12,7 +12,7 @@
                   <?php
                   if(isset($_POST['resetPrintQueue'])) {
                     echo $AD->resetPrintQueue();
-                    $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",Print Queue Reset,-," . $_SESSION['username']);
+                    $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Print Queue Reset,-," . $_SESSION['username']);
                   ?>
                   <p>Print Queue Reset Successfully</p>
                   <a href="resetprintqueue.php"><button class="btn btn-success">Back</button></a>

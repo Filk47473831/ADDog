@@ -41,7 +41,9 @@
 </main>
 <script>
 $(document).ready(function() {
-  $('#dataTable-activityLog').DataTable();
+  $('#dataTable-activityLog').DataTable( {
+        "order": [[ 0, "desc" ]]
+    } );
 });
 </script>
 <?php require("footer.php"); ?>

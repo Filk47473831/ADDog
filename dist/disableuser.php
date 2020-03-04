@@ -35,7 +35,7 @@
                               if(isset($_POST['inputUser'])) {
                                       $AD->disableUser($_POST['inputUser']);
                                       $name = explode(",",$_POST['inputUser']);
-                                      $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",Disabled User," . substr($name[0], 3) . "," . $_SESSION['username']);
+                                      $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Disabled User," . substr($name[0], 3) . "," . $_SESSION['username']);
                                       header("Location: disableusercomplete.php");
                               }
 

@@ -23,7 +23,7 @@
               foreach($data as $user) {
                 $AD->resetPassword($user['dn'],$_POST['inputPassword'],$_POST['promptNextLogin']);
               }
-              $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",Bulk Password Reset,-," . $_SESSION['username']);
+              $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Bulk Password Reset,-," . $_SESSION['username']);
               header("Location: resetpwbulkcomplete.php");
           }
         }
@@ -36,9 +36,9 @@
                           <div id="OUTree">
                             <?php $AD->showOUTree(); ?>
                           </div>
-                          <p class="mt-2" id="selectedOU"></p>
+                          <input style="border:0px" required class="form-control mt-2" name="inputUserOU" id="inputUserOU" value="" placeholder="Select Target OU from Tree">
                         </div>
-                        <input hidden name="inputUserOU" id="inputUserOU" value="">
+
                         <div class="form-group">
                             <label class="small mb-1" for="inputPassword">New Password</label>
                             <input name="inputPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="New Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputPassword']; } ?>"/>
@@ -68,7 +68,7 @@ $('#OUTree').on('changed.jstree', function (e, data) {
     for(i = 0, j = data.selected.length; i < j; i++) {
       r.push(data.instance.get_node(data.selected[i]).li_attr.value);
     }
-    $('#selectedOU').html(r.join(', '));
+    $('#inputUserOU').html(r.join(', '));
     $('#inputUserOU').attr('value', r.join(', '));
   });
 </script>

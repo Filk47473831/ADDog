@@ -33,7 +33,7 @@
                 $info["UserPrincipalName"] = $_POST['inputUsername'] . "@" . $settings->Domain;
                 $password = $_POST['inputPassword'];
                 $addAccount = $AD->addUser($userTemplate,$info,$password);
-                $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",User Added," . $info['givenName'] . " " . $info["sn"] . "," . $_SESSION['username']);
+                $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",User Added," . $info['givenName'] . " " . $info["sn"] . "," . $_SESSION['username']);
                 if($addAccount === null) { header("Location: addusercomplete.php"); }
               }
             }

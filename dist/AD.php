@@ -37,7 +37,12 @@ public $settings = '';
               $count = $results["count"] + $count;
               array_shift($results);
               foreach($results as $result) {
-                $data[] = $result;
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                $hiddenUsers = array_merge($authUsers, $adminUsers);
+                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
+                  $data[] = $result;
+                }
               }
             }
               $data['count'] = $count;
@@ -58,7 +63,12 @@ public $settings = '';
               $count = $results["count"] + $count;
               array_shift($results);
               foreach($results as $result) {
-                $data[] = $result;
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                $hiddenUsers = array_merge($authUsers, $adminUsers);
+                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
+                  $data[] = $result;
+                }
               }
             }
               $data['count'] = $count;
@@ -78,7 +88,12 @@ public $settings = '';
               $count = $results["count"] + $count;
               array_shift($results);
               foreach($results as $result) {
-                $data[] = $result;
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                $hiddenUsers = array_merge($authUsers, $adminUsers);
+                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
+                  $data[] = $result;
+                }
               }
             }
               $data['count'] = $count;
@@ -206,7 +221,7 @@ public $settings = '';
 
         function testFirstName($firstName) {
           $message = "";
-          $matches = preg_match('/[`\'\"~!@# $*()<>,:;{}\|]/',$firstName);
+          $matches = preg_match('/[`\'\"~!@#$*()<>,:;{}\|]/',$firstName);
           if ($matches === 1) {
             $message = "First name must not contain symbols.";
             return $message;
@@ -228,7 +243,7 @@ public $settings = '';
 
         function testLastName($lastName) {
           $message = "";
-          $matches = preg_match('/[`\'\"~!@# $*()<>,:;{}\|]/',$lastName);
+          $matches = preg_match('/[`\'\"~!@#$*()<>,:;{}\|]/',$lastName);
           if ($matches === 1) {
             $message = "Last name must not contain symbols.";
             return $message;
@@ -252,7 +267,7 @@ public $settings = '';
           $message = "";
           $matches = preg_match('/[`\'\"~!@# $*()<>,:;{}\|]/',$username);
           if ($matches === 1) {
-            $message = "Username must not contain symbols.";
+            $message = "Username must not contain symbols or spaces.";
             return $message;
           }
           if (strlen($username) === 0) {

@@ -22,14 +22,18 @@
             $name = explode(",",$_POST['inputUser']);
             if($testPassword == "") {
                 $testPassword = $AD->resetPassword($_POST['inputUser'],$_POST['inputPassword'],$_POST['promptNextLogin']);
-                $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
+                $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
                 if($testPassword == "") {
                   $name = explode(",",$_POST['inputUser']);
                   $name = $name[0];
                   $name = substr($name, 3);
                   echo '<p>Password Reset Successfully</p><p>' . $name . '\'s new password is: ' . $_POST['inputPassword'] . '</p>
                       <a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
+                } else {
+                  echo '<p>' . $testPassword . '</p><a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
                 }
+            } else {
+              echo '<p>' . $testPassword . '</p><a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
             }
         } else {
 

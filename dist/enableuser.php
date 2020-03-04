@@ -35,7 +35,7 @@
                               if(isset($_POST['inputUser'])) {
                                       $AD->enableUser($_POST['inputUser']);
                                       $name = explode(",",$_POST['inputUser']);
-                                      $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",Enabled User," . substr($name[0], 3) . "," . $_SESSION['username']);
+                                      $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Enabled User," . substr($name[0], 3) . "," . $_SESSION['username']);
                                       header("Location: enableusercomplete.php");
                               }
 
