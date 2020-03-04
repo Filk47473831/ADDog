@@ -13,7 +13,27 @@ if($authList !== null) { $authList = implode("\n",$authList); }
         <li class="breadcrumb-item active">Settings</li>
       </ol>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-      <div class="card shadow-lg border-0 rounded-lg mt-2">
+      <div class="card shadow-lg border-0 rounded-lg mb-5">
+          <div class="card-body">
+              <p>Current Version: 0.2</p>
+              <?php
+
+              if(isset($_POST['updateApp'])) {
+                shell_exec("..\..\git\bin\git.exe -c http.sslVerify=false reset --hard 2>&1");
+                $outputs = shell_exec("..\..\git\bin\git.exe -c http.sslVerify=false pull https://b47ce1f940d20badca903c57add8be34ab2f6abc@github.com/Filk47473831/ADDog.git 2>&1");
+                echo "ADDog Updated";
+                echo "<p class='small'>$outputs</p>";
+              }
+
+              ?>
+              <form action="editsettings.php" method="POST">
+                  <input type="submit" name="updateApp" class="btn btn-success" href="#" value="Check for updates">
+              </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
+      <div class="card shadow-lg border-0 rounded-lg mt-3">
           <div class="card-body">
                 <form action="editsettings.php" method="POST">
                   <div class="form-group">
@@ -68,26 +88,6 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                     ?>
 
                   </div>
-                </form>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-        <div class="card shadow-lg border-0 rounded-lg mt-3 mb-5">
-            <div class="card-body">
-                <p>Current Version: 0.2</p>
-                <?php
-
-                if(isset($_POST['updateApp'])) {
-                  shell_exec("..\..\git\bin\git.exe -c http.sslVerify=false reset --hard 2>&1");
-                  $outputs = shell_exec("..\..\git\bin\git.exe -c http.sslVerify=false pull https://b47ce1f940d20badca903c57add8be34ab2f6abc@github.com/Filk47473831/ADDog.git 2>&1");
-                  echo "ADDog Updated";
-                  echo "<p class='small'>$outputs</p>";
-                }
-
-                ?>
-                <form action="editsettings.php" method="POST">
-                    <input type="submit" name="updateApp" class="btn btn-success" href="#" value="Check for updates">
                 </form>
             </div>
           </div>
