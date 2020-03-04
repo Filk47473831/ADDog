@@ -73,7 +73,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
           </div>
         </div>
         <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-        <div class="card shadow-lg border-0 rounded-lg mt-2">
+        <div class="card shadow-lg border-0 rounded-lg mt-2 mb-5">
             <div class="card-body">
                 <p>Current Version: 0.2</p>
                 <?php
