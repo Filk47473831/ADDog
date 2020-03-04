@@ -23,9 +23,15 @@
             if($testPassword == "") {
                 $testPassword = $AD->resetPassword($_POST['inputUser'],$_POST['inputPassword'],$_POST['promptNextLogin']);
                 $AD->writeActivityLogFile(date("d-m-y h:i:s") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
-                if($testPassword == "") { header("Location: resetpwcomplete.php"); }
+                if($testPassword == "") {
+                  $name = explode(",",$_POST['inputUser']);
+                  $name = $name[0];
+                  $name = substr($name, 3);
+                  echo '<p>Password Reset Successfully</p><p>' . $name . '\'s new password is: ' . $_POST['inputPassword'] . '</p>
+                      <a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
+                }
             }
-        }
+        } else {
 
         ?>
 
@@ -55,6 +61,9 @@
                             </div>
                         </div>
                     </form>
+
+                  <?php } ?>
+
                 </div>
             </div>
             </div>

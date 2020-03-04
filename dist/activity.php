@@ -8,7 +8,7 @@
     </ol>
     <div class="col-12">
     <div class="card shadow-lg border-0 rounded-lg mt-2">
-        <div class="card-body">
+        <div style="overflow:scroll" class="card-body">
                         <table width="100%" class="table table-striped table-borderless table-hover" id="dataTable-activityLog">
                             <thead>
                                 <tr>

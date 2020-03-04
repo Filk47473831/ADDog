@@ -119,6 +119,8 @@ public $settings = '';
             $group = $this->chooseUserTemplate($userTemplate,$user);
             $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $group[1];
             $user = array_merge($user, $group[0]);
+            $user = array_filter($user);
+            print_r($user);
             if(ldap_add($ds,$dn,$user) === false) {
               $error = ldap_error($ds);
               $errno = ldap_errno($ds);
