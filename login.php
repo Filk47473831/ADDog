@@ -25,7 +25,6 @@ $settings = $AD->readSettingsFile();
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-2">
                                     <div class="card-header d-flex justify-content-center">
-                                      <!-- <h3 class="text-center font-weight-light my-4">AD Dog</h3> -->
                                       <img style="max-width: 140px; max-height: 110px" src="assets/img/dog.png">
                                     </div>
                                     <div class="card-body">
