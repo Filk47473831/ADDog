@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <h3 class="mt-4">Add Bulk Users</h3>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
             <li class="breadcrumb-item active">Add Bulk Users</li>
         </ol>
             <div class="col-12">
@@ -106,7 +106,7 @@
 
                         }
                            ?>
-                  <a href="addbulkusers.php"><button class="mt-5 btn btn-primary">Back</button></a>
+                  <a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>
                 </div>
             </div>
             </div>

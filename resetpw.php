@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <h3 class="mt-4">Reset User Password</h3>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
             <li class="breadcrumb-item active">Reset User Password</li>
         </ol>
             <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
@@ -28,18 +28,18 @@
                   $name = $name[0];
                   $name = substr($name, 3);
                   echo '<p>Password Reset Successfully</p><p>' . $name . '\'s new password is: ' . $_POST['inputPassword'] . '</p>
-                      <a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
+                      <a href="resetpw"><button class="btn btn-success">Back</button></a>';
                 } else {
-                  echo '<p>' . $testPassword . '</p><a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
+                  echo '<p>' . $testPassword . '</p><a href="resetpw"><button class="btn btn-success">Back</button></a>';
                 }
             } else {
-              echo '<p>' . $testPassword . '</p><a href="resetpw.php"><button class="btn btn-success">Back</button></a>';
+              echo '<p>' . $testPassword . '</p><a href="resetpw"><button class="btn btn-success">Back</button></a>';
             }
         } else {
 
         ?>
 
-                    <form action="resetpw.php" method="POST">
+                    <form action="resetpw" method="POST">
                         <div class="form-group">
                             <label class="small mb-1" for="inputUser">Select User</label>
                             <input required class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>

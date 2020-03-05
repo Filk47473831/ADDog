@@ -35,16 +35,16 @@ $settings = $AD->readSettingsFile();
                                           $AD->connect();
                                           if($login = $AD->login()) {
                                             if($login == 1) {
-                                              header("Location: index.php");
+                                              header("Location: index");
                                             }
                                             if($login === -1) {
-                                              header("Location: settings.php");
+                                              header("Location: settings");
                                             }
                                           }
                                         }
 
                                          ?>
-                                        <form action="login.php" method="POST">
+                                        <form action="login" method="POST">
                                             <div class="form-group">
                                               <label class="small mb-1" for="inputUsername">Username</label><input name="inputUsername" class="<?php if(isset($_POST['inputUsername'])) { echo "is-invalid"; } ?> form-control py-4" id="inputUsername" type="text" value="<?php if(isset($_POST['inputUsername'])) { echo $_POST['inputUsername']; } ?>"/>
                                             </div>

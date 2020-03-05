@@ -10,7 +10,7 @@ public $settings = '';
             global $settings;
             $settings = $this->readSettingsFile();
             $server = "ldaps://" . $settings->Server . ":636";
-            return $ds = ldap_connect($server) or die("Could not connect to server. Please check your <a href='settings.php'>Settings</a>.");
+            return $ds = ldap_connect($server) or die("Could not connect to server. Please check your <a href='settings'>Settings</a>.");
         }
 
         function bind() {
@@ -20,7 +20,7 @@ public $settings = '';
           $psw = $settings->Password;
           ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
           ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
-          $r = ldap_bind($ds, $user, $psw) or die("Could not bind to AD. Please check your <a href='settings.php'>Settings</a>.");
+          $r = ldap_bind($ds, $user, $psw) or die("Could not bind to AD. Please check your <a href='settings'>Settings</a>.");
         }
 
         function searchAD() {
@@ -114,7 +114,7 @@ public $settings = '';
         }
 
         function displayUsers($data) {
-          if($data["count"] === 0) { header("Location: index.php"); } else {
+          if($data["count"] === 0) { header("Location: index"); } else {
             for ($i = 0; $i < $data["count"]; $i++) {
                 echo "<option value='" . $data[$i]["distinguishedname"][0] . "'>" . $data[$i]["cn"][0] . "</option>";
             }
@@ -137,7 +137,7 @@ public $settings = '';
             foreach($userTemplates as $userTemplate){
               echo "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
             }
-          } else { header("Location: addusertemplate.php"); }
+          } else { header("Location: addusertemplate"); }
         }
 
         function addUser($userTemplate,$user,$password) {
@@ -479,7 +479,7 @@ public $settings = '';
           $_SESSION = null;
           setcookie('PHPSESSID', '', time() - 7000000, '/');
           session_destroy();
-          header("Location: login.php");
+          header("Location: login");
         }
 
         function readAuthFile() {

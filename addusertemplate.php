@@ -1,10 +1,10 @@
 <?php require("header.php"); ?>
-<?php if(!$_SESSION['admin']) { header("Location: index.php"); } ?>
+<?php if(!$_SESSION['admin']) { header("Location: index"); } ?>
   <main>
     <div class="container-fluid">
       <h3 class="mt-4">Add User Template</h3>
       <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
         <li class="breadcrumb-item active">Add User Template</li>
       </ol>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
@@ -16,7 +16,7 @@
             $AD->bind();
 
             ?>
-              <form action="addusertemplate.php" method="POST">
+              <form action="addusertemplate" method="POST">
                 <p><small>You must have at least one user template before you can add new users.</small></p>
                 <div class="form-group">
                   <label class="small mb-1" for="inputUserTemplateName">Template Name</label>
@@ -72,7 +72,7 @@
                         "userOU" => $_POST['inputUserOU']
                     );
                     $AD->addToUserTemplatesFile($userTemplate);
-                    header("Location: addusertemplatecomplete.php");
+                    header("Location: addusertemplatecomplete");
                   }
 
                 ?>
@@ -125,7 +125,7 @@ function getUserData(chosenUser){
       }
     }
   }
-  xmlhttp.open("POST", "control/controller.php", true);
+  xmlhttp.open("POST", "control/controller", true);
   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xmlhttp.send("getUserData=" + chosenUser);
 }
@@ -149,7 +149,7 @@ function getTemplateData(chosenTemplate){
       }
     }
   }
-  xmlhttp.open("POST", "control/controller.php", true);
+  xmlhttp.open("POST", "control/controller", true);
   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xmlhttp.send("chosenUserTemplate=" + chosenTemplate);
 }

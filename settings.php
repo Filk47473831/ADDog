@@ -28,7 +28,7 @@ $AD->getKey();
                                       <img style="max-width: 140px; max-height: 110px" src="assets/img/dog.png">
                                     </div>
                                     <div class="card-body">
-                                      <form action="settings.php" method="POST">
+                                      <form action="settings" method="POST">
                                         <div class="form-group">
                                           <label class="small mb-1" for="inputDC">Domain Controller</label>
                                           <input required name="inputDC" class="form-control" id="inputDC" type="text" placeholder="e.g. A-DC" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDC']; } else { echo $settings->Server; } ?>"/>
@@ -61,7 +61,7 @@ $AD->getKey();
                                               $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputOU']);
                                               $admins = [strtolower($_POST['inputUsername'])];
                                               $AD->writeAdminsFile($admins);
-                                              header("Location: login.php");
+                                              header("Location: login");
                                             } else {
                                               echo "Fields Missing";
                                             }

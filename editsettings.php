@@ -1,6 +1,6 @@
 <?php require("header.php"); ?>
 <?php
-if(!$_SESSION['admin']) { header("Location: index.php"); }
+if(!$_SESSION['admin']) { header("Location: index"); }
 $settings = $AD->readSettingsFile();
 $authList = $AD->readAuthFile();
 if($authList !== null) { $authList = implode("\n",$authList); }
@@ -9,7 +9,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
     <div class="container-fluid">
       <h3 class="mt-4">Settings</h3>
       <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
         <li class="breadcrumb-item active">Settings</li>
       </ol>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
@@ -27,7 +27,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
               }
 
               ?>
-              <form action="editsettings.php" method="POST">
+              <form action="editsettings" method="POST">
                   <input type="submit" name="updateApp" class="btn btn-success" href="#" value="Check for updates">
               </form>
           </div>
@@ -36,7 +36,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
       <div class="card shadow-lg border-0 rounded-lg mt-3 mb-5">
           <div class="card-body">
-                <form action="editsettings.php" method="POST">
+                <form action="editsettings" method="POST">
                   <div class="form-group">
                     <label class="small mb-1" for="inputDC">Domain Controller</label>
                     <input required name="inputDC" class="form-control" id="inputDC" type="text" placeholder="e.g. A-DC" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDC']; } else { echo $settings->Server; } ?>"/>

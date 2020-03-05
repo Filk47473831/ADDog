@@ -4,7 +4,7 @@
 require("AD.php");
 $AD = new AD;
 $settings = $AD->readSettingsFile();
-if(!$AD->isLoggedIn()) { header("Location: login.php"); }
+if(!$AD->isLoggedIn()) { header("Location: login"); }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,16 +30,16 @@ if(!$AD->isLoggedIn()) { header("Location: login.php"); }
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="index.php"><img style="max-width: 50px" src="assets/img/dog_white.png"> AD Dog</a>
+            <a class="navbar-brand" href="/"><img style="max-width: 50px" src="assets/img/dog_white.png"> AD Dog</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <?php if($_SESSION['admin']) { ?>
-                        <a class="dropdown-item" href="editsettings.php">Settings</a><?php } ?><a class="dropdown-item" href="activity.php">Activity Log</a>
+                        <a class="dropdown-item" href="editsettings">Settings</a><?php } ?><a class="dropdown-item" href="activity">Activity Log</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout.php">Logout</a>
+                        <a class="dropdown-item" href="logout">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -50,22 +50,22 @@ if(!$AD->isLoggedIn()) { header("Location: login.php"); }
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading"></div>
-                            <a class="nav-link" href="index.php"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <a class="nav-link" href="/"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard</a>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Users
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                  <a class="nav-link" href="resetpw.php">Reset Password</a>
-                                  <a class="nav-link" href="resetpwbulk.php">Bulk Reset Passwords</a>
-                                  <a class="nav-link" href="adduser.php">Add User</a>
-                                  <a class="nav-link" href="addbulkusers.php">Bulk Add Users</a>
-                                  <a class="nav-link" href="enableuser.php">Enable User</a>
-                                  <a class="nav-link" href="disableuser.php">Disable User</a>
+                                  <a class="nav-link" href="resetpw">Reset Password</a>
+                                  <a class="nav-link" href="resetpwbulk">Bulk Reset Passwords</a>
+                                  <a class="nav-link" href="adduser">Add User</a>
+                                  <a class="nav-link" href="addbulkusers">Bulk Add Users</a>
+                                  <a class="nav-link" href="enableuser">Enable User</a>
+                                  <a class="nav-link" href="disableuser">Disable User</a>
                                   <?php if($_SESSION['admin']) { ?>
-                                  <a class="nav-link" href="addusertemplate.php">Add User Template</a>
-                                  <a class="nav-link" href="removeusertemplate.php">Remove User Template</a>
+                                  <a class="nav-link" href="addusertemplate">Add User Template</a>
+                                  <a class="nav-link" href="removeusertemplate">Remove User Template</a>
                                   <?php } ?>
                                 </nav>
                             </div>
@@ -73,13 +73,13 @@ if(!$AD->isLoggedIn()) { header("Location: login.php"); }
                                 Printing
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="resetprintqueue.php">Reset Print Queue</a></nav>
+                            <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="resetprintqueue">Reset Print Queue</a></nav>
                             </div>
                             <div class="sb-sidenav-menu-heading"></div>
                             <?php if($_SESSION['admin']) { ?>
-                            <a class="nav-link" href="editsettings.php"><div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
+                            <a class="nav-link" href="editsettings"><div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
                                 Settings</a><?php } ?>
-                            <a class="nav-link" href="activity.php"><div class="sb-nav-link-icon"><i class="far fa-file-alt"></i></div>
+                            <a class="nav-link" href="activity"><div class="sb-nav-link-icon"><i class="far fa-file-alt"></i></div>
                                 Activity Log</a>
                         </div>
                     </div>
