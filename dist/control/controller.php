@@ -16,4 +16,11 @@ if(isset($_POST['chosenUserTemplate'])) {
   echo json_encode($data);
 }
 
+if(isset($_POST['targetSearchOU'])) {
+  $AD->connect();
+  $AD->bind();
+  $data = $AD->getTargetOUCount($_POST['targetSearchOU']);
+  echo $data;
+}
+
  ?>

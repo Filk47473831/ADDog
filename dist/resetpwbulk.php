@@ -37,6 +37,7 @@
                             <?php $AD->showOUTree(); ?>
                           </div>
                           <input style="border:0px" required class="form-control mt-2" name="inputUserOU" id="inputUserOU" value="" placeholder="Select Target OU from Tree">
+                          <p style="margin-left:12px" class="small" id="targetCount"></p>
                         </div>
 
                         <div class="form-group">
@@ -62,6 +63,22 @@
     </div>
 </main>
 <script>
+function getTargetOUCount(targetSearchOU){
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+       document.getElementById("targetCount").innerText = this.responseText + " user(s) would have their passwords reset.";
+    }
+  }
+  xmlhttp.open("POST", "control/controller.php", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("targetSearchOU=" + targetSearchOU);
+}
+
 $(function () { $('#OUTree').jstree(); });
 $('#OUTree').on('changed.jstree', function (e, data) {
     var i, j, r = [];
@@ -70,6 +87,7 @@ $('#OUTree').on('changed.jstree', function (e, data) {
     }
     $('#inputUserOU').html(r.join(', '));
     $('#inputUserOU').attr('value', r.join(', '));
+    getTargetOUCount(r);
   });
 </script>
 <?php require("footer.php"); ?>

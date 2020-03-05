@@ -8,7 +8,7 @@
         <li class="breadcrumb-item active">Add User Template</li>
       </ol>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-        <div class="card shadow-lg border-0 rounded-lg mt-2">
+        <div class="card shadow-lg border-0 rounded-lg mt-2 mb-5">
           <div class="card-body">
             <?php
 
@@ -48,7 +48,7 @@
                   <div id="OUTree">
                     <?php $AD->showOUTree(); ?>
                   </div>
-                  <input style="border:0px" required class="form-control mt-3" name="inputUserOU" id="inputUserOU" value="" placeholder="Select Target OU from Tree">
+                  <input style="border:0px" required class="form-control mt-3" name="inputUserOU" id="inputUserOU" value="" placeholder="Select target OU for new users">
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputGroupDN">Member Group DN's (1 Per Line)</label>

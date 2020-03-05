@@ -86,6 +86,7 @@ public $settings = '';
               $sr = ldap_search($ds, $dn, $search);
               $results = ldap_get_entries($ds, $sr);
               $count = $results["count"] + $count;
+              echo $count;
               array_shift($results);
               foreach($results as $result) {
                 $authUsers = $this->readAuthFile();
@@ -98,6 +99,18 @@ public $settings = '';
             }
               $data['count'] = $count;
               return $data;
+        }
+
+        function getTargetOUCount($searchOU) {
+              global $ds;
+              global $settings;
+              $count = 0;
+              $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
+              ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $searchOU, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              return $count;
         }
 
         function displayUsers($data) {
