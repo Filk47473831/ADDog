@@ -1,6 +1,6 @@
 <?php require("header.php"); ?>
 <main>
-    <div class="container-fluid">
+    <div class="container-fluid unselectable">
         <h3 class="mt-4">Dashboard</h3>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active"><i class="fas fa-users"></i>&nbsp;Users</li>
