@@ -487,6 +487,7 @@ public $settings = '';
           if(filesize("C:\Program Files\ADDog\auth.data") > 0) {
           $authFile = fopen("C:\Program Files\ADDog\auth.data", "r");
           $auth = fread($authFile,filesize("C:\Program Files\ADDog\auth.data"));
+          $auth = $this->decryptData($auth);
           $auth = explode("\n",$auth);
           $auth = array_map('trim', $auth);
           $auth = array_map('strtolower', $auth);
@@ -497,11 +498,13 @@ public $settings = '';
 
         function writeAuthFile($authList) {
           $authFile = 'C:\Program Files\ADDog\auth.data';
+          $authList = $this->encryptData($authList);
           file_put_contents($authFile, $authList);
         }
 
         function writeAdminsFile($admins) {
           $adminsFile = 'C:\Program Files\ADDog\admins.data';
+          $admins = $this->encryptData($admins);
           file_put_contents($adminsFile, $admins);
         }
 
@@ -511,6 +514,7 @@ public $settings = '';
           if(filesize("C:\Program Files\ADDog\admins.data") > 0) {
           $adminsFile = fopen("C:\Program Files\ADDog\admins.data", "r");
           $admins = fread($adminsFile,filesize("C:\Program Files\ADDog\admins.data"));
+          $admins = $this->decryptData($admins);
           $admins = explode("\n",$admins);
           $admins = array_map('trim', $admins);
           $admins = array_map('strtolower', $admins);
