@@ -21,7 +21,8 @@
             $testPassword = $AD->testPassword($_POST['inputPassword'],$_POST['inputConfPassword']);
             $name = explode(",",$_POST['inputUser']);
             if($testPassword == "") {
-                $testPassword = $AD->resetPassword($_POST['inputUser'],$_POST['inputPassword'],$_POST['promptNextLogin']);
+                if(isset($_POST['promptNextLogin'])) { $promptNextLogin = "on"; } else { $promptNextLogin = null; }
+                $testPassword = $AD->resetPassword($_POST['inputUser'],$_POST['inputPassword'],$promptNextLogin);
                 $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
                 if($testPassword == "") {
                   $name = explode(",",$_POST['inputUser']);

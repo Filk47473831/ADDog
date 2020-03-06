@@ -320,11 +320,14 @@ public $settings = '';
         }
 
         function readUserTemplatesFile() {
+          $userTemplates = "";
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data") > 0) {
           $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
           $userTemplates = $this->decryptData($userTemplates);
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
+          }
           return $userTemplates;
         }
 
@@ -480,7 +483,7 @@ public $settings = '';
         function logout() {
           $_SESSION = null;
           setcookie('PHPSESSID', '', time() - 7000000, '/');
-          session_destroy();
+          if(session_status() !== PHP_SESSION_NONE) { session_destroy(); }
           header("Location: login");
         }
 
