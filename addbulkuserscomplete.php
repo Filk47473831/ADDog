@@ -9,6 +9,7 @@
             <div class="col-12">
             <div class="card shadow-lg border-0 rounded-lg mt-2">
                 <div class="card-body">
+                  <div style="overflow:scroll">
                     <?php
 
                       $AD->connect();
@@ -19,7 +20,7 @@
                           if(isset($_POST['bulkUsersInput'])) {
                             $csv = explode("\r\n", trim($_POST['bulkUsersInput']));
 
-                            echo '<table width="100%" class="table table-striped table-bordered table-hover" id="dataTable-bulkUsers">
+                            echo '<table width="100%" class="table table-striped table-borderless table-hover small" id="dataTable-bulkUsers">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -106,6 +107,7 @@
 
                         }
                            ?>
+                         </div>
                   <a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>
                 </div>
             </div>
