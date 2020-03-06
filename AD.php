@@ -318,8 +318,8 @@ public $settings = '';
         }
 
         function readUserTemplatesFile() {
-          $userTemplatesFile = fopen(substr(realpath(""), 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
-          $userTemplates = fread($userTemplatesFile,filesize(substr(realpath(""), 0, -3) . "usertemplates.data"));
+          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
+          $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
           $userTemplates = $this->decryptData($userTemplates);
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
@@ -337,7 +337,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
-          $userTemplatesFile = fopen(substr(realpath(""), 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
+          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
         }
@@ -347,16 +347,16 @@ public $settings = '';
           unset($userTemplates[$userTemplate]);
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
-          $userTemplatesFile = fopen(substr(realpath(""), 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
+          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
         }
 
         function readSettingsFile() {
           $settings = json_decode('{"Server":"","Domain":"","Username":"","Password":"","SearchOU":""}');
-          $settingsFile = fopen(substr(realpath(""), 0, -3) . "settings.data", "r") or die("Unable to open settings.");
-          if(filesize(substr(realpath(""), 0, -3) . "settings.data") > 0) {
-          $settings = fread($settingsFile,filesize(substr(realpath(""), 0, -3) . "settings.data"));
+          $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "r") or die("Unable to open settings.");
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data") > 0) {
+          $settings = fread($settingsFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data"));
           $settings = $this->decryptData($settings);
           $settings = json_decode($settings);
           fclose($settingsFile);
@@ -366,7 +366,7 @@ public $settings = '';
 
         function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials") {
           if($loginMessage === "") { $loginMessage = "Please login with your network credentials"; }
-          $settingsFile = fopen(substr(realpath(""), 0, -3) . "settings.data", "w") or die("Unable to open settings.");
+          $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "w") or die("Unable to open settings.");
           $settings = new \stdClass;
           $searchOU = explode("\r\n",$searchOU);
           $settings->Server = $dc;
@@ -383,9 +383,9 @@ public $settings = '';
         }
 
         function readActivityLogFile() {
-          $activityLogFile = fopen(substr(realpath(""), 0, -3) . "activity.log", "r") or die("Unable to open log.");
-          if(filesize(substr(realpath(""), 0, -3) . "activity.log") > 0) {
-          $activities = fread($activityLogFile,filesize(substr(realpath(""), 0, -3) . "activity.log"));
+          $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "r") or die("Unable to open log.");
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log") > 0) {
+          $activities = fread($activityLogFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log"));
           $activities = explode("\n",$activities);
           return $activities;
           fclose($activityLogFile);
@@ -402,7 +402,7 @@ public $settings = '';
           array_unshift($activities, $entry);
           $activities = implode("\r\n",$activities);
           }
-          $activityLogFile = fopen(substr(realpath(""), 0, -3) . "activity.log", "w") or die("Unable to open log.");
+          $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "w") or die("Unable to open log.");
           fwrite($activityLogFile, $activities);
           fclose($activityLogFile);
         }
@@ -432,7 +432,7 @@ public $settings = '';
         }
 
         function getKey() {
-          $filename = substr(realpath(""), 0, -3) . 'set.data';
+          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'set.data';
           if(file_exists($filename)) {
             return file_get_contents($filename, true);
           } else {
@@ -484,9 +484,9 @@ public $settings = '';
 
         function readAuthFile() {
           $auth = array();
-          if(filesize(substr(realpath(""), 0, -3) . "auth.data") > 0) {
-          $authFile = fopen(substr(realpath(""), 0, -3) . "auth.data", "r");
-          $auth = fread($authFile,filesize(substr(realpath(""), 0, -3) . "auth.data"));
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data") > 0) {
+          $authFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", "r");
+          $auth = fread($authFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data"));
           $auth = explode("\n",$auth);
           $auth = array_map('trim', $auth);
           $auth = array_map('strtolower', $auth);
@@ -496,21 +496,21 @@ public $settings = '';
         }
 
         function writeAuthFile($authList) {
-          $authFile = substr(realpath(""), 0, -3) . 'auth.data';
+          $authFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'auth.data';
           file_put_contents($authFile, $authList);
         }
 
         function writeAdminsFile($admins) {
-          $adminsFile = substr(realpath(""), 0, -3) . 'admins.data';
+          $adminsFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'admins.data';
           file_put_contents($adminsFile, $admins);
         }
 
 
         function readAdminsFile() {
           $admins = array();
-          if(filesize(substr(realpath(""), 0, -3) . "admins.data") > 0) {
-          $adminsFile = fopen(substr(realpath(""), 0, -3) . "admins.data", "r");
-          $admins = fread($adminsFile,filesize(substr(realpath(""), 0, -3) . "admins.data"));
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data") > 0) {
+          $adminsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data", "r");
+          $admins = fread($adminsFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data"));
           $admins = explode("\n",$admins);
           $admins = array_map('trim', $admins);
           $admins = array_map('strtolower', $admins);
