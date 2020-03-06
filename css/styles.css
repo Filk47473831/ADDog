@@ -10152,6 +10152,7 @@ body {
 }
 
 .sb-sidenav-dark {
+  opacity: 0.946;
   background-color: #212529;
   color: rgba(255, 255, 255, 0.5);
 }
