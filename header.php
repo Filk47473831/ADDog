@@ -31,7 +31,7 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark unselectable">
-            <a class="navbar-brand" href="/"><img style="max-width: 50px" src="assets/img/dog_white.png"> AD Dog</a>
+            <a class="navbar-brand" href="/"><img style="max-width: 50px" src="assets/img/dog_white.png"> <small>AD Dog</small></a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <li class="nav-item dropdown">
