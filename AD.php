@@ -169,7 +169,9 @@ public $settings = '';
           $response = array();
           $response[0]['homeDirectory'] = $userTemplates[$userTemplate]['homeDirectory'] . $user['sAMAccountName'];
           $response[0]['homeDrive'] = $userTemplates[$userTemplate]['homeDrive'];
+          if($userTemplates[$userTemplate]['profilePath'] !== "") {
           $response[0]['profilePath'] = $userTemplates[$userTemplate]['profilePath'] . $user['sAMAccountName'];
+          }
           $response[0]['scriptPath'] = $userTemplates[$userTemplate]['scriptPath'];
           $response[1] = $userTemplates[$userTemplate]['userOU'];
           $response[2] = $userTemplates[$userTemplate]['groupDN'];
