@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-check">
                           <input name="promptNextLogin" type="checkbox" class="form-check-input" id="promptNextLogin">
-                          <label class="form-check-label" for="promptNextLogin">Prompt user to change password on next login</label>
+                          <label class="form-check-label small" for="promptNextLogin">Prompt user to change password on next login</label>
                         </div>
                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                             <input type="submit" class="btn btn-primary" href="#" value="Reset Password">

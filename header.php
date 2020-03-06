@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<?php if (session_status() == PHP_SESSION_NONE) { session_start();} ?>
+<?php if (session_status() == PHP_SESSION_NONE) { session_start(); } ?>
 <?php
 require("AD.php");
 $AD = new AD;
@@ -11,7 +11,7 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>AD Dog</title>
@@ -37,8 +37,8 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <?php if($_SESSION['admin']) { ?>
-                        <a class="dropdown-item" href="editsettings">Settings</a><?php } ?><a class="dropdown-item" href="activity">Activity Log</a>
+                        <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
+                        <a class="dropdown-item" href="editsettings">Settings</a><?php } } ?><a class="dropdown-item" href="activity">Activity Log</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="logout">Logout</a>
                     </div>
@@ -64,10 +64,10 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                   <a class="nav-link" href="addbulkusers">Bulk Add Users</a>
                                   <a class="nav-link" href="enableuser">Enable User</a>
                                   <a class="nav-link" href="disableuser">Disable User</a>
-                                  <?php if($_SESSION['admin']) { ?>
+                                  <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
                                   <a class="nav-link" href="addusertemplate">Add User Template</a>
                                   <a class="nav-link" href="removeusertemplate">Remove User Template</a>
-                                  <?php } ?>
+                                  <?php } } ?>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"><div class="sb-nav-link-icon"><i class="fas fa-print"></i></div>
@@ -77,16 +77,16 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                             <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="resetprintqueue">Reset Print Queue</a></nav>
                             </div>
                             <div class="sb-sidenav-menu-heading"></div>
-                            <?php if($_SESSION['admin']) { ?>
+                            <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
                             <a class="nav-link" href="editsettings"><div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
-                                Settings</a><?php } ?>
+                                Settings</a><?php } } ?>
                             <a class="nav-link" href="activity"><div class="sb-nav-link-icon"><i class="far fa-file-alt"></i></div>
                                 Activity Log</a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        <?php echo $_SESSION['username']; if($_SESSION['admin']) { echo " - (admin)"; } ?>
+                        <?php if(isset($_SESSION['username'])) { echo $_SESSION['username']; } if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { echo " - (admin)"; } } ?>
                     </div>
                 </nav>
             </div>
