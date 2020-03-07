@@ -1,329 +1,675 @@
-<?php 
-        $__='printf';$_='Loading Class/Code NAME';
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                                                                                                                                                $_____='    b2JfZW5kX2NsZWFu';                                                                                                                                                                              $______________='cmV0dXJuIGV2YWwoJF8pOw==';
-$__________________='X19sYW1iZGE=';
-
-                                                                                                                                                                                                                                          $______=' Z3p1bmNvbXByZXNz';                    $___='  b2Jfc3RhcnQ=';                                                                                                    $____='b2JfZ2V0X2NvbnRlbnRz';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                $__=                                                              'base64_decode'                           ;                                                                       $______=$__($______);           if(!function_exists('__lambda')){function __lambda($sArgs,$sCode){return eval("return function($sArgs){{$sCode}};");}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    $__________________=$__($__________________);                                                                                                                                                                                                                                                                                                                                                                         $______________=$__($______________);
-        $__________=$__________________('$_',$______________);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 $_____=$__($_____);                                                                                                                                                                                                                                                    $____=$__($____);                                                                                                                    $___=$__($___);                      $_='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';
-
-        $___();$__________($______($__($_))); $________=$____();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             $_____();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       echo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                                                                                                                                                                     $________;
+<?php
+
+Class AD {
+
+public $ds = '';
+public $settings = '';
+
+        function connect() {
+            global $ds;
+            global $settings;
+            $settings = $this->readSettingsFile();
+            $server = "ldaps://" . $settings->Server . ":636";
+            return $ds = ldap_connect($server) or die("Could not connect to server. Please check your <a href='settings'>Settings</a>.");
+        }
+
+        function bind() {
+          global $ds;
+          global $settings;
+          $user = $settings->Username . "@" . $settings->Domain;
+          $psw = $settings->Password;
+          ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+          ldap_set_option($ds, LDAP_OPT_REFERRALS, 0);
+          $r = ldap_bind($ds, $user, $psw) or die("Could not bind to AD. Please check your <a href='settings'>Settings</a>.");
+        }
+
+        function searchAD() {
+            global $ds;
+            global $settings;
+            $data = [];
+            $count = 0;
+            $searchOU = $settings->SearchOU;
+            foreach($searchOU as $dn) {
+              $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
+  	          ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $dn, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              array_shift($results);
+              foreach($results as $result) {
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                $hiddenUsers = array_merge($authUsers, $adminUsers);
+                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
+                  $data[] = $result;
+                }
+              }
+            }
+              $data['count'] = $count;
+              return $data;
+        }
+
+        function searchDisabledAD() {
+            global $ds;
+            global $settings;
+            $data = [];
+            $count = 0;
+            $searchOU = $settings->SearchOU;
+            foreach($searchOU as $dn) {
+              $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(userAccountControl:1.2.840.113556.1.4.803:=2))";
+  	          ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $dn, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              array_shift($results);
+              foreach($results as $result) {
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                $hiddenUsers = array_merge($authUsers, $adminUsers);
+                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
+                  $data[] = $result;
+                }
+              }
+            }
+              $data['count'] = $count;
+              return $data;
+        }
+
+        function searchTargetOU($searchOU) {
+            global $ds;
+            global $settings;
+            $data = [];
+            $count = 0;
+            foreach($searchOU as $dn) {
+              $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
+  	          ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $dn, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              array_shift($results);
+              foreach($results as $result) {
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                $hiddenUsers = array_merge($authUsers, $adminUsers);
+                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
+                  $data[] = $result;
+                }
+              }
+            }
+              $data['count'] = $count;
+              return $data;
+        }
+
+        function searchForGroupsAD() {
+            global $ds;
+            global $settings;
+            $data = [];
+            $count = 0;
+            $searchOU = $settings->SearchOU;
+            foreach($searchOU as $dn) {
+              $search = "(objectClass=group)";
+              ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $dn, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              array_shift($results);
+              foreach($results as $result) {
+                  $data[] = $result;
+              }
+            }
+              $data['count'] = $count;
+              return $data;
+        }
+
+        function getTargetOUCount($searchOU) {
+              global $ds;
+              global $settings;
+              $count = 0;
+              $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
+              ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $searchOU, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              return $count;
+        }
+
+        function displayUsers($data) {
+          if($data["count"] === 0) { header("Location: index"); } else {
+            for ($i = 0; $i < $data["count"]; $i++) {
+                echo "<option value='" . $data[$i]["distinguishedname"][0] . "'>" . $data[$i]["cn"][0] . "</option>";
+            }
+          }
+        }
+
+        function updateUsersJSON($data) {
+            $users = "[";
+            for ($i = 0; $i < $data["count"] - 1; $i++) {
+              if($i !== 0) { $users .= ","; }
+                $users .= '{ "value": "' . $data[$i]["distinguishedname"][0] . '", "label": "' . $data[$i]["cn"][0] . '" }';
+              }
+            $users .= "]";
+          echo $users;
+        }
+
+        function displayUserTemplates() {
+          $userTemplates = $this->readUserTemplatesFile();
+          if(count($userTemplates) > 0) {
+            foreach($userTemplates as $userTemplate){
+              echo "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
+            }
+          } else { header("Location: addusertemplate"); }
+        }
+
+        function addUser($userTemplate,$user,$password,$userOU,$groups) {
+            global $ds;
+            $user['objectclass'] = "User";
+            $user['UserAccountControl'] = "66080";
+            if($userTemplate !== null) {
+              $group = $this->chooseUserTemplate($userTemplate,$user);
+              $user = array_merge($user, $group[0]);
+              $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $group[1];
+            } else {
+              $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $userOU;
+              $user['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['homeDirectory']);
+              $user['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['profilePath']);
+            }
+            $user = array_filter($user);
+            if(ldap_add($ds,$dn,$user) === false) {
+              $error = ldap_error($ds);
+              $errno = ldap_errno($ds);
+              $response = "Account cannot be added - " . $error . " (" . $errno . ")";
+              return $response;
+            } else {
+              $this->resetPassword($dn,$password,null);
+              if($userTemplate !== null) {
+                $groups = $group[2];
+              }
+              foreach($groups as $group){
+              $this->addUsersToGroup($dn,$group);
+              }
+            }
+        }
+
+        function chooseUserTemplate($userTemplate,$user) {
+          global $ds;
+          $userTemplates = $this->readUserTemplatesFile();
+          $response = array();
+          if($user !== null) { $response[0]['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['homeDirectory']); } else {
+            $response[0]['homeDirectory'] = $userTemplates[$userTemplate]['homeDirectory'];
+          }
+          $response[0]['homeDrive'] = $userTemplates[$userTemplate]['homeDrive'];
+          if($user !== null) { $response[0]['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['profilePath']); } else {
+            $response[0]['profilePath'] = $userTemplates[$userTemplate]['profilePath'];
+          }
+          $response[0]['scriptPath'] = $userTemplates[$userTemplate]['scriptPath'];
+          $response[1] = $userTemplates[$userTemplate]['userOU'];
+          $response[2] = $userTemplates[$userTemplate]['groupDN'];
+          return $response;
+         }
+
+         function addUsersToGroup($dn,$group) {
+             global $ds;
+             $groupInfo['member'] = $dn;
+             ldap_mod_add($ds,$group,$groupInfo);
+         }
+
+        function enableuser($user) {
+            global $ds;
+            $entry["UserAccountControl"] = "66080";
+            if(ldap_mod_replace($ds,$user,$entry) === false) {
+                $error = ldap_error($ds);
+                $errno = ldap_errno($ds);
+                $response = "User cannot be enabled - " . $error . " (" . $errno . ")";
+                } else {
+                $response = "User Enabled Successfully";
+            }
+            return $response;
+        }
+
+        function disableUser($user) {
+            global $ds;
+            $entry["UserAccountControl"] = "514";
+            if(ldap_mod_replace($ds,$user,$entry) === false) {
+                $error = ldap_error($ds);
+                $errno = ldap_errno($ds);
+                $response = "User cannot be disabled - " . $error . " (" . $errno . ")";
+                } else {
+                $response = "User Disabled Successfully";
+            }
+            return $response;
+        }
+
+        function removeUser($user) {
+            global $ds;
+            if(ldap_delete($ds,$user) === false) {
+                $error = ldap_error($ds);
+                $errno = ldap_errno($ds);
+                $response = "User cannot be removed - " . $error . " (" . $errno . ")";
+                } else {
+                $response = "User Removed Successfully";
+            }
+            return $response;
+        }
+
+        function resetPassword($user,$password,$change) {
+            global $ds;
+            $encoded_password = $this->hashPassword($password);
+            $entry = array();
+            if($change === "on") {
+              $entry["pwdlastset"] = 0;
+            }
+            $entry["unicodePwd"] = "$encoded_password";
+            if(ldap_mod_replace($ds,$user,$entry) === false) {
+                $error = ldap_error($ds);
+                $errno = ldap_errno($ds);
+                $response = "Password cannot be reset - " . $error . " (" . $errno . ")";
+                return $response;
+                }
+        }
+
+        function hashPassword($newpassword) {
+            $newpassword = "\"" . $newpassword . "\"";
+            $len = strlen($newpassword);
+            $newpass = "";
+            for ($i = 0; $i < $len; $i++) $newpass .= "{$newpassword{$i}}\000";
+            return $newpass;
+        }
+
+        function testFirstName($firstName) {
+          $message = "";
+          $matches = preg_match('/[`\'\"~!@#$*()<>,:;{}\|]/',$firstName);
+          if ($matches === 1) {
+            $message = "First name must not contain symbols.";
+            return $message;
+          }
+          if (strlen($firstName) === 0) {
+            $message = "You must enter a first name.";
+            return $message;
+          }
+          if (strlen($firstName) > 44) {
+            $message = "First name must be 44 characters or less.";
+            return $message;
+          }
+          if ($message === "") {
+            return "";
+          } else {
+            return $message;
+          }
+        }
+
+        function testLastName($lastName) {
+          $message = "";
+          $matches = preg_match('/[`\'\"~!@#$*()<>,:;{}\|]/',$lastName);
+          if ($matches === 1) {
+            $message = "Last name must not contain symbols.";
+            return $message;
+          }
+          if (strlen($lastName) === 0) {
+            $message = "You must enter a last name.";
+            return $message;
+          }
+          if (strlen($lastName) > 44) {
+            $message = "Last name must be 44 characters or less.";
+            return $message;
+          }
+          if ($message === "") {
+            return "";
+          } else {
+            return $message;
+          }
+        }
+
+        function testUsername($username) {
+          $message = "";
+          $matches = preg_match('/[`\'\"~!@# $*()<>,:;{}\|]/',$username);
+          if ($matches === 1) {
+            $message = "Username must not contain symbols or spaces.";
+            return $message;
+          }
+          if (strlen($username) === 0) {
+            $message = "You must enter a username.";
+            return $message;
+          }
+          if (strlen($username) > 20) {
+            $message = "Username must be 20 characters or less.";
+            return $message;
+          }
+          if ($message === "") {
+            return "";
+          } else {
+            return $message;
+          }
+        }
+
+        function testPassword($password,$passwordConf) {
+            global $settings;
+            $message = "";
+            if ($password != $passwordConf) {
+              $message = "Passwords do not match.";
+              return $message;
+            }
+
+            if (strlen($password) < $settings->PasswordMinLength) {
+              $message = "Password must be at least " . $settings->PasswordMinLength . " character(s) long.";
+              return $message;
+            }
+            if($message === "") {
+              return "";
+            } else {
+              return $message;
+            }
+        }
+
+        function readUserTemplatesFile() {
+          $userTemplates = "";
+          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data") > 0) {
+          $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
+          $userTemplates = $this->decryptData($userTemplates);
+          $userTemplates = json_decode($userTemplates, TRUE);
+          fclose($userTemplatesFile);
+          }
+          return $userTemplates;
+        }
+
+        function addToUserTemplatesFile($userTemplate) {
+          $userTemplates = $this->readUserTemplatesFile();
+          $userTemplates[$userTemplate['userTemplateName']]['name'] = $userTemplate['userTemplateName'];
+          $userTemplates[$userTemplate['userTemplateName']]['homeDirectory'] = $userTemplate['homeDirectory'];
+          $userTemplates[$userTemplate['userTemplateName']]['homeDrive'] = $userTemplate['homeDrive'];
+          $userTemplates[$userTemplate['userTemplateName']]['profilePath'] = $userTemplate['profilePath'];
+          $userTemplates[$userTemplate['userTemplateName']]['scriptPath'] = $userTemplate['scriptPath'];
+          $userTemplates[$userTemplate['userTemplateName']]['groupDN'] = $userTemplate['groupDN'];
+          $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
+          $userTemplates = json_encode($userTemplates);
+          echo $userTemplates;
+          $userTemplates = $this->encryptData($userTemplates);
+          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
+          fwrite($userTemplatesFile, $userTemplates);
+          fclose($userTemplatesFile);
+        }
+
+        function removeFromUserTemplatesFile($userTemplate) {
+          $userTemplates = $this->readUserTemplatesFile();
+          unset($userTemplates[$userTemplate]);
+          $userTemplates = json_encode($userTemplates);
+          $userTemplates = $this->encryptData($userTemplates);
+          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
+          fwrite($userTemplatesFile, $userTemplates);
+          fclose($userTemplatesFile);
+        }
+
+        function readSettingsFile() {
+          $settings = json_decode('{"Server":"","Domain":"","Username":"","Password":"","SearchOU":""}');
+          $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "r") or die("Unable to open settings.");
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data") > 0) {
+          $settings = fread($settingsFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data"));
+          $settings = $this->decryptData($settings);
+          $settings = json_decode($settings);
+          fclose($settingsFile);
+          }
+          return $settings;
+        }
+
+        function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials") {
+          if($loginMessage === "") { $loginMessage = "Please login with your network credentials"; }
+          $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "w") or die("Unable to open settings.");
+          $settings = new \stdClass;
+          $searchOU = explode("\r\n",$searchOU);
+          $settings->Server = $dc;
+          $settings->Domain = $domain;
+          $settings->Username = $username;
+          $settings->Password = $password;
+          $settings->SearchOU = $searchOU;
+          $settings->PasswordMinLength = $passwordMinLength;
+          $settings->LoginMessage = $loginMessage;
+          $settings = json_encode($settings);
+          $settings = $this->encryptData($settings);
+          fwrite($settingsFile, $settings);
+          fclose($settingsFile);
+        }
+
+        function readActivityLogFile() {
+          $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "r") or die("Unable to open log.");
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log") > 0) {
+          $activities = fread($activityLogFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log"));
+          $activities = explode("\n",$activities);
+          return $activities;
+          fclose($activityLogFile);
+          }
+        }
+
+        function writeActivityLogFile($entry) {
+          $activities = $this->readActivityLogFile();
+          if(empty($activities)) {
+            $activities = array();
+            array_push($activities,$entry);
+            $activities = implode("\r\n",$activities);
+          } else {
+          array_unshift($activities, $entry);
+          $activities = implode("\r\n",$activities);
+          }
+          $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "w") or die("Unable to open log.");
+          fwrite($activityLogFile, $activities);
+          fclose($activityLogFile);
+        }
+
+        function encryptData($plaintext) {
+          $key = $this->getKey();
+          $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+          $iv = openssl_random_pseudo_bytes($ivlen);
+          $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
+          $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
+          return $ciphertext = base64_encode( $iv.$hmac.$ciphertext_raw );
+        }
+
+        function decryptData($ciphertext) {
+          $key = $this->getKey();
+          $c = base64_decode($ciphertext);
+          $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+          $iv = substr($c, 0, $ivlen);
+          $hmac = substr($c, $ivlen, $sha2len=32);
+          $ciphertext_raw = substr($c, $ivlen+$sha2len);
+          $plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
+          $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
+          if (hash_equals($hmac, $calcmac))
+          {
+              return $plaintext;
+          }
+        }
+
+        function getKey() {
+          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'set.data';
+          if(file_exists($filename)) {
+            return file_get_contents($filename, true);
+          } else {
+            $bytes = random_bytes(60);
+            ob_start();
+            var_dump(bin2hex($bytes));
+            $key = ob_get_clean();
+            $key = substr($key,13);
+            $key = substr($key, 0, -2);
+            file_put_contents($filename, $key);
+            return $key;
+          }
+        }
+
+        function resetPrintQueue() {
+            shell_exec('whoami');
+            shell_exec('sc \\\\%COMPUTERNAME% stop spooler');
+            shell_exec('del %windir%\system32\spool\printers\*.* /q');
+            shell_exec('sc \\\\%COMPUTERNAME% start spooler');
+        }
+
+        function login() {
+            global $ds;
+            global $settings;
+            if($_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "") {
+                if(ldap_bind($ds, strtolower($_POST['inputUsername']) . "@" . $settings->Domain, $_POST['inputPassword']) === false) {
+                  $errno = ldap_errno($ds);
+                  return $errno;
+                } else {
+                  if($this->checkAuthLevel(strtolower($_POST['inputUsername'])) || $this->checkAdminLevel(strtolower($_POST['inputUsername']))) {
+                  $_SESSION['username'] = $_POST['inputUsername'];
+                  $_SESSION['admin'] = $this->checkAdminLevel(strtolower($_POST['inputUsername']));
+                  return true;
+                } else { return false; }
+                }
+            } else { return false; }
+        }
+
+        function isLoggedIn() {
+          if(isset($_SESSION['username'])) { if($_SESSION['username'] !== null) { return true; } else { return false; } } else { return false; }
+        }
+
+        function logout() {
+          $_SESSION = null;
+          setcookie('PHPSESSID', '', time() - 7000000, '/');
+          if(session_status() !== PHP_SESSION_NONE) { session_destroy(); }
+          header("Location: login");
+        }
+
+        function readAuthFile() {
+          $auth = array();
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data") > 0) {
+          $authFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", "r");
+          $auth = fread($authFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data"));
+          $auth = explode("\n",$auth);
+          $auth = array_map('trim', $auth);
+          $auth = array_map('strtolower', $auth);
+          fclose($authFile);
+          }
+          return $auth;
+        }
+
+        function writeAuthFile($authList) {
+          $authFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'auth.data';
+          file_put_contents($authFile, $authList);
+        }
+
+        function writeAdminsFile($admins) {
+          $adminsFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'admins.data';
+          file_put_contents($adminsFile, $admins);
+        }
+
+
+        function readAdminsFile() {
+          $admins = array();
+          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data") > 0) {
+          $adminsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data", "r");
+          $admins = fread($adminsFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data"));
+          $admins = explode("\n",$admins);
+          $admins = array_map('trim', $admins);
+          $admins = array_map('strtolower', $admins);
+          fclose($adminsFile);
+          return $admins;
+          }
+        }
+
+        function checkAuthLevel($username) {
+          $authList = $this->readAuthFile();
+          if(in_array($username, $authList)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        function checkAdminLevel($username) {
+          $admins = $this->readAdminsFile();
+          if(in_array($username, $admins)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+
+        function endsWith($currentString, $target) {
+            $length = strlen($target);
+            if ($length == 0) {
+                return true;
+            }
+            return (substr($currentString, -$length) === $target);
+        }
+
+        function getUserData($data,$chosenUser) {
+          foreach($data as $user){
+            if($user['cn'][0] === $chosenUser) {
+              $result = ["homedirectory"=>"","homedrive"=>"","profilepath"=>"","scriptpath"=>"","ou"=>"","groups"=>""];
+              if(in_array("homedirectory", $user)) {
+                $homeDirectory = explode("\\",$user['homedirectory'][0]);
+                array_pop($homeDirectory);
+                $result['homedirectory'] = implode("\\",$homeDirectory) . "\\";
+              }
+              if(in_array("homedrive", $user)) {
+                $result['homedrive'] = substr($user['homedrive'][0], 0, 1);
+              }
+              if(in_array("profilepath", $user)) {
+                $profilePath = explode("\\",$user['profilepath'][0]);
+                array_pop($profilePath);
+                $result['profilepath'] = implode("\\",$profilePath) . "\\";
+              }
+              if(in_array("scriptpath", $user)) {
+                $result['scriptpath'] = $user['scriptpath'][0];
+              }
+              if(in_array("distinguishedname", $user)) {
+                $ou = explode(",",$user['distinguishedname'][0]);
+                array_shift($ou);
+                $result['ou'] = implode(",",$ou);
+              }
+              if(in_array("memberof", $user)) {
+              $chosenGroups = $user['memberof'];
+              array_shift($chosenGroups);
+              $availableGroups = $this->searchForGroupsAD();
+              $finalGroups = [];
+              foreach($availableGroups as $availableGroup) {
+                if(in_array($availableGroup['distinguishedname'][0],$chosenGroups)) {
+                  $finalGroups[] = $availableGroup['cn'][0];
+                }
+              }
+              $result['groups'] = $finalGroups;
+              $result['groups'] = implode("\r\n",$result['groups']);
+              }
+              return $result;
+            }
+          }
+        }
+
+        function showOUTree() {
+          global $ds;
+          global $settings;
+
+          echo '<ul>
+                  <li class="jstree-open">' . $settings->Domain;
+
+            foreach($settings->SearchOU as $dn) {
+
+              $filter="(objectClass=organizationalunit)";
+              $justthese = array("dn", "ou");
+              $sr=ldap_search($ds, $dn, $filter, $justthese);
+              $info = ldap_get_entries($ds, $sr);
+
+              echo '<ul>
+                     <li value="' . $dn . '">' . $dn . '
+                      <ul>';
+
+              for ($i=0; $i < $info["count"]; $i++) {
+                  $name = explode(",",$info[$i]['dn']);
+                  $name = $name[0];
+                  $name = substr($name, 3);
+
+                  echo '<li value="' . $info[$i]['dn'] . '">' . $name . '</li>';
+              }
+
+              echo '</ul>
+                  </li>
+                </ul>';
+
+            }
+
+            echo '</li>
+              </ul>';
+
+        }
+
+    }
