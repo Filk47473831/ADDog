@@ -40,10 +40,18 @@
     </div>
 </main>
 <script>
-$(document).ready(function() {
-  $('#dataTable-activityLog').DataTable( {
-        "order": [[ 0, "desc" ]]
-    } );
-});
+  $('#dataTable-activityLog').dataTable( {
+    "order": [[ 0, "desc" ]],
+    dom: 'Bfrtip',
+    buttons: {
+          buttons: [
+              { extend: 'copy', className: 'btn-sm' },
+              { extend: 'csv', className: 'btn-sm' },
+              { extend: 'excel', className: 'btn-sm' },
+              { extend: 'pdf', className: 'btn-sm' },
+              { extend: 'print', className: 'btn-sm' }
+          ]
+      }
+  } );
 </script>
 <?php require("footer.php"); ?>
