@@ -58,15 +58,38 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                  <a class="nav-link" href="resetpw">Reset Password</a>
-                                  <a class="nav-link" href="resetpwbulk">Bulk Reset Passwords</a>
-                                  <a class="nav-link" href="adduser">Add User</a>
-                                  <a class="nav-link" href="addbulkusers">Bulk Add Users</a>
-                                  <a class="nav-link" href="enableuser">Enable User</a>
-                                  <a class="nav-link" href="disableuser">Disable User</a>
+                                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#individualUserNavItems" aria-expanded="false" aria-controls="individualUserNavItems">
+                                      Individual User
+                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                  <div class="collapse" id="individualUserNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
+                                      <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="resetpw">Reset Password</a>
+                                        <a class="nav-link" href="adduser">Add User</a>
+                                        <a class="nav-link" href="removeuser">Remove User</a>
+                                        <a class="nav-link" href="enableuser">Enable User</a>
+                                        <a class="nav-link" href="disableuser">Disable User</a>
+                                      </nav>
+                                  </div>
+                                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bulkManageNavItems" aria-expanded="false" aria-controls="bulkManageNavItems">
+                                      Bulk Manage
+                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                  <div class="collapse" id="bulkManageNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
+                                      <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="resetpwbulk">Reset Passwords</a>
+                                        <a class="nav-link" href="addbulkusers">Add Users</a>
+                                        <a class="nav-link" href="removebulkusers">Remove Users</a>
+                                      </nav>
+                                  </div>
                                   <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
-                                  <a class="nav-link" href="addusertemplate">Add User Template</a>
-                                  <a class="nav-link" href="removeusertemplate">Remove User Template</a>
+                                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#templatesNavItems" aria-expanded="false" aria-controls="templatesNavItems">
+                                      Templates
+                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                  <div class="collapse" id="templatesNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
+                                      <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="addusertemplate">Add User Template</a>
+                                        <a class="nav-link" href="removeusertemplate">Remove User Template</a>
+                                      </nav>
+                                  </div>
                                   <?php } } ?>
                                 </nav>
                             </div>

@@ -20,10 +20,13 @@
           if($testPassword == "") {
             $searchOU = [$_POST['inputUserOU']];
             $data = $AD->searchTargetOU($searchOU);
+            if(isset($_POST['promptNextLogin'])) { $promptNextLogin = "on"; } else { $promptNextLogin = null; }
               foreach($data as $user) {
-                $AD->resetPassword($user['dn'],$_POST['inputPassword'],$_POST['promptNextLogin']);
+                $AD->resetPassword($user['dn'],$_POST['inputPassword'],$promptNextLogin);
+                $name = explode(",",$user['dn']);
+                $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
               }
-              $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Bulk Password Reset,-," . $_SESSION['username']);
+
               header("Location: resetpwbulkcomplete");
           }
         }
