@@ -22,9 +22,12 @@
               $testLastName = $AD->testLastName($_POST['inputLastName']);
               $testUsername = $AD->testUsername($_POST['inputUsername']);
               $testPassword = $AD->testPassword($_POST['inputPassword'],$_POST['inputPasswordConf']);
+              $testUserOU = $AD->testUserOU($_POST['inputUserOU']);
 
-              if(($testFirstName == "") && ($testLastName == "") && ($testUsername == "") && ($testPassword == "")) {
-                $userTemplate = $_POST['inputUserTemplate'];
+              if(($testFirstName == "") && ($testLastName == "") && ($testUsername == "") && ($testPassword == "") && ($testUserOU == "") && ($testUserOU == "")) {
+
+                echo $testUserOU;
+
                 $info = array();
                 $info["cn"] = $_POST['inputFirstName'] . " " . $_POST['inputLastName'];
                 $info['givenName'] = $_POST['inputFirstName'];
@@ -68,7 +71,7 @@
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testLastName; } ?></div>
                 </div>
                 <p>
-                  <a class="btn btn-info btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     Advanced Options
                   </a>
                 </p>
@@ -90,19 +93,19 @@
                     <input name="inputScriptPath" class="form-control" id="inputScriptPath" type="text" placeholder="e.g. Staff.bat" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputScriptPath']; } ?>"/>
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="OUTree">User OU</label>
-                    <div id="OUTree">
-                      <?php $AD->showOUTree(); ?>
-                    </div>
-                    <input style="border:0px" required class="form-control mt-3" name="inputUserOU" id="inputUserOU" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUserOU']; } ?>" placeholder="Select target OU for new users">
-                  </div>
-                  <div class="form-group">
                     <label class="small mb-1" for="inputGroupDN">Member Group Name's (1 Per Line)</label>
                     <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g.&#x0a;Staff&#x0a;RD Users"><?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
                   </div>
                 </div>
 
-
+                <div class="form-group">
+                  <label class="small mb-1" for="OUTree">User OU</label>
+                  <div id="OUTree">
+                    <?php $AD->showOUTree(); ?>
+                  </div>
+                  <input required style="border:0px" required class="<?php if(isset($_POST['inputFirstName']) && $testUserOU !== "") { echo "is-invalid"; } ?> form-control mt-3" name="inputUserOU" id="inputUserOU" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUserOU']; } ?>" placeholder="Select target OU for new user">
+                  <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testUserOU; } ?></div>
+                </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputUsername">Username</label>
                   <input required name="inputUsername" class="<?php if(isset($_POST['inputFirstName']) && $testUsername !== "") { echo "is-invalid"; } ?> form-control" id="inputUsername" type="text" placeholder="jsmith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUsername']; } ?>"/>
@@ -155,7 +158,9 @@
   </script>
   <?php if(!isset($_POST['inputFirstName'])) { ?>
   <script>
-    getTemplateData(document.getElementById("inputUserTemplate").value);
+    if(document.getElementById("inputUserTemplate").value !== "null") {
+      getTemplateData(document.getElementById("inputUserTemplate").value);
+    }
   </script>
   <?php } ?>
   <script>
@@ -168,8 +173,10 @@
       document.getElementById("inputUserOU").value = r.join(', ');
     });
 
-  document.getElementById("inputUserTemplate").addEventListener("focusout", function() {
-    getTemplateData(document.getElementById("inputUserTemplate").value);
+  document.getElementById("inputUserTemplate").addEventListener("change", function() {
+    if(document.getElementById("inputUserTemplate").value !== "null") {
+      getTemplateData(document.getElementById("inputUserTemplate").value);
+    }
   });
 </script>
   <?php require("footer.php"); ?>

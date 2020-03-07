@@ -56,7 +56,7 @@
                                                 $info["sAMAccountName"] = $user['inputUsername'];
                                                 $info["UserPrincipalName"] = $user['inputUsername'] . "@" . $settings->Domain;
                                                 $password = $user['inputPassword'];
-                                                $addAccount = $AD->addUser($userTemplate,$info,$password,null,null);
+                                                $addAccount = $AD->addUser($userTemplate,$info,$password,$_POST['inputUserOU'],null);
 
                                                 if($addAccount == "") {
 

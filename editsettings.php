@@ -80,7 +80,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                         $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputOU'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage']);
                         $authList = [strtolower($_POST['inputAuthList'])];
                         $AD->writeAuthFile($authList);
-                        echo "Settings Updated";
+                        echo "<p style='color:green'><b>Settings Updated</b></p>";
                       } else {
                         echo "Fields Missing";
                       }

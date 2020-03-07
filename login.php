@@ -46,7 +46,7 @@ $settings = $AD->readSettingsFile();
                                          ?>
                                         <form action="login" method="POST">
                                             <div class="form-group">
-                                              <label class="small mb-1" for="inputUsername">Username</label><input name="inputUsername" class="<?php if(isset($_POST['inputUsername'])) { echo "is-invalid"; } ?> form-control py-4" id="inputUsername" type="text" value="<?php if(isset($_POST['inputUsername'])) { echo $_POST['inputUsername']; } ?>"/>
+                                              <label class="small mb-1" for="inputUsername">Username</label><input autofocus name="inputUsername" class="<?php if(isset($_POST['inputUsername'])) { echo "is-invalid"; } ?> form-control py-4" id="inputUsername" type="text" value="<?php if(isset($_POST['inputUsername'])) { echo $_POST['inputUsername']; } ?>"/>
                                             </div>
                                             <div class="form-group">
                                               <label class="small mb-1" for="inputPassword">Password</label><input name="inputPassword" class="<?php if(isset($_POST['inputUsername'])) { echo "is-invalid"; } ?> form-control py-4" id="inputPassword" type="password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputPassword']; } ?>"/>

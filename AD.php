@@ -153,11 +153,13 @@ public $settings = '';
 
         function displayUserTemplates() {
           $userTemplates = $this->readUserTemplatesFile();
-          if(count($userTemplates) > 0) {
-            foreach($userTemplates as $userTemplate){
-              echo "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
-            }
-          } else { header("Location: addusertemplate"); }
+          if(is_array($userTemplates)) {
+            if(count($userTemplates) > 0) {
+              foreach($userTemplates as $userTemplate){
+                echo "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
+              }
+            } else { echo "<option value='null'>No Available Templates</option>"; }
+          } else { echo "<option value='null'>No Available Templates</option>"; }
         }
 
         function addUser($userTemplate,$user,$password,$userOU,$groups) {
@@ -167,7 +169,11 @@ public $settings = '';
             if($userTemplate !== null) {
               $group = $this->chooseUserTemplate($userTemplate,$user);
               $user = array_merge($user, $group[0]);
-              $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $group[1];
+              if($userOU !== null) {
+                $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $userOU;
+              } else {
+                $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $group[1];
+              }
             } else {
               $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $userOU;
               $user['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['homeDirectory']);
@@ -280,15 +286,12 @@ public $settings = '';
           $matches = preg_match('/[`\'\"~!@#$*()<>,:;{}\|]/',$firstName);
           if ($matches === 1) {
             $message = "First name must not contain symbols.";
-            return $message;
           }
           if (strlen($firstName) === 0) {
             $message = "You must enter a first name.";
-            return $message;
           }
           if (strlen($firstName) > 44) {
             $message = "First name must be 44 characters or less.";
-            return $message;
           }
           if ($message === "") {
             return "";
@@ -302,15 +305,12 @@ public $settings = '';
           $matches = preg_match('/[`\'\"~!@#$*()<>,:;{}\|]/',$lastName);
           if ($matches === 1) {
             $message = "Last name must not contain symbols.";
-            return $message;
           }
           if (strlen($lastName) === 0) {
             $message = "You must enter a last name.";
-            return $message;
           }
           if (strlen($lastName) > 44) {
             $message = "Last name must be 44 characters or less.";
-            return $message;
           }
           if ($message === "") {
             return "";
@@ -324,15 +324,12 @@ public $settings = '';
           $matches = preg_match('/[`\'\"~!@# $*()<>,:;{}\|]/',$username);
           if ($matches === 1) {
             $message = "Username must not contain symbols or spaces.";
-            return $message;
           }
           if (strlen($username) === 0) {
             $message = "You must enter a username.";
-            return $message;
           }
           if (strlen($username) > 20) {
             $message = "Username must be 20 characters or less.";
-            return $message;
           }
           if ($message === "") {
             return "";
@@ -346,12 +343,10 @@ public $settings = '';
             $message = "";
             if ($password != $passwordConf) {
               $message = "Passwords do not match.";
-              return $message;
             }
 
             if (strlen($password) < $settings->PasswordMinLength) {
               $message = "Password must be at least " . $settings->PasswordMinLength . " character(s) long.";
-              return $message;
             }
             if($message === "") {
               return "";
@@ -360,8 +355,17 @@ public $settings = '';
             }
         }
 
+        function testUserOU($userOU) {
+            global $settings;
+            $message = "";
+            if (strlen($userOU) < 3) {
+              $message = "You must specify a user OU.";
+            }
+            return $message;
+        }
+
         function readUserTemplatesFile() {
-          $userTemplates = "";
+          $userTemplates = [];
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
           if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data") > 0) {
           $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
@@ -373,6 +377,7 @@ public $settings = '';
         }
 
         function addToUserTemplatesFile($userTemplate) {
+          $userTemplates = [];
           $userTemplates = $this->readUserTemplatesFile();
           $userTemplates[$userTemplate['userTemplateName']]['name'] = $userTemplate['userTemplateName'];
           $userTemplates[$userTemplate['userTemplateName']]['homeDirectory'] = $userTemplate['homeDirectory'];
