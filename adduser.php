@@ -70,12 +70,14 @@
                   <input name="inputLastName" class="<?php if(isset($_POST['inputFirstName']) && $testLastName !== "") { echo "is-invalid"; } ?> form-control" id="inputLastName" type="text" placeholder="Smith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputLastName']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testLastName; } ?></div>
                 </div>
-                <p>
-                  <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Advanced Options
-                  </a>
+                <p style="cursor:pointer" class="small" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    &nbsp;<i class="far fa-plus-square"></i>&nbsp;Advanced Options
                 </p>
                 <div class="collapse" id="collapseExample">
+                  <div class="form-group">
+                    <label class="small mb-1" for="inputEmailAddress">Email Address</label>
+                    <input required name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. jsmith@arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
+                  </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputHomeDirectory">Home Directory</label>
                     <input required name="inputHomeDirectory" class="form-control" id="inputHomeDirectory" type="text" placeholder="e.g. \\AS-DC\Staff$\%USERNAME%" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputHomeDirectory']; } ?>"/>
@@ -142,10 +144,10 @@
       if (this.status == 200) {
         var response = JSON.parse(this.responseText);
         if(response !== null) {
-          document.getElementById("inputHomeDirectory").value = response[0].homeDirectory;
+          document.getElementById("inputHomeDirectory").value = response[0].homeDirectory + "%USERNAME%";
           document.getElementById("inputHomeDrive").value = response[0].homeDrive;
           document.getElementById("inputScriptPath").value = response[0].scriptPath;
-          document.getElementById("inputProfilePath").value = response[0].profilePath;
+          document.getElementById("inputProfilePath").value = response[0].profilePath + "%USERNAME%";
           document.getElementById("inputUserOU").value = response[1];
           document.getElementById("inputGroupDN").value = response[2];
         }

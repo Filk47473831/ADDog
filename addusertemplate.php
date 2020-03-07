@@ -17,7 +17,6 @@
 
             ?>
               <form action="addusertemplate" method="POST">
-                <p><small>You must have at least one user template before you can add new users.</small></p>
                 <div class="form-group">
                   <label class="small mb-1" for="inputUserTemplateName">Template Name</label>
                   <input required name="inputUserTemplateName" class="form-control" id="inputUserTemplateName" type="text" placeholder="e.g. Staff" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUserTemplateName']; } ?>"/>
@@ -32,6 +31,10 @@
 
                       echo $name; } ?>"/>
                     <input name="inputUser" type="hidden" id="inputUser-id">
+                </div>
+                <div class="form-group">
+                  <label class="small mb-1" for="inputEmailAddress">Email Address</label>
+                  <input name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. %USERNAME%@arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputHomeDirectory">Home Directory</label>
@@ -130,10 +133,10 @@ function getUserData(chosenUser){
     if (this.status == 200) {
       var response = JSON.parse(this.responseText);
       if(response !== null) {
-        document.getElementById("inputHomeDirectory").value = response.homedirectory;
+        document.getElementById("inputHomeDirectory").value = response.homedirectory + "%USERNAME%";
         document.getElementById("inputHomeDrive").value = response.homedrive;
         document.getElementById("inputScriptPath").value = response.scriptpath;
-        document.getElementById("inputProfilePath").value = response.profilepath;
+        document.getElementById("inputProfilePath").value = response.profilepath + "%USERNAME%";
         document.getElementById("inputUserOU").value = response.ou;
         document.getElementById("inputGroupDN").value = response.groups;
       }
