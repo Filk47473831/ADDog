@@ -9,7 +9,6 @@
             <div class="col-12">
             <div class="card shadow-lg border-0 rounded-lg mt-2">
                 <div class="card-body">
-                  <div style="overflow:scroll">
                     <?php
 
                       $AD->connect();
@@ -23,7 +22,7 @@
                             echo '<table width="100%" class="table table-striped table-borderless table-hover small" id="dataTable-bulkUsers">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th scope="col" class="d-none d-sm-table-cell">Name</th>
                                             <th>Username</th>
                                             <th>Password</th>
                                             <th>Status</th>
@@ -57,12 +56,12 @@
                                                 $info["sAMAccountName"] = $user['inputUsername'];
                                                 $info["UserPrincipalName"] = $user['inputUsername'] . "@" . $settings->Domain;
                                                 $password = $user['inputPassword'];
-                                                $addAccount = $AD->addUser($userTemplate,$info,$password);
+                                                $addAccount = $AD->addUser($userTemplate,$info,$password,null,null);
 
                                                 if($addAccount == "") {
 
                                                     echo '<tr style="background-color:#ddedd8" class="odd gradeX">
-                                                            <td>' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
+                                                            <td scope="col" class="d-none d-sm-table-cell">' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
                                                             <td>' . $user['inputUsername'] . '</td>
                                                             <td>' . $user['inputPassword'] . '</td>
                                                             <td>Added Successfully</td>
@@ -71,7 +70,7 @@
                                                   } else {
 
                                                     echo '<tr style="background-color:#edd8d8" class="odd gradeX">
-                                                          <td>' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
+                                                          <td scope="col" class="d-none d-sm-table-cell">' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
                                                           <td>' . $user['inputUsername'] . '</td>
                                                           <td>' . $user['inputPassword'] . '</td>
                                                           <td>' . $addAccount . '</td>
@@ -82,7 +81,7 @@
                                                 } else {
 
                                                   echo '<tr style="background-color:#edd8d8" class="odd gradeX">
-                                                        <td>' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
+                                                        <td scope="col" class="d-none d-sm-table-cell">' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
                                                         <td>' . $user['inputUsername'] . '</td>
                                                         <td>' . $user['inputPassword'] . '</td>
                                                         <td>Account cannot be added - ' . $testPassword . '</td>
@@ -92,7 +91,7 @@
                                       } else {
 
                                         echo '<tr style="background-color:#edd8d8" class="odd gradeX">
-                                              <td>' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
+                                              <td scope="col" class="d-none d-sm-table-cell">' . $user['inputFirstName'] . " " . $user['inputLastName'] . '</td>
                                               <td>' . $user['inputUsername'] . '</td>
                                               <td>' . $user['inputPassword'] . '</td>
                                               <td>Account cannot be added - Missing Info</td>
@@ -107,7 +106,6 @@
 
                         }
                            ?>
-                         </div>
                   <a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>
                 </div>
             </div>

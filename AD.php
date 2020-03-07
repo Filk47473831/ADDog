@@ -101,6 +101,27 @@ public $settings = '';
               return $data;
         }
 
+        function searchForGroupsAD() {
+            global $ds;
+            global $settings;
+            $data = [];
+            $count = 0;
+            $searchOU = $settings->SearchOU;
+            foreach($searchOU as $dn) {
+              $search = "(objectClass=group)";
+              ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $dn, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              array_shift($results);
+              foreach($results as $result) {
+                  $data[] = $result;
+              }
+            }
+              $data['count'] = $count;
+              return $data;
+        }
+
         function getTargetOUCount($searchOU) {
               global $ds;
               global $settings;
@@ -140,13 +161,19 @@ public $settings = '';
           } else { header("Location: addusertemplate"); }
         }
 
-        function addUser($userTemplate,$user,$password) {
+        function addUser($userTemplate,$user,$password,$userOU,$groups) {
             global $ds;
             $user['objectclass'] = "User";
             $user['UserAccountControl'] = "66080";
-            $group = $this->chooseUserTemplate($userTemplate,$user);
-            $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $group[1];
-            $user = array_merge($user, $group[0]);
+            if($userTemplate !== null) {
+              $group = $this->chooseUserTemplate($userTemplate,$user);
+              $user = array_merge($user, $group[0]);
+              $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $group[1];
+            } else {
+              $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $userOU;
+              $user['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['homeDirectory']);
+              $user['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['profilePath']);
+            }
             $user = array_filter($user);
             if(ldap_add($ds,$dn,$user) === false) {
               $error = ldap_error($ds);
@@ -155,7 +182,9 @@ public $settings = '';
               return $response;
             } else {
               $this->resetPassword($dn,$password,null);
-              $groups = $group[2];
+              if($userTemplate !== null) {
+                $groups = $group[2];
+              }
               foreach($groups as $group){
               $this->addUsersToGroup($dn,$group);
               }
@@ -166,10 +195,12 @@ public $settings = '';
           global $ds;
           $userTemplates = $this->readUserTemplatesFile();
           $response = array();
-          $response[0]['homeDirectory'] = $userTemplates[$userTemplate]['homeDirectory'] . $user['sAMAccountName'];
+          if($user !== null) { $response[0]['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['homeDirectory']); } else {
+            $response[0]['homeDirectory'] = $userTemplates[$userTemplate]['homeDirectory'];
+          }
           $response[0]['homeDrive'] = $userTemplates[$userTemplate]['homeDrive'];
-          if($userTemplates[$userTemplate]['profilePath'] !== "") {
-          $response[0]['profilePath'] = $userTemplates[$userTemplate]['profilePath'] . $user['sAMAccountName'];
+          if($user !== null) { $response[0]['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['profilePath']); } else {
+            $response[0]['profilePath'] = $userTemplates[$userTemplate]['profilePath'];
           }
           $response[0]['scriptPath'] = $userTemplates[$userTemplate]['scriptPath'];
           $response[1] = $userTemplates[$userTemplate]['userOU'];
@@ -340,6 +371,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['groupDN'] = $userTemplate['groupDN'];
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates = json_encode($userTemplates);
+          echo $userTemplates;
           $userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
@@ -575,9 +607,17 @@ public $settings = '';
                 $result['ou'] = implode(",",$ou);
               }
               if(in_array("memberof", $user)) {
-              $groups = $user['memberof'];
-              array_shift($groups);
-              $result['groups'] = implode("\r\n",$groups);
+              $chosenGroups = $user['memberof'];
+              array_shift($chosenGroups);
+              $availableGroups = $this->searchForGroupsAD();
+              $finalGroups = [];
+              foreach($availableGroups as $availableGroup) {
+                if(in_array($availableGroup['distinguishedname'][0],$chosenGroups)) {
+                  $finalGroups[] = $availableGroup['cn'][0];
+                }
+              }
+              $result['groups'] = $finalGroups;
+              $result['groups'] = implode("\r\n",$result['groups']);
               }
               return $result;
             }

@@ -13,6 +13,16 @@ if(isset($_POST['chosenUserTemplate'])) {
   $AD->connect();
   $AD->bind();
   $data = $AD->chooseUserTemplate($_POST['chosenUserTemplate'],null);
+  $availableGroups = $AD->searchForGroupsAD();
+  $chosenGroups = $data[2];
+  $finalGroups = [];
+  foreach($availableGroups as $availableGroup) {
+    if(in_array($availableGroup['distinguishedname'][0],$chosenGroups)) {
+      $finalGroups[] = $availableGroup['cn'][0];
+    }
+  }
+  $data[2] = $finalGroups;
+  $data[2] = implode("\r\n",$data[2]);
   echo json_encode($data);
 }
 
