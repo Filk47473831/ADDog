@@ -70,7 +70,7 @@
                   <input name="inputLastName" class="<?php if(isset($_POST['inputFirstName']) && $testLastName !== "") { echo "is-invalid"; } ?> form-control" id="inputLastName" type="text" placeholder="Smith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputLastName']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testLastName; } ?></div>
                 </div>
-                <p style="cursor:pointer" class="small" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <p style="cursor:pointer" class="small unselectable" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     &nbsp;<i class="far fa-plus-square"></i>&nbsp;Advanced Options
                 </p>
                 <div class="collapse" id="collapseExample">

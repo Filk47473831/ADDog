@@ -51,7 +51,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputAuthList">Authorised Admins (1 Username Per Line)</label>
-                    <textarea name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7"><?php if(isset($_POST['inputDC'])) { echo $_POST['inputAuthList']; } else { echo $authList; } ?></textarea>
+                    <textarea name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7" placeholder="e.g. jsmith"><?php if(isset($_POST['inputDC'])) { echo $_POST['inputAuthList']; } else { echo $authList; } ?></textarea>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputPWMinLength">Password Minimum Length</label>

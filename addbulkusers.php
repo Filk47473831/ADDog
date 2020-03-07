@@ -10,7 +10,7 @@
             <div class="card shadow-lg border-0 rounded-lg mt-2">
                 <div class="card-body">
                   <?php
-                  
+
                   $AD->connect();
                   $AD->bind();
 
@@ -33,7 +33,7 @@
                       <p class="small mt-2">One user per row. Each row must contain comma separated values for first name, last name, username and desired password. In that order. Max 100 users.</p>
                     </div>
                     <div class="form-group">
-                      <textarea required name="bulkUsersInput" class="form-control" id="bulkUsersInput" type="text" rows="10" placeholder="e.g.&#x0a;Chris,Groves,cgroves,Password1234&#x0a;Emma,Stone,estone,Password1234&#x0a;Barack,Obama,bobama,Password1234&#x0a;Alan,Turing,aturing,Password1234"></textarea>
+                      <textarea required name="bulkUsersInput" class="form-control" id="bulkUsersInput" type="text" rows="10" placeholder="e.g. Chris,Groves,cgroves,Password1234"></textarea>
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                       <input type="submit" class="btn btn-success" href="#" value="Add Bulk Users">

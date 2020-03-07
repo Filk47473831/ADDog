@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputGroupDN">Member Group Name's (1 Per Line)</label>
-                  <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g.&#x0a;Staff&#x0a;RD Users"><?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
+                  <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g. Staff"><?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                   <input type="submit" class="btn btn-success" href="#" value="Add User Template">&nbsp;&nbsp;
