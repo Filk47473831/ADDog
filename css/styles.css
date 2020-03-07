@@ -10225,3 +10225,18 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
+main {
+  animation: fadeInMain 0.5s linear;
+}
+
+@keyframes fadeInMain {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
