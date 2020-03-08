@@ -12,33 +12,33 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="description" content="AD Dog Active Directory Commander" />
+        <meta name="author" content="Chris Groves" />
         <title>AD Dog</title>
-        <link href="css/styles.css" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" crossorigin="anonymous"/>
-        <link href="css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
-        <link href="css/jquery-ui.css" rel="stylesheet"/>
-        <link href="css/style.min.css" rel="stylesheet"/>
-        <script src="js/jquery-3.4.1.min.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>
-        <script src="js/dataTables.bootstrap4.min.js"></script>
-        <script src="js/dataTables.buttons.min.js"></script>
-        <script src="js/buttons.flash.min.js"></script>
-        <script src="js/jszip.min.js"></script>
-        <script src="js/pdfmake.min.js"></script>
-        <script src="js/vfs_fonts.js"></script>
-        <script src="js/buttons.html5.min.js"></script>
-        <script src="js/buttons.print.min.js"></script>
-        <script src="js/all.min.js"></script>
-        <script src="js/bootstrap-autocomplete.min.js"></script>
-        <script src="js/jstree.min.js"></script>
-        <script src="js/jquery-ui.js"></script>
+        <link href="css/styles.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" crossorigin="anonymous" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"  crossorigin="anonymous" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" rel="stylesheet" crossorigin="anonymous" />
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.0/dist/latest/bootstrap-autocomplete.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark unselectable">
-            <a class="navbar-brand" href="/"><img style="max-width: 50px" src="assets/img/dog_white.png"> <small>AD Dog</small></a>
+            <a class="navbar-brand" href="/"><img style="max-width: 50px" src="img/dog_white.png"> <small>AD Dog</small></a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <li class="nav-item dropdown">

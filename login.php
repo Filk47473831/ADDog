@@ -10,8 +10,8 @@ $settings = $AD->readSettingsFile();
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="description" content="AD Dog Active Directory Commander" />
+        <meta name="author" content="Chris Groves" />
         <title>AD Dog</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@ $settings = $AD->readSettingsFile();
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-2">
                                     <div class="card-header d-flex justify-content-center">
-                                      <img style="max-width: 140px; max-height: 110px" src="assets/img/dog.png">
+                                      <img style="max-width: 140px; max-height: 110px" src="img/dog.png">
                                     </div>
                                     <div class="card-body">
                                       <?php
@@ -75,8 +75,5 @@ $settings = $AD->readSettingsFile();
                 </footer>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
     </body>
 </html>

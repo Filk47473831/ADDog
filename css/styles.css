@@ -10227,7 +10227,7 @@ body {
 }
 
 main {
-  animation: fadeInMain 0.5s linear;
+  animation: fadeInMain 0.3s linear;
 }
 
 @keyframes fadeInMain {
