@@ -380,6 +380,7 @@ public $settings = '';
           $response[1] = $userTemplates[$userTemplate]['userOU'];
           $response[2] = $userTemplates[$userTemplate]['groupDN'];
           $response[3] = $userTemplates[$userTemplate]['upnSuffix'];
+          $response[4] = $userTemplates[$userTemplate]['usernameFormat'];
           return $response;
          }
 
@@ -395,6 +396,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['groupDN'] = $userTemplate['groupDN'];
           $userTemplates[$userTemplate['userTemplateName']]['upnSuffix'] = $userTemplate['upnSuffix'];
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
+          $userTemplates[$userTemplate['userTemplateName']]['usernameFormat'] = $userTemplate['usernameFormat'];
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");

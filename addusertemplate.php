@@ -67,6 +67,17 @@
                   <label class="small mb-1" for="inputGroupDN">Member Group Name's (1 Per Line)</label>
                   <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g. Staff"><?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
                 </div>
+                <div class="form-group">
+                  <label class="small mb-1" for="inputPWMinLength">Standard Username Format</label>
+                  <select class="form-control" name="inputUsernameFormat" id="inputPWMinLength">
+                    <option value="1">jsmith</option>
+                    <option value="2">j.smith</option>
+                    <option value="3">john.smith</option>
+                    <option value="4">johnsmith</option>
+                    <option value="5">johns</option>
+                    <option value="6">john.s</option>
+                  </select>
+                </div>
                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                   <input type="submit" class="btn btn-success" href="#" value="Add User Template">&nbsp;&nbsp;
                 </div>
@@ -92,7 +103,8 @@
                       "scriptPath" => $_POST['inputScriptPath'],
                       "groupDN" => $finalGroups,
                       "upnSuffix" => $_POST['inputUPNSuffix'],
-                      "userOU" => $_POST['inputUserOU']
+                      "userOU" => $_POST['inputUserOU'],
+                      "usernameFormat" => $_POST['inputUsernameFormat']
                   );
                     $AD->addToUserTemplatesFile($userTemplate);
                     header("Location: addusertemplatecomplete");

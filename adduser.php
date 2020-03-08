@@ -79,11 +79,11 @@
                 <div class="collapse" id="collapseExample">
                   <div class="form-group">
                     <label class="small mb-1" for="inputUPNSuffix">UPN Suffix</label>
-                    <input name="inputUPNSuffix" class="form-control" id="inputUPNSuffix" type="text" placeholder="e.g. arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUPNSuffix']; } ?>"/>
+                    <input name="inputUPNSuffix" class="form-control" id="inputUPNSuffix" type="text" placeholder="e.g. arunside.school" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUPNSuffix']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputEmailAddress">Email Address</label>
-                    <input required name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. jsmith@arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
+                    <input required name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. jsmith@arunside.school" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputHomeDirectory">Home Directory</label>
@@ -141,6 +141,111 @@
     </div>
   </main>
   <script>
+  function usernameFormat(chosenFormat){
+    var firstNameField = document.getElementById("inputFirstName");
+    var lastNameField = document.getElementById("inputLastName");
+    var usernameField = document.getElementById("inputUsername");
+    var firstName = "";
+    var lastName = "";
+    var createdUsername = "";
+
+    switch(chosenFormat) {
+      case 1:
+        firstNameField.addEventListener("focusout", function(){
+          firstName = firstNameField.value.substring(0, 1);
+          createdUsername = firstName + lastNameField.value;
+          createdUsername = createdUsername.toLowerCase();
+          usernameField.value = createdUsername;
+        })
+        lastNameField.addEventListener("focusout", function(){
+          firstName = firstNameField.value.substring(0, 1);
+          createdUsername = firstName + lastNameField.value;
+          createdUsername = createdUsername.toLowerCase();
+          usernameField.value = createdUsername;
+        })
+        break;
+      case 2:
+      firstNameField.addEventListener("focusout", function(){
+        firstName = firstNameField.value.substring(0, 1);
+        createdUsername = firstName + "." + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      lastNameField.addEventListener("focusout", function(){
+        firstName = firstNameField.value.substring(0, 1);
+        createdUsername = firstName + "." + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+        break;
+      case 3:
+      firstNameField.addEventListener("focusout", function(){
+        createdUsername = firstNameField.value + "." + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      lastNameField.addEventListener("focusout", function(){
+        createdUsername = firstNameField.value + "." + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+        break;
+      case 4:
+      firstNameField.addEventListener("focusout", function(){
+        createdUsername = firstNameField.value + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      lastNameField.addEventListener("focusout", function(){
+        createdUsername = firstNameField.value + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+        break;
+      case 5:
+      firstNameField.addEventListener("focusout", function(){
+        lastName = lastNameField.value.substring(0, 1);
+        createdUsername = firstNameField.value + lastName;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      lastNameField.addEventListener("focusout", function(){
+        lastName = lastNameField.value.substring(0, 1);
+        createdUsername = firstNameField.value + lastName;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+        break;
+      case 6:
+      firstNameField.addEventListener("focusout", function(){
+        lastName = lastNameField.value.substring(0, 1);
+        createdUsername = firstNameField.value + "." + lastName;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      lastNameField.addEventListener("focusout", function(){
+        lastName = lastNameField.value.substring(0, 1);
+        createdUsername = firstNameField.value + "." + lastName;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+        break;
+      default:
+      firstNameField.addEventListener("focusout", function(){
+        firstName = firstNameField.value.substring(0, 1);
+        createdUsername = firstName + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      lastNameField.addEventListener("focusout", function(){
+        firstName = firstNameField.value.substring(0, 1);
+        createdUsername = firstName + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+    }
+  }
+
   function getTemplateData(chosenTemplate){
     if (window.XMLHttpRequest) {
       xmlhttp = new XMLHttpRequest();
@@ -159,6 +264,7 @@
           document.getElementById("inputUserOU").value = response[1];
           document.getElementById("inputGroupDN").value = response[2];
           document.getElementById("inputUPNSuffix").value = response[3];
+          usernameFormat(response[4]);
         }
       }
     }
