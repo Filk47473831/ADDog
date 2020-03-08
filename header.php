@@ -42,7 +42,7 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></div>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
                         <a class="dropdown-item" href="editsettings">Settings</a><?php } } ?><a class="dropdown-item" href="activity">Activity Log</a>
@@ -60,14 +60,14 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                             <div class="sb-sidenav-menu-heading"></div>
                             <a class="nav-link" href="/"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard</a>
-                            <a id="usersNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            <div id="usersNavItem" class="cursor-pointer nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Users
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></div>
+                            <div class="collapse cursor-pointer" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                  <a id="individualUserNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#individualUserNavItems" aria-expanded="false" aria-controls="individualUserNavItems">
+                                  <div id="individualUserNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#individualUserNavItems" aria-expanded="false" aria-controls="individualUserNavItems">
                                       Individual User
-                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></div>
                                   <div class="collapse" id="individualUserNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
                                       <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="resetpw">Reset Password</a>
@@ -77,9 +77,9 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                         <a class="nav-link" href="disableuser">Disable User</a>
                                       </nav>
                                   </div>
-                                  <a id="bulkManageNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bulkManageNavItems" aria-expanded="false" aria-controls="bulkManageNavItems">
+                                  <div id="bulkManageNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bulkManageNavItems" aria-expanded="false" aria-controls="bulkManageNavItems">
                                       Bulk Manage
-                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></div>
                                   <div class="collapse" id="bulkManageNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
                                       <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="resetpwbulk">Reset Passwords</a>
@@ -88,9 +88,9 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                       </nav>
                                   </div>
                                   <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
-                                  <a id="templatesNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#templatesNavItems" aria-expanded="false" aria-controls="templatesNavItems">
+                                  <div id="templatesNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#templatesNavItems" aria-expanded="false" aria-controls="templatesNavItems">
                                       Templates
-                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></div>
                                   <div class="collapse" id="templatesNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
                                       <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="addusertemplate">Add User Template</a>
@@ -100,9 +100,9 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                   <?php } } ?>
                                 </nav>
                             </div>
-                            <a id="printingNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"><div class="sb-nav-link-icon"><i class="fas fa-print"></i></div>
+                            <div id="printingNavItem" class="cursor-pointer nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"><div class="sb-nav-link-icon"><i class="fas fa-print"></i></div>
                                 Printing
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></div>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="resetprintqueue">Reset Print Queue</a></nav>
                             </div>
