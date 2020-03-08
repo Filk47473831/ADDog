@@ -10240,3 +10240,7 @@ main {
     transform: translateY(0px);
   }
 }
+
+.cursor-pointer {
+  cursor:pointer;
+}
