@@ -51,7 +51,6 @@
                     $finalGroups[] = $availableGroup['distinguishedname'][0];
                   }
                 }
-                print_r($finalGroups);
                 $password = $_POST['inputPassword'];
                 $addAccount = $AD->addUser(null,$info,$password,$_POST['inputUserOU'],$finalGroups);
                 $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",User Added," . $info['givenName'] . " " . $info["sn"] . "," . $_SESSION['username']);
