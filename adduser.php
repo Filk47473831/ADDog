@@ -43,12 +43,15 @@
                 $info['mail'] = $_POST['inputEmailAddress'];
                 $availableGroups = $AD->searchForGroupsAD();
                 $chosenGroups = explode("\n", str_replace("\r", "", $_POST['inputGroupDN']));
+                $blockedGroups = ["Administrators","Domain Admins","Enterprise Admins"];
+                $chosenGroups = array_diff($chosenGroups, $blockedGroups);
                 $finalGroups = [];
                 foreach($availableGroups as $availableGroup) {
                   if(in_array($availableGroup['cn'][0],$chosenGroups)) {
                     $finalGroups[] = $availableGroup['distinguishedname'][0];
                   }
                 }
+                print_r($finalGroups);
                 $password = $_POST['inputPassword'];
                 $addAccount = $AD->addUser(null,$info,$password,$_POST['inputUserOU'],$finalGroups);
                 $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",User Added," . $info['givenName'] . " " . $info["sn"] . "," . $_SESSION['username']);
