@@ -81,6 +81,7 @@
                   }
                   $userTemplate = array(
                       "userTemplateName" => $_POST['inputUserTemplateName'],
+                      "mail" => $_POST['inputEmailAddress'],
                       "homeDirectory" => $_POST['inputHomeDirectory'],
                       "homeDrive" => $_POST['inputHomeDrive'],
                       "profilePath" => $_POST['inputProfilePath'],
@@ -133,6 +134,7 @@ function getUserData(chosenUser){
     if (this.status == 200) {
       var response = JSON.parse(this.responseText);
       if(response !== null) {
+        document.getElementById("inputEmailAddress").value = response.mail;
         document.getElementById("inputHomeDirectory").value = response.homedirectory + "%USERNAME%";
         document.getElementById("inputHomeDrive").value = response.homedrive;
         document.getElementById("inputScriptPath").value = response.scriptpath;
@@ -156,7 +158,9 @@ function getTemplateData(chosenTemplate){
   xmlhttp.onload = function() {
     if (this.status == 200) {
       var response = JSON.parse(this.responseText);
+      console.log(response);
       if(response !== null) {
+        document.getElementById("inputEmailAddress").value = response[0].mail;
         document.getElementById("inputHomeDirectory").value = response[0].homeDirectory;
         document.getElementById("inputHomeDrive").value = response[0].homeDrive;
         document.getElementById("inputScriptPath").value = response[0].scriptPath;

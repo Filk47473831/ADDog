@@ -38,6 +38,7 @@
                 $info['homeDrive'] = $_POST['inputHomeDrive'];
                 $info['profilePath'] = $_POST['inputProfilePath'];
                 $info['scriptPath'] = $_POST['inputScriptPath'];
+                $info['mail'] = $_POST['inputEmailAddress'];
                 $availableGroups = $AD->searchForGroupsAD();
                 $chosenGroups = explode("\n", str_replace("\r", "", $_POST['inputGroupDN']));
                 $finalGroups = [];
@@ -144,10 +145,11 @@
       if (this.status == 200) {
         var response = JSON.parse(this.responseText);
         if(response !== null) {
-          document.getElementById("inputHomeDirectory").value = response[0].homeDirectory + "%USERNAME%";
+          document.getElementById("inputEmailAddress").value = response[0].mail;
+          document.getElementById("inputHomeDirectory").value = response[0].homeDirectory;
           document.getElementById("inputHomeDrive").value = response[0].homeDrive;
           document.getElementById("inputScriptPath").value = response[0].scriptPath;
-          document.getElementById("inputProfilePath").value = response[0].profilePath + "%USERNAME%";
+          document.getElementById("inputProfilePath").value = response[0].profilePath;
           document.getElementById("inputUserOU").value = response[1];
           document.getElementById("inputGroupDN").value = response[2];
         }

@@ -176,6 +176,8 @@ public $settings = '';
               }
             } else {
               $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $userOU;
+              $user['mail'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['mail']);
+              $user['proxyAddresses'] = "SMTP:" . $user['mail'];
               $user['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['homeDirectory']);
               $user['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['profilePath']);
             }
@@ -195,23 +197,6 @@ public $settings = '';
               }
             }
         }
-
-        function chooseUserTemplate($userTemplate,$user) {
-          global $ds;
-          $userTemplates = $this->readUserTemplatesFile();
-          $response = array();
-          if($user !== null) { $response[0]['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['homeDirectory']); } else {
-            $response[0]['homeDirectory'] = $userTemplates[$userTemplate]['homeDirectory'];
-          }
-          $response[0]['homeDrive'] = $userTemplates[$userTemplate]['homeDrive'];
-          if($user !== null) { $response[0]['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['profilePath']); } else {
-            $response[0]['profilePath'] = $userTemplates[$userTemplate]['profilePath'];
-          }
-          $response[0]['scriptPath'] = $userTemplates[$userTemplate]['scriptPath'];
-          $response[1] = $userTemplates[$userTemplate]['userOU'];
-          $response[2] = $userTemplates[$userTemplate]['groupDN'];
-          return $response;
-         }
 
          function addUsersToGroup($dn,$group) {
              global $ds;
@@ -369,17 +354,39 @@ public $settings = '';
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
           if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data") > 0) {
           $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
-          $userTemplates = $this->decryptData($userTemplates);
+          //$userTemplates = $this->decryptData($userTemplates);
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
           }
           return $userTemplates;
         }
 
+        function chooseUserTemplate($userTemplate,$user) {
+          global $ds;
+          $userTemplates = $this->readUserTemplatesFile();
+          $response = array();
+          if($user !== null) { $response[0]['mail'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['mail']); } else {
+            $response[0]['mail'] = $userTemplates[$userTemplate]['mail'];
+            $response[0]['proxyAddresses'] = "SMTP:" . $response[0]['mail'];
+          }
+          if($user !== null) { $response[0]['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['homeDirectory']); } else {
+            $response[0]['homeDirectory'] = $userTemplates[$userTemplate]['homeDirectory'];
+          }
+          $response[0]['homeDrive'] = $userTemplates[$userTemplate]['homeDrive'];
+          if($user !== null) { $response[0]['profilePath'] = str_replace("%USERNAME%",$user['sAMAccountName'],$userTemplates[$userTemplate]['profilePath']); } else {
+            $response[0]['profilePath'] = $userTemplates[$userTemplate]['profilePath'];
+          }
+          $response[0]['scriptPath'] = $userTemplates[$userTemplate]['scriptPath'];
+          $response[1] = $userTemplates[$userTemplate]['userOU'];
+          $response[2] = $userTemplates[$userTemplate]['groupDN'];
+          return $response;
+         }
+
         function addToUserTemplatesFile($userTemplate) {
           $userTemplates = [];
           $userTemplates = $this->readUserTemplatesFile();
           $userTemplates[$userTemplate['userTemplateName']]['name'] = $userTemplate['userTemplateName'];
+          $userTemplates[$userTemplate['userTemplateName']]['mail'] = $userTemplate['mail'];
           $userTemplates[$userTemplate['userTemplateName']]['homeDirectory'] = $userTemplate['homeDirectory'];
           $userTemplates[$userTemplate['userTemplateName']]['homeDrive'] = $userTemplate['homeDrive'];
           $userTemplates[$userTemplate['userTemplateName']]['profilePath'] = $userTemplate['profilePath'];
@@ -387,8 +394,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['groupDN'] = $userTemplate['groupDN'];
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates = json_encode($userTemplates);
-          echo $userTemplates;
-          $userTemplates = $this->encryptData($userTemplates);
+          //$userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
@@ -398,7 +404,7 @@ public $settings = '';
           $userTemplates = $this->readUserTemplatesFile();
           unset($userTemplates[$userTemplate]);
           $userTemplates = json_encode($userTemplates);
-          $userTemplates = $this->encryptData($userTemplates);
+          //$userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
@@ -600,7 +606,10 @@ public $settings = '';
         function getUserData($data,$chosenUser) {
           foreach($data as $user){
             if($user['cn'][0] === $chosenUser) {
-              $result = ["homedirectory"=>"","homedrive"=>"","profilepath"=>"","scriptpath"=>"","ou"=>"","groups"=>""];
+              $result = ["mail"=>"","homedirectory"=>"","homedrive"=>"","profilepath"=>"","scriptpath"=>"","ou"=>"","groups"=>""];
+              if(in_array("mail", $user)) {
+                $result['mail'] = $user['mail'][0];
+              }
               if(in_array("homedirectory", $user)) {
                 $homeDirectory = explode("\\",$user['homedirectory'][0]);
                 array_pop($homeDirectory);
