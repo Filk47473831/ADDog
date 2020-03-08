@@ -60,12 +60,12 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                             <div class="sb-sidenav-menu-heading"></div>
                             <a class="nav-link" href="/"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard</a>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            <a id="usersNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Users
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#individualUserNavItems" aria-expanded="false" aria-controls="individualUserNavItems">
+                                  <a id="individualUserNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#individualUserNavItems" aria-expanded="false" aria-controls="individualUserNavItems">
                                       Individual User
                                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                                   <div class="collapse" id="individualUserNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
@@ -77,7 +77,7 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                         <a class="nav-link" href="disableuser">Disable User</a>
                                       </nav>
                                   </div>
-                                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bulkManageNavItems" aria-expanded="false" aria-controls="bulkManageNavItems">
+                                  <a id="bulkManageNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#bulkManageNavItems" aria-expanded="false" aria-controls="bulkManageNavItems">
                                       Bulk Manage
                                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                                   <div class="collapse" id="bulkManageNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
@@ -88,7 +88,7 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                       </nav>
                                   </div>
                                   <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?>
-                                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#templatesNavItems" aria-expanded="false" aria-controls="templatesNavItems">
+                                  <a id="templatesNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#templatesNavItems" aria-expanded="false" aria-controls="templatesNavItems">
                                       Templates
                                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                                   <div class="collapse" id="templatesNavItems" aria-labelledby="headingOne" data-parent="#collapseLayouts">
@@ -100,7 +100,7 @@ if(!$AD->isLoggedIn()) { header("Location: login"); }
                                   <?php } } ?>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"><div class="sb-nav-link-icon"><i class="fas fa-print"></i></div>
+                            <a id="printingNavItem" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"><div class="sb-nav-link-icon"><i class="fas fa-print"></i></div>
                                 Printing
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
