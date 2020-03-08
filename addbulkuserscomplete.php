@@ -118,11 +118,11 @@ $('#dataTable-bulkUsers').dataTable( {
   dom: 'Bfrtip',
   buttons: {
         buttons: [
-            { extend: 'copy', className: 'btn-sm' },
-            { extend: 'csv', className: 'btn-sm' },
-            { extend: 'excel', className: 'btn-sm' },
-            { extend: 'pdf', className: 'btn-sm' },
-            { extend: 'print', className: 'btn-sm' }
+            { extend: 'copy', className: 'btn btn-primary btn-sm' },
+            { extend: 'csv', className: 'btn btn-primary btn-sm' },
+            { extend: 'excel', className: 'btn btn-primary btn-sm' },
+            { extend: 'pdf', className: 'btn btn-primary btn-sm' },
+            { extend: 'print', className: 'btn btn-primary btn-sm' }
         ]
     }
 } );
