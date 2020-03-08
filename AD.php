@@ -354,7 +354,7 @@ public $settings = '';
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
           if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data") > 0) {
           $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
-          //$userTemplates = $this->decryptData($userTemplates);
+          $userTemplates = $this->decryptData($userTemplates);
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
           }
@@ -394,7 +394,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['groupDN'] = $userTemplate['groupDN'];
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates = json_encode($userTemplates);
-          //$userTemplates = $this->encryptData($userTemplates);
+          $userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
@@ -404,7 +404,7 @@ public $settings = '';
           $userTemplates = $this->readUserTemplatesFile();
           unset($userTemplates[$userTemplate]);
           $userTemplates = json_encode($userTemplates);
-          //$userTemplates = $this->encryptData($userTemplates);
+          $userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
