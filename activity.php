@@ -42,6 +42,7 @@
 <script>
   $('#dataTable-activityLog').dataTable( {
     "order": [[ 0, "desc" ]],
+    "sPaginationType": "listbox",
     dom: 'Bfrtip',
     buttons: {
           buttons: [

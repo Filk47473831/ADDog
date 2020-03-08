@@ -24,6 +24,8 @@
               $testPassword = $AD->testPassword($_POST['inputPassword'],$_POST['inputPasswordConf']);
               $testUserOU = $AD->testUserOU($_POST['inputUserOU']);
 
+              if($_POST['inputUPNSuffix'] == "") { $_POST['inputUPNSuffix'] = $settings->Domain; }
+
               if(($testFirstName == "") && ($testLastName == "") && ($testUsername == "") && ($testPassword == "") && ($testUserOU == "") && ($testUserOU == "")) {
 
                 echo $testUserOU;
@@ -33,7 +35,7 @@
                 $info['givenName'] = $_POST['inputFirstName'];
                 $info["sn"] = $_POST['inputLastName'];
                 $info["sAMAccountName"] = $_POST['inputUsername'];
-                $info["UserPrincipalName"] = $_POST['inputUsername'] . "@" . $settings->Domain;
+                $info["UserPrincipalName"] = $_POST['inputUsername'] . "@" . $_POST['inputUPNSuffix'];
                 $info['homeDirectory'] = $_POST['inputHomeDirectory'];
                 $info['homeDrive'] = $_POST['inputHomeDrive'];
                 $info['profilePath'] = $_POST['inputProfilePath'];
@@ -76,6 +78,10 @@
                 </p>
                 <div class="collapse" id="collapseExample">
                   <div class="form-group">
+                    <label class="small mb-1" for="inputUPNSuffix">UPN Suffix</label>
+                    <input name="inputUPNSuffix" class="form-control" id="inputUPNSuffix" type="text" placeholder="e.g. arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUPNSuffix']; } ?>"/>
+                  </div>
+                  <div class="form-group">
                     <label class="small mb-1" for="inputEmailAddress">Email Address</label>
                     <input required name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. jsmith@arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
                   </div>
@@ -97,7 +103,7 @@
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputGroupDN">Member Group Name's (1 Per Line)</label>
-                    <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g.&#x0a;Staff&#x0a;RD Users"><?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
+                    <textarea name="inputGroupDN" class="form-control" id="inputGroupDN" type="text" rows="7" placeholder="e.g. Staff"><?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputGroupDN']; } ?></textarea>
                   </div>
                 </div>
 
@@ -152,6 +158,7 @@
           document.getElementById("inputProfilePath").value = response[0].profilePath;
           document.getElementById("inputUserOU").value = response[1];
           document.getElementById("inputGroupDN").value = response[2];
+          document.getElementById("inputUPNSuffix").value = response[3];
         }
       }
     }

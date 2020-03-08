@@ -17,6 +17,16 @@
 
           $data = $AD->searchAD();
 
+          if(isset($_POST['inputUser'])) {
+                  $AD->removeUser($_POST['inputUser']);
+                  $name = explode(",",$_POST['inputUser']);
+                  $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Removed User," . substr($name[0], 3) . "," . $_SESSION['username']);
+
+                  echo '<p>User Removed Successfully</p>
+                  <a href="removeuser"><button class="btn btn-success">Back</button></a>';
+                  
+          } else {
+
           ?>
 
                       <form action="removeuser" method="POST">
@@ -28,22 +38,9 @@
                           <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                               <input type="submit" class="btn btn-danger" href="#" value="Remove User">
                           </div>
-                          <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-
-                              <?php
-
-                              if(isset($_POST['inputUser'])) {
-                                      $AD->removeUser($_POST['inputUser']);
-                                      $name = explode(",",$_POST['inputUser']);
-                                      $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Removed User," . substr($name[0], 3) . "," . $_SESSION['username']);
-                                      header("Location: removeusercomplete");
-                              }
-
-                              ?>
-
-                          </div>
 
                       </form>
+                      <?php } ?>
                   </div>
               </div>
               </div>

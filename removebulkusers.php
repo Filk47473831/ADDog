@@ -23,8 +23,10 @@
                 $name = explode(",",$user['dn']);
                 $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Removed User," . substr($name[0], 3) . "," . $_SESSION['username']);
               }
-              header("Location: removebulkuserscomplete");
-        }
+
+              echo '<p>Bulk User Removal Completed</p>
+              <a href="removebulkusers"><button class="btn btn-success">Back</button></a>';
+        } else {
 
         ?>
 
@@ -42,6 +44,8 @@
                             <input type="submit" class="btn btn-danger" href="#" value="Remove Users">
                         </div>
                     </form>
+                    
+                  <?php } ?>
                 </div>
             </div>
             </div>

@@ -115,6 +115,7 @@
 <script>
 $('#dataTable-bulkUsers').dataTable( {
   "pageLength": 100,
+  "sPaginationType": "listbox",
   dom: 'Bfrtip',
   buttons: {
         buttons: [

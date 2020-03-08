@@ -27,9 +27,17 @@
                 $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
               }
 
-              header("Location: resetpwbulkcomplete");
+              echo '<p>Bulk Password Reset Complete</p>
+              <p><small>Please note that password complexity requirements may have prevented some or all of these resets. Contact your Administrator if your chosen password is not successfully logging the user(s) in.</small></p>
+              <a href="resetpwbulk"><button class="btn btn-success">Back</button></a>';
+          } else {
+
+            echo '<p>Bulk Password Reset Failed</p>
+            <p>' . $testPassword . '</p>
+            <a href="resetpwbulk"><button class="btn btn-success">Back</button></a>';
+
           }
-        }
+        } else {
 
         ?>
 
@@ -60,6 +68,8 @@
                             <input type="submit" class="btn btn-primary" href="#" value="Reset Passwords">
                         </div>
                     </form>
+
+                  <?php } ?>
                 </div>
             </div>
             </div>

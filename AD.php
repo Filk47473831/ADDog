@@ -379,6 +379,7 @@ public $settings = '';
           $response[0]['scriptPath'] = $userTemplates[$userTemplate]['scriptPath'];
           $response[1] = $userTemplates[$userTemplate]['userOU'];
           $response[2] = $userTemplates[$userTemplate]['groupDN'];
+          $response[3] = $userTemplates[$userTemplate]['upnSuffix'];
           return $response;
          }
 
@@ -392,6 +393,7 @@ public $settings = '';
           $userTemplates[$userTemplate['userTemplateName']]['profilePath'] = $userTemplate['profilePath'];
           $userTemplates[$userTemplate['userTemplateName']]['scriptPath'] = $userTemplate['scriptPath'];
           $userTemplates[$userTemplate['userTemplateName']]['groupDN'] = $userTemplate['groupDN'];
+          $userTemplates[$userTemplate['userTemplateName']]['upnSuffix'] = $userTemplate['upnSuffix'];
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
@@ -606,7 +608,7 @@ public $settings = '';
         function getUserData($data,$chosenUser) {
           foreach($data as $user){
             if($user['cn'][0] === $chosenUser) {
-              $result = ["mail"=>"","homedirectory"=>"","homedrive"=>"","profilepath"=>"","scriptpath"=>"","ou"=>"","groups"=>""];
+              $result = ["mail"=>"","homedirectory"=>"","homedrive"=>"","profilepath"=>"","scriptpath"=>"","ou"=>"","groups"=>"","upnSuffix"=>""];
               if(in_array("mail", $user)) {
                 $result['mail'] = $user['mail'][0];
               }
@@ -625,6 +627,9 @@ public $settings = '';
               }
               if(in_array("scriptpath", $user)) {
                 $result['scriptpath'] = $user['scriptpath'][0];
+              }
+              if(in_array("upnSuffix", $user)) {
+                $result['upnSuffix'] = $user['upnSuffix'][0];
               }
               if(in_array("distinguishedname", $user)) {
                 $ou = explode(",",$user['distinguishedname'][0]);

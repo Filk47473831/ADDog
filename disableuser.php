@@ -17,6 +17,16 @@
 
           $data = $AD->searchAD();
 
+          if(isset($_POST['inputUser'])) {
+                  $AD->disableUser($_POST['inputUser']);
+                  $name = explode(",",$_POST['inputUser']);
+                  $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Disabled User," . substr($name[0], 3) . "," . $_SESSION['username']);
+
+                  echo '<p>User Disabled Successfully</p>
+                  <a href="disableuser"><button class="btn btn-success">Back</button></a>';
+
+          } else {
+
           ?>
 
                       <form action="disableuser" method="POST">
@@ -28,22 +38,10 @@
                           <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                               <input type="submit" class="btn btn-danger" href="#" value="Disable User">
                           </div>
-                          <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-
-                              <?php
-
-                              if(isset($_POST['inputUser'])) {
-                                      $AD->disableUser($_POST['inputUser']);
-                                      $name = explode(",",$_POST['inputUser']);
-                                      $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Disabled User," . substr($name[0], 3) . "," . $_SESSION['username']);
-                                      header("Location: disableusercomplete");
-                              }
-
-                              ?>
-
-                          </div>
 
                       </form>
+
+                      <?php } ?>
                   </div>
               </div>
               </div>

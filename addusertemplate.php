@@ -33,6 +33,10 @@
                     <input name="inputUser" type="hidden" id="inputUser-id">
                 </div>
                 <div class="form-group">
+                  <label class="small mb-1" for="inputUPNSuffix">UPN Suffix</label>
+                  <input name="inputUPNSuffix" class="form-control" id="inputUPNSuffix" type="text" placeholder="e.g. arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUPNSuffix']; } ?>"/>
+                </div>
+                <div class="form-group">
                   <label class="small mb-1" for="inputEmailAddress">Email Address</label>
                   <input name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. %USERNAME%@arunside.school" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
                 </div>
@@ -87,6 +91,7 @@
                       "profilePath" => $_POST['inputProfilePath'],
                       "scriptPath" => $_POST['inputScriptPath'],
                       "groupDN" => $finalGroups,
+                      "upnSuffix" => $_POST['inputUPNSuffix'],
                       "userOU" => $_POST['inputUserOU']
                   );
                     $AD->addToUserTemplatesFile($userTemplate);
@@ -141,6 +146,7 @@ function getUserData(chosenUser){
         document.getElementById("inputProfilePath").value = response.profilepath + "%USERNAME%";
         document.getElementById("inputUserOU").value = response.ou;
         document.getElementById("inputGroupDN").value = response.groups;
+        document.getElementById("inputUPNSuffix").value = response.upnSuffix;
       }
     }
   }
@@ -158,7 +164,6 @@ function getTemplateData(chosenTemplate){
   xmlhttp.onload = function() {
     if (this.status == 200) {
       var response = JSON.parse(this.responseText);
-      console.log(response);
       if(response !== null) {
         document.getElementById("inputEmailAddress").value = response[0].mail;
         document.getElementById("inputHomeDirectory").value = response[0].homeDirectory;
@@ -167,6 +172,7 @@ function getTemplateData(chosenTemplate){
         document.getElementById("inputProfilePath").value = response[0].profilePath;
         document.getElementById("inputUserOU").value = response[1];
         document.getElementById("inputGroupDN").value = response[2];
+        document.getElementById("inputUPNSuffix").value = response[3];
       }
     }
   }
