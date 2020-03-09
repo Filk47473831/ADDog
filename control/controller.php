@@ -39,8 +39,8 @@ if(isset($_POST['updateAuthorisedAdmins'])) {
   $username = $_POST['updateAuthorisedAdmins'];
   $distinguishedNames = explode("\r\n", $_POST['distinguishednames']);
   if(is_array($distinguishedNames)) { $distinguishedNames = json_encode($distinguishedNames); }
-  $authList->$username['username'] = $username;
-  $authList->$username['distinguishednames'] = $_POST['distinguishednames'];
+  $authList[$username]['username'] = $username;
+  $authList[$username]['distinguishednames'] = $_POST['distinguishednames'];
   $AD->writeAuthFile($authList);
 }
 
