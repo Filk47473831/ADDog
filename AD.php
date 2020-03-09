@@ -1,5 +1,4 @@
-<?php ob_start(); ?>
-<?php if(session_status() == PHP_SESSION_NONE) { session_start(); }
+<?php
 
 Class AD {
 
@@ -27,11 +26,14 @@ public $settings = '';
         function searchAD() {
             global $ds;
             global $settings;
+
+            $username = strtolower($_SESSION['username']);
+
             $data = [];
             $count = 0;
 
-            if($this->checkAdminLevel(strtolower($_SESSION['username']))) { $searchOU = $settings->SearchOU; } else {
-              $searchOU = $this->getAuthorisedOU(strtolower($_SESSION['username']));
+            if($this->checkAdminLevel($username)) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU($username);
               $searchOU = explode("\n",$searchOU);
             }
 
@@ -60,11 +62,14 @@ public $settings = '';
         function searchDisabledAD() {
             global $ds;
             global $settings;
+
+            $username = strtolower($_SESSION['username']);
+
             $data = [];
             $count = 0;
 
-            if($this->checkAdminLevel($_SESSION['username'])) { $searchOU = $settings->SearchOU; } else {
-              $searchOU = $this->getAuthorisedOU($_SESSION['username']);
+            if($this->checkAdminLevel($username)) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU($username);
               $searchOU = explode("\n",$searchOU);
             }
 
