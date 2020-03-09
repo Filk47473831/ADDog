@@ -2,8 +2,13 @@
 
 Class AD {
 
+public $username;
 public $ds = '';
 public $settings = '';
+
+public function __construct() {
+    $this->username = $_SESSION['username'];
+}
 
         function connect() {
             global $ds;
@@ -27,13 +32,11 @@ public $settings = '';
             global $ds;
             global $settings;
 
-            $username = strtolower($_SESSION['username']);
-
             $data = [];
             $count = 0;
 
-            if($this->checkAdminLevel($username)) { $searchOU = $settings->SearchOU; } else {
-              $searchOU = $this->getAuthorisedOU($username);
+            if($this->checkAdminLevel($this->username)) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU($this->username);
               $searchOU = explode("\n",$searchOU);
             }
 
@@ -63,13 +66,11 @@ public $settings = '';
             global $ds;
             global $settings;
 
-            $username = strtolower($_SESSION['username']);
-
             $data = [];
             $count = 0;
 
-            if($this->checkAdminLevel($username)) { $searchOU = $settings->SearchOU; } else {
-              $searchOU = $this->getAuthorisedOU($username);
+            if($this->checkAdminLevel($this->username)) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU($this->username);
               $searchOU = explode("\n",$searchOU);
             }
 
