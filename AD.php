@@ -8,7 +8,7 @@ public $ds = '';
 public $settings = '';
 
 public function __construct() {
-    $this->username = $_SESSION['username'];
+    $this->username = strtolower($_SESSION['username']);
 }
 
         function connect() {
