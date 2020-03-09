@@ -209,21 +209,17 @@ public function __construct() {
               return $response;
             } else {
               $this->resetPassword($dn,$password,null);
-              $groups = [];
               if($userTemplate !== null) {
                 $groups = $group[2];
               }
               foreach($groups as $group){
-              $this->addUsersToGroup($dn,$group);
+                $this->addUsersToGroup($dn,$group);
               }
             }
         }
 
          function addUsersToGroup($dn,$group) {
              global $ds;
-             echo $dn;
-             echo $group;
-             echo $groupInfo;
              $groupInfo['member'] = $dn;
              ldap_mod_add($ds,$group,$groupInfo);
          }
