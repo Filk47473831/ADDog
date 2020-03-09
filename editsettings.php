@@ -2,8 +2,6 @@
 <?php
 if(!$_SESSION['admin']) { header("Location: index"); }
 $settings = $AD->readSettingsFile();
-$authList = $AD->readAuthFile();
-if($authList !== null) { $authList = implode("\n",$authList); }
 ?>
   <main>
     <div class="container-fluid">
