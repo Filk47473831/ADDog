@@ -13,7 +13,7 @@ $settings = $AD->readSettingsFile();
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
       <div class="card shadow-lg border-0 rounded-lg mb-2">
           <div class="card-body">
-              <p>Current Version: 0.9</p>
+              <p>Current Version: 1.0</p>
               <?php
 
               if(isset($_POST['updateApp'])) {

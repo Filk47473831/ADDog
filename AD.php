@@ -570,7 +570,6 @@ public function __construct() {
           $auth = "";
           if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data") > 0) {
           $auth = file_get_contents(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", true);
-          $auth = $this->decryptData($auth);
           $auth = json_decode($auth, true);
           }
           return $auth;
@@ -579,7 +578,6 @@ public function __construct() {
         function writeAuthFile($authList) {
           $authFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'auth.data';
           $authList = json_encode($authList);
-          $authList = $this->encryptData($authList);
           file_put_contents($authFile, $authList);
         }
 
