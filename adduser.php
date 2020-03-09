@@ -54,7 +54,7 @@
                 $password = $_POST['inputPassword'];
                 $addAccount = $AD->addUser(null,$info,$password,$_POST['inputUserOU'],$finalGroups);
                 $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",User Added," . $info['givenName'] . " " . $info["sn"] . "," . $_SESSION['username']);
-                if($addAccount === null) { header("Location: addusercomplete"); }
+                //if($addAccount === null) { header("Location: addusercomplete"); }
               }
             }
 
