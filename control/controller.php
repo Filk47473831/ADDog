@@ -15,6 +15,7 @@ if(isset($_POST['chosenUserTemplate'])) {
   $data = $AD->chooseUserTemplate($_POST['chosenUserTemplate'],null);
   $availableGroups = $AD->searchForGroupsAD();
   $chosenGroups = $data[2];
+  if($chosenGroups === null) { $chosenGroups = []; }
   $finalGroups = [];
   foreach($availableGroups as $availableGroup) {
     if(in_array($availableGroup['distinguishedname'][0],$chosenGroups)) {

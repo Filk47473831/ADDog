@@ -189,6 +189,7 @@ public $settings = '';
               return $response;
             } else {
               $this->resetPassword($dn,$password,null);
+              $groups = [];
               if($userTemplate !== null) {
                 $groups = $group[2];
               }
