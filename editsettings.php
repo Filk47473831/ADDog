@@ -51,10 +51,18 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputAuthList">Authorised Admins</label>
-                    <textarea readonly name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7" placeholder="No Authorised Admins"><?php if(isset($_POST['inputDC'])) { echo $_POST['inputAuthList']; } else { echo $authList; } ?></textarea>
+                    <textarea readonly name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7" placeholder="No Authorised Admins"><?php
+
+                    $authList = $AD->readAuthFile();
+
+                    foreach ($authList as $authUser) {
+                        echo $authUser['username'] . "\n";
+                    }
+
+                    ?></textarea>
                   </div>
                   <div class="form-group">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAuthorisedAdminModal">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAuthorisedAdminModal">
                       Add Authorised Admin
                     </button>
                   </div>
@@ -83,8 +91,6 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                     if(isset($_POST['inputDC'])) {
                         if($_POST['inputDC'] !== "" && $_POST['inputDC'] !== "" && $_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "" && $_POST['inputOU'] !== "") {
                         $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputOU'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage']);
-                        $authList = [strtolower($_POST['inputAuthList'])];
-                        $AD->writeAuthFile($authList);
                         echo "<p style='color:green'><b>Settings Updated</b></p>";
                       } else {
                         echo "Fields Missing";
@@ -105,7 +111,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Add Authorised Admin</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -113,18 +119,52 @@ if($authList !== null) { $authList = implode("\n",$authList); }
       <div class="modal-body">
         <div class="form-group">
           <label class="small mb-1" for="inputAuthorisedAdminUsername">Username</label>
-          <input required name="inputAuthorisedAdminUsername" class="form-control" id="inputAuthorisedAdminUsername" type="text" placeholder="e.g. jsmith" value=""/>
+          <input class="form-control" id="inputAuthorisedAdminUsername" type="text" placeholder="e.g. jsmith" value=""/>
         </div>
         <div class="form-group">
-          <label class="small mb-1" for="inputOU">User Search OUs (1 DN Per Line)</label>
-          <textarea required name="inputOU" class="form-control" id="inputOU" type="text" rows="5" placeholder="e.g. OU=Users,OU=Arunside,DC=ASDOMAIN,DC=local"></textarea>
+          <label class="small mb-1" for="inputAuthorisedAdminSearchOUs">User Search OUs (1 DN Per Line)</label>
+          <textarea class="form-control" id="inputAuthorisedAdminSearchOUs" type="text" rows="5" placeholder="e.g. OU=Users,OU=Arunside,DC=ASDOMAIN,DC=local"></textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button id="updateAuthorisedAdminsSaveBtn" onclick="updateAuthorisedAdmins()" type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" onclick="hideResetModal()">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+<script>
+function updateAuthorisedAdmins(){
+  var username = document.getElementById("inputAuthorisedAdminUsername").value;
+  var distinguishednames = document.getElementById("inputAuthorisedAdminSearchOUs").value;
+  document.getElementById("updateAuthorisedAdminsSaveBtn").style = "width:56px";
+  document.getElementById("updateAuthorisedAdminsSaveBtn").innerHTML = '<i style="font-size:1.2rem" class="fas fa-circle-notch fa-spin"></i>';
+
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+    $('#addAuthorisedAdminModal').modal('hide');
+    document.getElementById("updateAuthorisedAdminsSaveBtn").style = "";
+    document.getElementById("updateAuthorisedAdminsSaveBtn").innerHTML = 'Save';
+    document.getElementById("inputAuthorisedAdminUsername").value = "";
+    document.getElementById("inputAuthorisedAdminSearchOUs").value = "";
+    }
+  }
+  xmlhttp.open("POST", "control/controller", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("updateAuthorisedAdmins=" + username + "&distinguishednames=" + distinguishednames);
+}
+
+function hideResetModal() {
+  $('#addAuthorisedAdminModal').modal('hide');
+  document.getElementById("updateAuthorisedAdminsSaveBtn").style = "";
+  document.getElementById("updateAuthorisedAdminsSaveBtn").innerHTML = 'Save';
+  document.getElementById("inputAuthorisedAdminUsername").value = "";
+  document.getElementById("inputAuthorisedAdminSearchOUs").value = "";
+}
+</script>
   <?php require("footer.php"); ?>

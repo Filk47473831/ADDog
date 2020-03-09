@@ -39,8 +39,8 @@ $AD->getKey();
                                           <input required name="inputDomain" class="form-control" id="inputDomain" type="text" placeholder="e.g. ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDomain']; } else { echo $settings->Domain; } ?>"/>
                                         </div>
                                         <div class="form-group">
-                                          <label class="small mb-1" for="inputOU">Search OU</label>
-                                          <input required name="inputOU" class="form-control" id="inputOU" type="text" placeholder="e.g. OU=Arunside,DC=ASDOMAIN,DC=LOCAL" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputOU']; } else { if(isset($settings->SearchOU[0])) { echo $settings->SearchOU[0]; } } ?>"/>
+                                          <label class="small mb-1" for="inputOU">Base DN</label>
+                                          <input required name="inputOU" class="form-control" id="inputOU" type="text" placeholder="e.g. DC=ASDOMAIN,DC=LOCAL" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputOU']; } else { if(isset($settings->SearchOU[0])) { echo $settings->SearchOU[0]; } } ?>"/>
                                         </div>
                                         <div class="form-group">
                                           <label class="small mb-1" for="inputUsername">Admin Account</label>

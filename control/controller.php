@@ -34,4 +34,11 @@ if(isset($_POST['targetSearchOU'])) {
   echo $data;
 }
 
+if(isset($_POST['updateAuthorisedAdmins'])) {
+  $authList = $AD->readAuthFile();
+  $authList[$_POST['updateAuthorisedAdmins']]['username'] = $_POST['updateAuthorisedAdmins'];
+  $authList[$_POST['updateAuthorisedAdmins']]['distinguishednames'] = $_POST['distinguishednames'];
+  $AD->writeAuthFile($authList);
+}
+
  ?>

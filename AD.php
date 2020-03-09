@@ -28,6 +28,11 @@ public $settings = '';
             global $settings;
             $data = [];
             $count = 0;
+
+            //Check Admin Level
+
+            //Then Check Auth Search OU's as per logged in username
+
             $searchOU = $settings->SearchOU;
             foreach($searchOU as $dn) {
               $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
@@ -54,6 +59,11 @@ public $settings = '';
             global $settings;
             $data = [];
             $count = 0;
+
+            //Check Admin Level
+
+            //Then Check Auth Search OU's as per logged in username
+
             $searchOU = $settings->SearchOU;
             foreach($searchOU as $dn) {
               $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(userAccountControl:1.2.840.113556.1.4.803:=2))";
@@ -546,20 +556,16 @@ public $settings = '';
         }
 
         function readAuthFile() {
-          $auth = array();
           if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data") > 0) {
-          $authFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", "r");
-          $auth = fread($authFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data"));
-          $auth = explode("\n",$auth);
-          $auth = array_map('trim', $auth);
-          $auth = array_map('strtolower', $auth);
-          fclose($authFile);
+          $auth = file_get_contents(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", true);
+          $auth = json_decode($auth, true);
           }
           return $auth;
         }
 
         function writeAuthFile($authList) {
           $authFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'auth.data';
+          $authList = json_encode($authList);
           file_put_contents($authFile, $authList);
         }
 
@@ -584,7 +590,7 @@ public $settings = '';
 
         function checkAuthLevel($username) {
           $authList = $this->readAuthFile();
-          if(in_array($username, $authList)) {
+          if(array_key_exists($username, $authList)) {
             return true;
           } else {
             return false;
