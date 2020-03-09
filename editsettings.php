@@ -46,25 +46,43 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                     <input required name="inputDomain" class="form-control" id="inputDomain" type="text" placeholder="e.g. ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDomain']; } else { echo $settings->Domain; } ?>"/>
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="inputOU">Base DN</label>
-                    <input required name="inputOU" class="form-control" id="inputOU" type="text" placeholder="e.g. DC=ASDOMAIN,DC=local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputOU']; } else { echo implode("\r\n",$settings->SearchOU); } ?>">
+                    <label class="small mb-1" for="inputBaseDN">Base DN</label>
+                    <input required name="inputBaseDN" class="form-control" id="inputBaseDN" type="text" placeholder="e.g. DC=ASDOMAIN,DC=local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputBaseDN']; } else { echo implode("\r\n",$settings->SearchOU); } ?>">
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="inputAuthList">Authorised Admins</label>
-                    <textarea readonly name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7" placeholder="No Authorised Admins"><?php
+                    <label class="small mb-1" for="OUTree">Authorised Admins</label>
 
-                    $authList = $AD->readAuthFile();
+                        <?php
 
-                    foreach ($authList as $authUser) {
-                        echo $authUser['username'] . "\n";
-                    }
+                        $authList = $AD->readAuthFile();
 
-                    ?></textarea>
+                        if($authList !== null) {
+                          echo '<div id="OUTree">
+                                  <ul>';
+                          foreach ($authList as $authUser) {
+                              echo '<li>' . $authUser['username'];
+                              echo '<ul>';
+                              $distinguishedNames = explode("\n",$authUser['distinguishednames']);
+                              foreach($distinguishedNames as $distinguishedname){
+                                echo '<li>' . $distinguishedname . '</li>';
+                              }
+                              echo '</ul></li>';
+                          }
+                            echo '</ul></div>';
+                        } else {
+                          echo '<p>No Authorised Admins</p>';
+                        }
+
+                        ?>
+
                   </div>
                   <div class="form-group">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAuthorisedAdminModal">
                       Add Authorised Admin
                     </button>
+                    <?php if($authList !== null) { ?><button onclick="clearAuthorisedAdmins()" type="button" class="btn btn-danger btn-sm">
+                      Clear Authorised Admins
+                    </button><?php } ?>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputPWMinLength">Password Minimum Length</label>
@@ -89,8 +107,8 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                     <?php
 
                     if(isset($_POST['inputDC'])) {
-                        if($_POST['inputDC'] !== "" && $_POST['inputDC'] !== "" && $_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "" && $_POST['inputOU'] !== "") {
-                        $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputOU'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage']);
+                        if($_POST['inputDC'] !== "" && $_POST['inputDC'] !== "" && $_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "" && $_POST['inputBaseDN'] !== "") {
+                        $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputBaseDN'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage']);
                         echo "<p style='color:green'><b>Settings Updated</b></p>";
                       } else {
                         echo "Fields Missing";
@@ -134,12 +152,35 @@ if($authList !== null) { $authList = implode("\n",$authList); }
   </div>
 </div>
 <script>
+$(function () { $('#OUTree').jstree(); });
+
 function updateAuthorisedAdmins(){
   var username = document.getElementById("inputAuthorisedAdminUsername").value;
   var distinguishednames = document.getElementById("inputAuthorisedAdminSearchOUs").value;
-  document.getElementById("updateAuthorisedAdminsSaveBtn").style = "width:56px";
-  document.getElementById("updateAuthorisedAdminsSaveBtn").innerHTML = '<i style="font-size:1.2rem" class="fas fa-circle-notch fa-spin"></i>';
 
+  if(username !== "" && distinguishednames !== "") {
+
+    document.getElementById("updateAuthorisedAdminsSaveBtn").style = "width:56px";
+    document.getElementById("updateAuthorisedAdminsSaveBtn").innerHTML = '<i style="font-size:1.2rem" class="fas fa-circle-notch fa-spin"></i>';
+
+    if (window.XMLHttpRequest) {
+      xmlhttp = new XMLHttpRequest();
+    } else {
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onload = function() {
+      if (this.status == 200) {
+        location.reload();
+      }
+    }
+    xmlhttp.open("POST", "control/controller", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("updateAuthorisedAdmins=" + username + "&distinguishednames=" + distinguishednames);
+
+  }
+}
+
+function clearAuthorisedAdmins(){
   if (window.XMLHttpRequest) {
     xmlhttp = new XMLHttpRequest();
   } else {
@@ -147,16 +188,12 @@ function updateAuthorisedAdmins(){
   }
   xmlhttp.onload = function() {
     if (this.status == 200) {
-    $('#addAuthorisedAdminModal').modal('hide');
-    document.getElementById("updateAuthorisedAdminsSaveBtn").style = "";
-    document.getElementById("updateAuthorisedAdminsSaveBtn").innerHTML = 'Save';
-    document.getElementById("inputAuthorisedAdminUsername").value = "";
-    document.getElementById("inputAuthorisedAdminSearchOUs").value = "";
+      location.reload();
     }
   }
   xmlhttp.open("POST", "control/controller", true);
   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xmlhttp.send("updateAuthorisedAdmins=" + username + "&distinguishednames=" + distinguishednames);
+  xmlhttp.send("clearAuthorisedAdmins");
 }
 
 function hideResetModal() {

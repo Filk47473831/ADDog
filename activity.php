@@ -34,12 +34,30 @@
                                  ?>
                             </tbody>
                         </table>
+                      <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?><button onclick="clearAllLog()" class="btn btn-warning">Clear Logs</button><?php } } ?>
                     </div>
                 </div>
         </div>
     </div>
 </main>
 <script>
+
+function clearAllLog(){
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+      location.reload();
+    }
+  }
+  xmlhttp.open("POST", "control/controller", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("clearAllLog");
+}
+
   $('#dataTable-activityLog').dataTable( {
     "order": [[ 0, "desc" ]],
     "sPaginationType": "listbox",

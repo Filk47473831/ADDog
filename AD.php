@@ -29,11 +29,11 @@ public $settings = '';
             $data = [];
             $count = 0;
 
-            //Check Admin Level
+            if($this->checkAdminLevel(strtolower($_SESSION['username']))) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU(strtolower($_SESSION['username']));
+              $searchOU = explode("\n",$searchOU);
+            }
 
-            //Then Check Auth Search OU's as per logged in username
-
-            $searchOU = $settings->SearchOU;
             foreach($searchOU as $dn) {
               $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))";
   	          ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
@@ -60,11 +60,11 @@ public $settings = '';
             $data = [];
             $count = 0;
 
-            //Check Admin Level
+            if($this->checkAdminLevel($_SESSION['username'])) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU($_SESSION['username']);
+              $searchOU = explode("\n",$searchOU);
+            }
 
-            //Then Check Auth Search OU's as per logged in username
-
-            $searchOU = $settings->SearchOU;
             foreach($searchOU as $dn) {
               $search = "(&(objectCategory=organizationalPerson)(objectClass=User)(userAccountControl:1.2.840.113556.1.4.803:=2))";
   	          ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
@@ -466,14 +466,16 @@ public $settings = '';
         }
 
         function writeActivityLogFile($entry) {
-          $activities = $this->readActivityLogFile();
-          if(empty($activities)) {
-            $activities = array();
-            array_push($activities,$entry);
+          if($entry === "CLEAR_ALL_LOG") { $activities = null; } else {
+            $activities = $this->readActivityLogFile();
+            if(empty($activities)) {
+              $activities = array();
+              array_push($activities,$entry);
+              $activities = implode("\r\n",$activities);
+            } else {
+            array_unshift($activities, $entry);
             $activities = implode("\r\n",$activities);
-          } else {
-          array_unshift($activities, $entry);
-          $activities = implode("\r\n",$activities);
+            }
           }
           $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "w") or die("Unable to open log.");
           fwrite($activityLogFile, $activities);
@@ -597,6 +599,11 @@ public $settings = '';
           }
         }
 
+        function getAuthorisedOU($username) {
+          $authList = $this->readAuthFile();
+          return $authList[$username]['distinguishednames'];
+        }
+
         function checkAdminLevel($username) {
           $admins = $this->readAdminsFile();
           if(in_array($username, $admins)) {
@@ -670,7 +677,12 @@ public $settings = '';
           echo '<ul>
                   <li class="jstree-open">' . $settings->Domain;
 
-            foreach($settings->SearchOU as $dn) {
+          if($this->checkAdminLevel(strtolower($_SESSION['username']))) { $searchOU = $settings->SearchOU; } else {
+            $searchOU = $this->getAuthorisedOU(strtolower($_SESSION['username']));
+            $searchOU = explode("\n",$searchOU);
+          }
+
+            foreach($searchOU as $dn) {
 
               $filter="(objectClass=organizationalunit)";
               $justthese = array("dn", "ou");
