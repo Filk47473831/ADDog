@@ -43,7 +43,9 @@ public $settings = '';
               array_shift($results);
               foreach($results as $result) {
                 $authUsers = $this->readAuthFile();
+                if($authUsers === null) { $authUsers = []; }
                 $adminUsers = $this->readAdminsFile();
+                if($adminUsers === null) { $adminUsers = []; }
                 $hiddenUsers = array_merge($authUsers, $adminUsers);
                 if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
                   $data[] = $result;
@@ -558,8 +560,10 @@ public $settings = '';
         }
 
         function readAuthFile() {
+          $auth = "";
           if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data") > 0) {
           $auth = file_get_contents(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", true);
+          $auth = $this->decryptData($auth);
           $auth = json_decode($auth, true);
           }
           return $auth;
@@ -568,6 +572,7 @@ public $settings = '';
         function writeAuthFile($authList) {
           $authFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'auth.data';
           $authList = json_encode($authList);
+          $authList = $this->encryptData($authList);
           file_put_contents($authFile, $authList);
         }
 
