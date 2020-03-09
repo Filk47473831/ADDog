@@ -221,11 +221,14 @@ public function __construct() {
 
          function addUsersToGroup($dn,$group) {
              global $ds;
+             echo $dn;
+             echo $group;
+             echo $groupInfo;
              $groupInfo['member'] = $dn;
              ldap_mod_add($ds,$group,$groupInfo);
          }
 
-        function enableuser($user) {
+        function enableUser($user) {
             global $ds;
             $entry["UserAccountControl"] = "66080";
             if(ldap_mod_replace($ds,$user,$entry) === false) {
