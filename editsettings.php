@@ -46,12 +46,17 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                     <input required name="inputDomain" class="form-control" id="inputDomain" type="text" placeholder="e.g. ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDomain']; } else { echo $settings->Domain; } ?>"/>
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="inputOU">User Search OUs (1 DN Per Line)</label>
-                    <textarea required name="inputOU" class="form-control" id="inputOU" type="text" rows="5" placeholder="e.g. OU=The Gaff,DC=thegaff,DC=co,DC=uk"><?php if(isset($_POST['inputDC'])) { echo $_POST['inputOU']; } else { echo implode("\r\n",$settings->SearchOU); } ?></textarea>
+                    <label class="small mb-1" for="inputOU">Base DN</label>
+                    <input required name="inputOU" class="form-control" id="inputOU" type="text" placeholder="e.g. DC=ASDOMAIN,DC=local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputOU']; } else { echo implode("\r\n",$settings->SearchOU); } ?>">
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="inputAuthList">Authorised Admins (1 Username Per Line)</label>
-                    <textarea name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7" placeholder="e.g. jsmith"><?php if(isset($_POST['inputDC'])) { echo $_POST['inputAuthList']; } else { echo $authList; } ?></textarea>
+                    <label class="small mb-1" for="inputAuthList">Authorised Admins</label>
+                    <textarea readonly name="inputAuthList" class="form-control" id="inputAuthList" type="text" rows="7" placeholder="No Authorised Admins"><?php if(isset($_POST['inputDC'])) { echo $_POST['inputAuthList']; } else { echo $authList; } ?></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAuthorisedAdminModal">
+                      Add Authorised Admin
+                    </button>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputPWMinLength">Password Minimum Length</label>
@@ -69,7 +74,7 @@ if($authList !== null) { $authList = implode("\n",$authList); }
                     <input required name="inputPassword" class="form-control" id="inputPassword" type="password" placeholder="Confirm Password" value=""/>
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                    <input type="submit" class="btn btn-primary" href="#" value="Submit">
+                    <input type="submit" class="btn btn-primary" href="#" value="Save">
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
 
@@ -95,4 +100,31 @@ if($authList !== null) { $authList = implode("\n",$authList); }
         </div>
       </div>
   </main>
+
+  <div id="addAuthorisedAdminModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="small mb-1" for="inputAuthorisedAdminUsername">Username</label>
+          <input required name="inputAuthorisedAdminUsername" class="form-control" id="inputAuthorisedAdminUsername" type="text" placeholder="e.g. jsmith" value=""/>
+        </div>
+        <div class="form-group">
+          <label class="small mb-1" for="inputOU">User Search OUs (1 DN Per Line)</label>
+          <textarea required name="inputOU" class="form-control" id="inputOU" type="text" rows="5" placeholder="e.g. OU=Users,OU=Arunside,DC=ASDOMAIN,DC=local"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
   <?php require("footer.php"); ?>
