@@ -165,6 +165,12 @@
           createdUsername = createdUsername.toLowerCase();
           usernameField.value = createdUsername;
         })
+        usernameField.addEventListener("click", function(){
+          firstName = firstNameField.value.substring(0, 1);
+          createdUsername = firstName + lastNameField.value;
+          createdUsername = createdUsername.toLowerCase();
+          usernameField.value = createdUsername;
+        })
         break;
       case 2:
       firstNameField.addEventListener("focusout", function(){
@@ -174,6 +180,12 @@
         usernameField.value = createdUsername;
       })
       lastNameField.addEventListener("focusout", function(){
+        firstName = firstNameField.value.substring(0, 1);
+        createdUsername = firstName + "." + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      usernameField.addEventListener("focusout", function(){
         firstName = firstNameField.value.substring(0, 1);
         createdUsername = firstName + "." + lastNameField.value;
         createdUsername = createdUsername.toLowerCase();
@@ -191,6 +203,11 @@
         createdUsername = createdUsername.toLowerCase();
         usernameField.value = createdUsername;
       })
+      usernameField.addEventListener("focusout", function(){
+        createdUsername = firstNameField.value + "." + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
         break;
       case 4:
       firstNameField.addEventListener("focusout", function(){
@@ -199,6 +216,11 @@
         usernameField.value = createdUsername;
       })
       lastNameField.addEventListener("focusout", function(){
+        createdUsername = firstNameField.value + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      usernameField.addEventListener("focusout", function(){
         createdUsername = firstNameField.value + lastNameField.value;
         createdUsername = createdUsername.toLowerCase();
         usernameField.value = createdUsername;
@@ -212,6 +234,12 @@
         usernameField.value = createdUsername;
       })
       lastNameField.addEventListener("focusout", function(){
+        lastName = lastNameField.value.substring(0, 1);
+        createdUsername = firstNameField.value + lastName;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      usernameField.addEventListener("focusout", function(){
         lastName = lastNameField.value.substring(0, 1);
         createdUsername = firstNameField.value + lastName;
         createdUsername = createdUsername.toLowerCase();
@@ -231,6 +259,12 @@
         createdUsername = createdUsername.toLowerCase();
         usernameField.value = createdUsername;
       })
+      usernameField.addEventListener("focusout", function(){
+        lastName = lastNameField.value.substring(0, 1);
+        createdUsername = firstNameField.value + "." + lastName;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
         break;
       default:
       firstNameField.addEventListener("focusout", function(){
@@ -240,6 +274,12 @@
         usernameField.value = createdUsername;
       })
       lastNameField.addEventListener("focusout", function(){
+        firstName = firstNameField.value.substring(0, 1);
+        createdUsername = firstName + lastNameField.value;
+        createdUsername = createdUsername.toLowerCase();
+        usernameField.value = createdUsername;
+      })
+      usernameField.addEventListener("focusout", function(){
         firstName = firstNameField.value.substring(0, 1);
         createdUsername = firstName + lastNameField.value;
         createdUsername = createdUsername.toLowerCase();
@@ -277,6 +317,7 @@
   </script>
   <?php if(!isset($_POST['inputFirstName'])) { ?>
   <script>
+    usernameFormat(99);
     if(document.getElementById("inputUserTemplate").value !== "null") {
       getTemplateData(document.getElementById("inputUserTemplate").value);
     }
