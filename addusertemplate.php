@@ -152,10 +152,14 @@ function getUserData(chosenUser){
       var response = JSON.parse(this.responseText);
       if(response !== null) {
         document.getElementById("inputEmailAddress").value = response.mail;
-        document.getElementById("inputHomeDirectory").value = response.homedirectory + "%USERNAME%";
+        if(response.homedirectory !== "") {
+          document.getElementById("inputHomeDirectory").value = response.homedirectory + "%USERNAME%";
+        }
         document.getElementById("inputHomeDrive").value = response.homedrive;
         document.getElementById("inputScriptPath").value = response.scriptpath;
-        document.getElementById("inputProfilePath").value = response.profilepath + "%USERNAME%";
+        if(response.profilepath !== "") {
+          document.getElementById("inputProfilePath").value = response.profilepath + "%USERNAME%";
+        }
         document.getElementById("inputUserOU").value = response.ou;
         document.getElementById("inputGroupDN").value = response.groups;
         document.getElementById("inputUPNSuffix").value = response.upnSuffix;
