@@ -24,7 +24,9 @@
               foreach($data as $user) {
                 $AD->resetPassword($user['dn'],$_POST['inputPassword'],$promptNextLogin);
                 $name = explode(",",$user['dn']);
-                $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
+                if($name !== "") {
+                  $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
+                }
               }
 
               echo '<p>Bulk Password Reset Complete</p>

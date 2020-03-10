@@ -16,6 +16,9 @@ $settings = $AD->readSettingsFile();
               <p>Current Version: 1.0</p>
               <?php
 
+              $AD->connect();
+              $AD->bind();
+
               if(isset($_POST['updateApp'])) {
                 shell_exec("..\git\bin\git.exe -c http.sslVerify=false reset --hard 2>&1");
                 $outputs = shell_exec("..\git\bin\git.exe -c http.sslVerify=false pull https://b47ce1f940d20badca903c57add8be34ab2f6abc@github.com/Filk47473831/ADDog.git 2>&1");
@@ -60,7 +63,7 @@ $settings = $AD->readSettingsFile();
                           foreach ($authList as $authUser) {
                               echo '<li>' . $authUser['username'];
                               echo '<ul>';
-                              $distinguishedNames = explode("\n",$authUser['distinguishednames']);
+                              $distinguishedNames = $authUser['distinguishednames'];
                               foreach($distinguishedNames as $distinguishedname){
                                 echo '<li>' . $distinguishedname . '</li>';
                               }
@@ -79,7 +82,7 @@ $settings = $AD->readSettingsFile();
                       Add Authorised Admin
                     </button>
                     <?php if($authList !== null) { ?><button onclick="clearAuthorisedAdmins()" type="button" class="btn btn-danger btn-sm">
-                      Clear Authorised Admins
+                      Clear All Authorised Admins
                     </button><?php } ?>
                   </div>
                   <div class="form-group">
@@ -138,9 +141,19 @@ $settings = $AD->readSettingsFile();
           <input class="form-control" id="inputAuthorisedAdminUsername" type="text" placeholder="e.g. jsmith" value=""/>
         </div>
         <div class="form-group">
+          <label class="small mb-1" for="authUserOUTree">User Search OU</label>
+          <div id="authUserOUTree">
+            <?php $AD->showOUTree(); ?>
+          </div>
+          <textarea readonly class="mt-3 mb-2 form-control" id="inputAuthorisedAdminSearchOUs" type="text" rows="5" placeholder="Select Search OU's"></textarea>
+          <button type="button" class="btn btn-warning btn-sm" onclick="document.getElementById('inputAuthorisedAdminSearchOUs').value = ''">
+            Clear
+          </button>
+        </div>
+        <!-- <div class="form-group">
           <label class="small mb-1" for="inputAuthorisedAdminSearchOUs">User Search OUs (1 DN Per Line)</label>
           <textarea class="form-control" id="inputAuthorisedAdminSearchOUs" type="text" rows="5" placeholder="e.g. OU=Users,OU=Arunside,DC=ASDOMAIN,DC=local"></textarea>
-        </div>
+        </div> -->
       </div>
       <div class="modal-footer">
         <button id="updateAuthorisedAdminsSaveBtn" onclick="updateAuthorisedAdmins()" type="button" class="btn btn-primary">Save</button>
@@ -150,8 +163,6 @@ $settings = $AD->readSettingsFile();
   </div>
 </div>
 <script>
-$(function () { $('#OUTree').jstree(); });
-
 function updateAuthorisedAdmins(){
   var username = document.getElementById("inputAuthorisedAdminUsername").value;
   var distinguishednames = document.getElementById("inputAuthorisedAdminSearchOUs").value;
@@ -201,5 +212,18 @@ function hideResetModal() {
   document.getElementById("inputAuthorisedAdminUsername").value = "";
   document.getElementById("inputAuthorisedAdminSearchOUs").value = "";
 }
+
+$(function () { $('#OUTree').jstree(); });
+
+$(function () { $('#authUserOUTree').jstree(); });
+
+$('#authUserOUTree').on('changed.jstree', function (e, data) {
+    var i, j, r = [];
+    for(i = 0, j = data.selected.length; i < j; i++) {
+      r.push(data.instance.get_node(data.selected[i]).li_attr.value);
+    }
+    if(document.getElementById("inputAuthorisedAdminSearchOUs").value == "") { document.getElementById("inputAuthorisedAdminSearchOUs").value = r.join(', '); } else {
+    document.getElementById("inputAuthorisedAdminSearchOUs").value = document.getElementById("inputAuthorisedAdminSearchOUs").value + ", " + r.join(', '); }
+  });
 </script>
   <?php require("footer.php"); ?>

@@ -38,7 +38,6 @@ public function __construct() {
 
             if($this->checkAdminLevel($this->username)) { $searchOU = $settings->SearchOU; } else {
               $searchOU = $this->getAuthorisedOU($this->username);
-              $searchOU = explode("\n",$searchOU);
             }
 
             foreach($searchOU as $dn) {
@@ -72,7 +71,6 @@ public function __construct() {
 
             if($this->checkAdminLevel($this->username)) { $searchOU = $settings->SearchOU; } else {
               $searchOU = $this->getAuthorisedOU($this->username);
-              $searchOU = explode("\n",$searchOU);
             }
 
             foreach($searchOU as $dn) {
@@ -187,6 +185,7 @@ public function __construct() {
             $user['objectclass'] = "User";
             $user['UserAccountControl'] = "66080";
             if($userTemplate !== null) {
+              $user['displayName'] = $user['givenName'] . " " . $user['sn'];
               $group = $this->chooseUserTemplate($userTemplate,$user);
               $user = array_merge($user, $group[0]);
               if($userOU !== null) {
@@ -196,6 +195,7 @@ public function __construct() {
               }
             } else {
               $dn = "cn=" . $user['givenName'] . " " . $user['sn'] . "," . $userOU;
+              $user['displayName'] = $user['givenName'] . " " . $user['sn'];
               $user['mail'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['mail']);
               $user['proxyAddresses'] = "SMTP:" . $user['mail'];
               $user['homeDirectory'] = str_replace("%USERNAME%",$user['sAMAccountName'],$user['homeDirectory']);
@@ -689,13 +689,13 @@ public function __construct() {
 
           if($this->checkAdminLevel(strtolower($_SESSION['username']))) { $searchOU = $settings->SearchOU; } else {
             $searchOU = $this->getAuthorisedOU(strtolower($_SESSION['username']));
-            $searchOU = explode("\n",$searchOU);
+            //$searchOU = explode("\n",$searchOU);
           }
 
             foreach($searchOU as $dn) {
 
               $filter="(objectClass=organizationalunit)";
-              $justthese = array("dn", "ou");
+              $justthese = array("ou");
               $sr=ldap_search($ds, $dn, $filter, $justthese);
               $info = ldap_get_entries($ds, $sr);
 
@@ -721,5 +721,6 @@ public function __construct() {
               </ul>';
 
         }
+
 
     }

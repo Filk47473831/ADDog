@@ -37,10 +37,13 @@ if(isset($_POST['targetSearchOU'])) {
 if(isset($_POST['updateAuthorisedAdmins'])) {
   $authList = $AD->readAuthFile();
   $username = $_POST['updateAuthorisedAdmins'];
-  $distinguishedNames = explode("\r\n", $_POST['distinguishednames']);
-  if(is_array($distinguishedNames)) { $distinguishedNames = json_encode($distinguishedNames); }
+  $distinguishedNames = explode(", ", $_POST['distinguishednames']);
+  $distinguishedNames = array_unique($distinguishedNames);
+  $distinguishedNames = array_filter($distinguishedNames);
+  //if(is_array($distinguishedNames)) { $distinguishedNames = json_encode($distinguishedNames); }
+  //$distinguishedNames = json_encode($distinguishedNames);
   $authList[$username]['username'] = $username;
-  $authList[$username]['distinguishednames'] = $_POST['distinguishednames'];
+  $authList[$username]['distinguishednames'] = $distinguishedNames;
   $AD->writeAuthFile($authList);
 }
 
