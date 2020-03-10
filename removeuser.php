@@ -17,8 +17,6 @@
 
           $data = $AD->searchAD();
 
-          print_r($data);
-
           if(isset($_POST['inputUser'])) {
                   $AD->removeUser($_POST['inputUser']);
                   $name = explode(",",$_POST['inputUser']);
