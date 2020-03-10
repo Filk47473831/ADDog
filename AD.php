@@ -162,7 +162,7 @@ public function __construct() {
 
         function updateUsersJSON($data) {
             $users = "[";
-            for ($i = 0; $i < $data["count"] - 1; $i++) {
+            for ($i = 0; $i < $data["count"]; $i++) {
               if($i !== 0) { $users .= ","; }
                 $users .= '{ "value": "' . $data[$i]["distinguishedname"][0] . '", "label": "' . $data[$i]["cn"][0] . '" }';
               }
