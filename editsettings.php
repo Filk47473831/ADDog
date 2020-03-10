@@ -51,7 +51,7 @@ $settings = $AD->readSettingsFile();
                     <input required name="inputBaseDN" class="form-control" id="inputBaseDN" type="text" placeholder="e.g. DC=ASDOMAIN,DC=local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputBaseDN']; } else { echo implode("\r\n",$settings->SearchOU); } ?>">
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="OUTree">Authorised Admins</label>
+                    <label class="small mb-1" for="OUTree">Authorised Users</label>
 
                         <?php
 
@@ -79,10 +79,10 @@ $settings = $AD->readSettingsFile();
                   </div>
                   <div class="form-group">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAuthorisedAdminModal">
-                      Add Authorised Admin
+                      Add Authorised User
                     </button>
                     <?php if($authList !== null) { ?><button onclick="clearAuthorisedAdmins()" type="button" class="btn btn-danger btn-sm">
-                      Clear All Authorised Admins
+                      Clear All Authorised Users
                     </button><?php } ?>
                   </div>
                   <div class="form-group">
@@ -130,7 +130,7 @@ $settings = $AD->readSettingsFile();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add Authorised Admin</h5>
+        <h5 class="modal-title">Add Authorised User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

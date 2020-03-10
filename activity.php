@@ -34,7 +34,7 @@
                                  ?>
                             </tbody>
                         </table>
-                      <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?><button onclick="clearAllLog()" class="btn btn-warning">Clear Logs</button><?php } } ?>
+                      <?php if(isset($_SESSION['admin'])) { if($_SESSION['admin']) { ?><button onclick="clearAllLog()" class="btn btn-warning btn-sm">Clear Logs</button><?php } } ?>
                     </div>
                 </div>
         </div>

@@ -78,6 +78,27 @@
                     <option value="6">john.s</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <label class="small mb-1" for="authUserOUTree">Authorised Users Template Visibility</label>
+
+                      <?php
+
+                      $authList = $AD->readAuthFile();
+
+                      if($authList !== null) {
+                        echo '<div id="authUserOUTree">
+                                <ul>';
+                        foreach ($authList as $authUser) {
+                            echo '<li>' . $authUser['username'] . '</li>';
+                        }
+                          echo '</ul></div>';
+                      } else {
+                        echo '<p>No Authorised Admins</p>';
+                      }
+
+                      ?>
+                      <input hidden name="authorisedUserVisibility" id="authorisedUserVisibility">
+                </div>
                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                   <input type="submit" class="btn btn-success" href="#" value="Add User Template">&nbsp;&nbsp;
                 </div>
@@ -104,7 +125,8 @@
                       "groupDN" => $finalGroups,
                       "upnSuffix" => $_POST['inputUPNSuffix'],
                       "userOU" => $_POST['inputUserOU'],
-                      "usernameFormat" => $_POST['inputUsernameFormat']
+                      "usernameFormat" => $_POST['inputUsernameFormat'],
+                      "authorisedUsers" => $_POST['authorisedUserVisibility']
                   );
                     $AD->addToUserTemplatesFile($userTemplate);
                     header("Location: addusertemplatecomplete");
@@ -204,6 +226,22 @@ document.getElementById("inputUserTemplateName").addEventListener("focusout", fu
 document.getElementById("inputUser").addEventListener("focusout", function() {
   getUserData(document.getElementById("inputUser").value);
 });
+
+$(function () { $('#authUserOUTree').jstree({
+    "checkbox" : {
+      "keep_selected_style" : false
+    },
+    "plugins" : [ "checkbox" ]
+  });
+});
+
+$('#authUserOUTree').on('changed.jstree', function (e, data) {
+    var i, j, r = [];
+    for(i = 0, j = data.selected.length; i < j; i++) {
+      r.push(data.instance.get_node(data.selected[i]).text);
+    }
+    document.getElementById("authorisedUserVisibility").value = r.join(', ');
+  });
 
 $(function () { $('#OUTree').jstree(); });
 $('#OUTree').on('changed.jstree', function (e, data) {

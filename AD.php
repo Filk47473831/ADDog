@@ -9,6 +9,7 @@ public $settings = '';
 
 public function __construct() {
     $this->username = strtolower($_SESSION['username']);
+    $this->admin = $_SESSION['admin'];
 }
 
         function connect() {
@@ -171,13 +172,19 @@ public function __construct() {
 
         function displayUserTemplates() {
           $userTemplates = $this->readUserTemplatesFile();
+          $response = "";
           if(is_array($userTemplates)) {
             if(count($userTemplates) > 0) {
               foreach($userTemplates as $userTemplate){
-                echo "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
+                $authorisedUsers = explode(",", $userTemplate['authorisedUsers']);
+                if(in_array($this->username, $authorisedUsers) || $this->admin) {
+                  $response .= "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
+                }
+                if($response == "") { $response .= "<option value='null'>No Available Templates</option>"; }
               }
-            } else { echo "<option value='null'>No Available Templates</option>"; }
-          } else { echo "<option value='null'>No Available Templates</option>"; }
+            } else { $response .= "<option value='null'>No Available Templates</option>"; }
+          } else { $response .= "<option value='null'>No Available Templates</option>"; }
+          echo $response;
         }
 
         function addUser($userTemplate,$user,$password,$userOU,$groups) {
@@ -417,6 +424,7 @@ public function __construct() {
           $userTemplates[$userTemplate['userTemplateName']]['upnSuffix'] = $userTemplate['upnSuffix'];
           $userTemplates[$userTemplate['userTemplateName']]['userOU'] = $userTemplate['userOU'];
           $userTemplates[$userTemplate['userTemplateName']]['usernameFormat'] = $userTemplate['usernameFormat'];
+          $userTemplates[$userTemplate['userTemplateName']]['authorisedUsers'] = $userTemplate['authorisedUsers'];
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
           $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
@@ -689,7 +697,6 @@ public function __construct() {
 
           if($this->checkAdminLevel(strtolower($_SESSION['username']))) { $searchOU = $settings->SearchOU; } else {
             $searchOU = $this->getAuthorisedOU(strtolower($_SESSION['username']));
-            //$searchOU = explode("\n",$searchOU);
           }
 
             foreach($searchOU as $dn) {
