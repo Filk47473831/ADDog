@@ -3,6 +3,7 @@ if (session_status() == PHP_SESSION_NONE) { session_start(); }
 require("AD.php");
 $AD = new AD;
 $settings = $AD->readSettingsFile();
+if($settings->Domain == "") { header("Location: settings"); }
 ?>
 <!DOCTYPE html>
 <html lang="en">

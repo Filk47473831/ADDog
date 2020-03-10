@@ -550,6 +550,7 @@ public function __construct() {
             global $ds;
             global $settings;
             if($_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "") {
+              if($settings->Domain !== null) {
                 if(ldap_bind($ds, strtolower($_POST['inputUsername']) . "@" . $settings->Domain, $_POST['inputPassword']) === false) {
                   $errno = ldap_errno($ds);
                   return $errno;
@@ -561,6 +562,7 @@ public function __construct() {
                 } else { return false; }
                 }
             } else { return false; }
+          } else { return false; }
         }
 
         function isLoggedIn() {
