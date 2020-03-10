@@ -180,8 +180,8 @@ public function __construct() {
                 if(in_array($this->username, $authorisedUsers) || $this->admin) {
                   $response .= "<option value='" . $userTemplate['name'] . "'>" . $userTemplate['name'] . "</option>";
                 }
-                if($response == "") { $response .= "<option value='null'>No Available Templates</option>"; }
               }
+              if($response == "") { $response .= "<option value='null'>No Available Templates</option>"; }
             } else { $response .= "<option value='null'>No Available Templates</option>"; }
           } else { $response .= "<option value='null'>No Available Templates</option>"; }
           echo $response;
