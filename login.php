@@ -1,5 +1,7 @@
 <?php ob_start();
 if (session_status() == PHP_SESSION_NONE) { session_start(); }
+$_SESSION['username'] = null;
+$_SESSION['admin'] = null;
 require("AD.php");
 $AD = new AD;
 $settings = $AD->readSettingsFile();

@@ -50,15 +50,10 @@ public function __construct() {
               array_shift($results);
               foreach($results as $result) {
                 $authUsers = $this->readAuthFile();
-                if($authUsers === null) { $authUsers = []; }
                 $adminUsers = $this->readAdminsFile();
-                if($adminUsers === null) { $adminUsers = []; }
-                $hiddenUsers = array_merge($authUsers, $adminUsers);
-                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
-                  $data[] = $result;
+                if(array_key_exists(strtolower($result["samaccountname"][0]),$authUsers) || in_array(strtolower($result["samaccountname"][0]),$adminUsers)) { } else { $data[] = $result; }
                 }
               }
-            }
               $data['count'] = $count;
               return $data;
         }
@@ -84,12 +79,9 @@ public function __construct() {
               foreach($results as $result) {
                 $authUsers = $this->readAuthFile();
                 $adminUsers = $this->readAdminsFile();
-                $hiddenUsers = array_merge($authUsers, $adminUsers);
-                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
-                  $data[] = $result;
+                if(array_key_exists(strtolower($result["samaccountname"][0]),$authUsers) || in_array(strtolower($result["samaccountname"][0]),$adminUsers)) { } else { $data[] = $result; }
                 }
               }
-            }
               $data['count'] = $count;
               return $data;
         }
@@ -109,12 +101,9 @@ public function __construct() {
               foreach($results as $result) {
                 $authUsers = $this->readAuthFile();
                 $adminUsers = $this->readAdminsFile();
-                $hiddenUsers = array_merge($authUsers, $adminUsers);
-                if(in_array(strtolower($result["samaccountname"][0]),$hiddenUsers) == false) {
-                  $data[] = $result;
+                if(array_key_exists(strtolower($result["samaccountname"][0]),$authUsers) || in_array(strtolower($result["samaccountname"][0]),$adminUsers)) { } else { $data[] = $result; }
                 }
               }
-            }
               $data['count'] = $count;
               return $data;
         }
@@ -163,8 +152,10 @@ public function __construct() {
         function updateUsersJSON($data) {
             $users = "[";
             for ($i = 0; $i < $data["count"]; $i++) {
-              if($i !== 0) { $users .= ","; }
-                $users .= '{ "value": "' . $data[$i]["distinguishedname"][0] . '", "label": "' . $data[$i]["cn"][0] . '" }';
+              if(isset($data[$i])) {
+                if($i !== 0) { $users .= ","; }
+                  $users .= '{ "value": "' . $data[$i]["distinguishedname"][0] . '", "label": "' . $data[$i]["cn"][0] . '" }';
+                }
               }
             $users .= "]";
           echo $users;
@@ -610,16 +601,20 @@ public function __construct() {
 
         function checkAuthLevel($username) {
           $authList = $this->readAuthFile();
-          if(array_key_exists($username, $authList)) {
-            return true;
-          } else {
-            return false;
-          }
+          if(is_array($authList)) {
+            if(array_key_exists($username, $authList)) {
+              return true;
+            } else {
+              return false;
+            }
+          } else { return false; }
         }
 
         function getAuthorisedOU($username) {
           $authList = $this->readAuthFile();
-          return $authList[$username]['distinguishednames'];
+          if(isset($authList[$username])) {
+            return $authList[$username]['distinguishednames'];
+          }
         }
 
         function checkAdminLevel($username) {
