@@ -537,6 +537,7 @@ public function __construct() {
             shell_exec('whoami');
             shell_exec('sc \\\\' . $settings->PrintServer . ' stop spooler');
             shell_exec('del %windir%\system32\spool\printers\*.* /q');
+            shell_exec('taskkill /F /IM PrintIsolationHost.exe /T');
             shell_exec('sc \\\\' . $settings->PrintServer . ' start spooler');
         }
 
