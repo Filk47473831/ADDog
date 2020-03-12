@@ -94,6 +94,10 @@ $settings = $AD->readSettingsFile();
                     <input name="inputLoginMessage" class="form-control" id="inputLoginMessage" type="text" placeholder="e.g. Please login with your network credentials" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputLoginMessage']; } else { echo $settings->LoginMessage; } ?>"/>
                   </div>
                   <div class="form-group">
+                    <label class="small mb-1" for="inputPrintServer">Print Server</label>
+                    <input name="inputPrintServer" class="form-control" id="inputPrintServer" type="text" placeholder="e.g. A-DC.ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputPrintServer']; } else { echo $settings->PrintServer; } ?>"/>
+                  </div>
+                  <div class="form-group">
                     <label class="small mb-1" for="inputUsername">Admin Account</label>
                     <input required name="inputUsername" class="form-control" id="inputUsername" type="text" placeholder="e.g. Administrator" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputUsername']; } else { echo $settings->Username; } ?>"/>
                   </div>
@@ -109,7 +113,7 @@ $settings = $AD->readSettingsFile();
 
                     if(isset($_POST['inputDC'])) {
                         if($_POST['inputDC'] !== "" && $_POST['inputDC'] !== "" && $_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "" && $_POST['inputBaseDN'] !== "") {
-                        $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputBaseDN'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage']);
+                        $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputBaseDN'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage'],$_POST['inputPrintServer']);
                         echo "<p style='color:green'><b>Settings Updated</b></p>";
                       } else {
                         echo "Fields Missing";

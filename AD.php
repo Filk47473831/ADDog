@@ -445,7 +445,7 @@ public function __construct() {
           return $settings;
         }
 
-        function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials") {
+        function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials",$printServer = "") {
           if($loginMessage === "") { $loginMessage = "Please login with your network credentials"; }
           $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "w") or die("Unable to open settings.");
           $settings = new \stdClass;
@@ -457,6 +457,7 @@ public function __construct() {
           $settings->SearchOU = $searchOU;
           $settings->PasswordMinLength = $passwordMinLength;
           $settings->LoginMessage = $loginMessage;
+          $settings->PrintServer = $printServer;
           $settings = json_encode($settings);
           $settings = $this->encryptData($settings);
           fwrite($settingsFile, $settings);
@@ -531,10 +532,12 @@ public function __construct() {
         }
 
         function resetPrintQueue() {
+            global $settings;
+            if($settings->PrintServer == "") { $settings->PrintServer = "%COMPUTERNAME%"; }
             shell_exec('whoami');
-            shell_exec('sc \\\\%COMPUTERNAME% stop spooler');
+            shell_exec('sc \\\\' . $settings->PrintServer . ' stop spooler');
             shell_exec('del %windir%\system32\spool\printers\*.* /q');
-            shell_exec('sc \\\\%COMPUTERNAME% start spooler');
+            shell_exec('sc \\\\' . $settings->PrintServer . ' start spooler');
         }
 
         function login() {

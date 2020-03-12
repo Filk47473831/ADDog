@@ -1,4 +1,5 @@
-<?php require("header.php"); ?>
+<?php require("header.php");
+$settings = $AD->readSettingsFile(); ?>
 <main>
     <div class="container-fluid">
         <h3 class="mt-4">Reset Print Queue</h3>
@@ -10,6 +11,7 @@
             <div class="card shadow-lg border-0 rounded-lg mt-2">
                 <div class="card-body">
                   <?php
+
                   if(isset($_POST['resetPrintQueue'])) {
                     echo $AD->resetPrintQueue();
                     $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Print Queue Reset,-," . $_SESSION['username']);
