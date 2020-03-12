@@ -87,7 +87,7 @@ $settings = $AD->readSettingsFile();
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputPWMinLength">Password Minimum Length</label>
-                    <input name="inputPWMinLength" class="form-control" id="inputPWMinLength" type="number" min="0" placeholder="10" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputPWMinLength']; } else { echo $settings->PasswordMinLength; } ?>"/>
+                    <input name="inputPWMinLength" class="form-control" id="inputPWMinLength" type="number" min="0" placeholder="e.g. 10" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputPWMinLength']; } else { echo $settings->PasswordMinLength; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputLoginMessage">Custom Login Message</label>
