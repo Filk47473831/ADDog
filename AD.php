@@ -534,7 +534,6 @@ public function __construct() {
         function resetPrintQueue() {
             global $settings;
             if($settings->PrintServer == "") { $settings->PrintServer = "%COMPUTERNAME%"; }
-            shell_exec('whoami');
             shell_exec('sc \\\\' . $settings->PrintServer . ' stop spooler');
             shell_exec('del %windir%\system32\spool\printers\*.* /q');
             shell_exec('taskkill /F /IM PrintIsolationHost.exe /T');
