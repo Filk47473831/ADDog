@@ -534,38 +534,30 @@ public function __construct() {
         function createPSExec($script) {
           global $settings;
           $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1';
-          if(file_exists($filename)) {
-            return file_get_contents($filename, true);
-          } else {
-            $text = '$password = "' . $settings->Password . '" | ConvertTo-SecureString -asPlainText -Force; $cred = New-Object System.Management.Automation.PSCredential("' . $settings->Username . '",$password); Invoke-Command -ComputerName ' . $settings->PrintServer . ' -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $script . '.ps1" -Credential $cred';
-            file_put_contents($filename, $text);
-            return $text;
-          }
+          $text = '$password = "' . $settings->Password . '" | ConvertTo-SecureString -asPlainText -Force; $cred = New-Object System.Management.Automation.PSCredential("' . $settings->Username . '",$password); Invoke-Command -ComputerName ' . $settings->PrintServer . ' -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $script . '.ps1" -Credential $cred';
+          file_put_contents($filename, $text);
+          shell_exec('PowerShell.exe -ExecutionPolicy Bypass -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1"');
+          unlink(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1');
         }
 
-        function createSpoolScript() {
+        function createPSScript($name,$script) {
           global $settings;
-          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'spool.ps1';
-          if(file_exists($filename)) {
-            return file_get_contents($filename, true);
-          } else {
-            $text = 'Stop-Service -Name spooler -Force
-                    Get-Process PrintIsolationHost | Stop-Process -Force
-                    Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*"
-                    Start-Service -Name spooler';
-            file_put_contents($filename, $text);
-            return $text;
-          }
+          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $name . '.ps1';
+          $text = 'Stop-Service -Name spooler -Force
+                  Get-Process PrintIsolationHost | Stop-Process -Force
+                  Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*"
+                  Start-Service -Name spooler';
+          file_put_contents($filename, $script);
+          return $text;
         }
 
         function resetPrintQueue() {
             global $settings;
-            $this->createSpoolScript();
+            $this->createPSScript('spool','Stop-Service -Name spooler -Force
+                    Get-Process PrintIsolationHost | Stop-Process -Force
+                    Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*" -Recurse -Force
+                    Start-Service -Name spooler');
             $this->createPSExec("spool");
-            if($settings->PrintServer == "") { $settings->PrintServer = "%COMPUTERNAME%"; }
-            shell_exec('PowerShell.exe -ExecutionPolicy Bypass -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1"');
-            unlink(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1');
-            unlink(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'spool.ps1');
         }
 
         function login() {
