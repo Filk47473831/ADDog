@@ -40,8 +40,6 @@ if(isset($_POST['updateAuthorisedAdmins'])) {
   $distinguishedNames = explode(", ", $_POST['distinguishednames']);
   $distinguishedNames = array_unique($distinguishedNames);
   $distinguishedNames = array_filter($distinguishedNames);
-  //if(is_array($distinguishedNames)) { $distinguishedNames = json_encode($distinguishedNames); }
-  //$distinguishedNames = json_encode($distinguishedNames);
   $authList[$username]['username'] = $username;
   $authList[$username]['distinguishednames'] = $distinguishedNames;
   $AD->writeAuthFile($authList);
@@ -54,6 +52,11 @@ if(isset($_POST['clearAuthorisedAdmins'])) {
 
 if(isset($_POST['clearAllLog'])) {
   $AD->writeActivityLogFile("CLEAR_ALL_LOG");
+}
+
+if(isset($_POST['resetPrintQueue'])) {
+  echo $AD->resetPrintQueue();
+  $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Print Queue Reset,-," . $_SESSION['username']);
 }
 
  ?>

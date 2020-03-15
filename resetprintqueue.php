@@ -9,27 +9,35 @@ $settings = $AD->readSettingsFile(); ?>
         </ol>
             <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
             <div class="card shadow-lg border-0 rounded-lg mt-2">
-                <div class="card-body">
-                  <?php
-
-                  if(isset($_POST['resetPrintQueue'])) {
-                    echo $AD->resetPrintQueue();
-                    $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Print Queue Reset,-," . $_SESSION['username']);
-                  ?>
-                  <p>Print Queue Reset Successfully</p>
-                  <a href="resetprintqueue"><button class="btn btn-success">Back</button></a>
-                <?php } else { ?>
-                  <form action="resetprintqueue" method="POST">
+                <div id="printResetForm" class="card-body">
                     <input hidden name="resetPrintQueue">
                     <p>Clear all currently pending jobs in the printer queue.</p>
                       <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                          <input type="submit" class="btn btn-primary" href="#" value="Reset Print Queue">
+                          <button id="resetPrintQueueBtn" onclick="resetPrintQueue()" type="button" class="btn btn-primary">Reset Print Queue</button>
                       </div>
-                  </form>
-                <?php } ?>
                 </div>
             </div>
             </div>
     </div>
 </main>
+<script>
+function resetPrintQueue(){
+
+  document.getElementById("resetPrintQueueBtn").innerHTML = 'Reset Print Queue &nbsp;<i style="margin-top:2px" class="fas fa-circle-notch fa-spin"></i>';
+
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+      document.getElementById("printResetForm").innerHTML = '<p>Print Queue Reset Successfully</p><a href="resetprintqueue"><button class="btn btn-success">Back</button></a>';
+    }
+  }
+  xmlhttp.open("POST", "control/controller", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("resetPrintQueue");
+}
+</script>
 <?php require("footer.php"); ?>

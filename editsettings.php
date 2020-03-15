@@ -154,10 +154,6 @@ $settings = $AD->readSettingsFile();
             Clear
           </button>
         </div>
-        <!-- <div class="form-group">
-          <label class="small mb-1" for="inputAuthorisedAdminSearchOUs">User Search OUs (1 DN Per Line)</label>
-          <textarea class="form-control" id="inputAuthorisedAdminSearchOUs" type="text" rows="5" placeholder="e.g. OU=Users,OU=Arunside,DC=ASDOMAIN,DC=local"></textarea>
-        </div> -->
       </div>
       <div class="modal-footer">
         <button id="updateAuthorisedAdminsSaveBtn" onclick="updateAuthorisedAdmins()" type="button" class="btn btn-primary">Save</button>
