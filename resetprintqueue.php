@@ -1,5 +1,4 @@
-<?php require("header.php");
-$settings = $AD->readSettingsFile(); ?>
+<?php require("header.php"); ?>
 <main>
     <div class="container-fluid">
         <h3 class="mt-4">Reset Print Queue</h3>

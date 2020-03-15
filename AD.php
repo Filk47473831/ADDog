@@ -532,7 +532,7 @@ public function __construct() {
         }
 
         function createPSExec($script) {
-          global $settings;
+          $settings = $this->readSettingsFile();
           $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1';
           $text = '$password = "' . $settings->Password . '" | ConvertTo-SecureString -asPlainText -Force; $cred = New-Object System.Management.Automation.PSCredential("' . $settings->Username . '",$password); Invoke-Command -ComputerName ' . $settings->PrintServer . ' -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $script . '.ps1" -Credential $cred';
           file_put_contents($filename, $text);
@@ -541,7 +541,7 @@ public function __construct() {
         }
 
         function createPSScript($name,$script) {
-          global $settings;
+          $settings = $this->readSettingsFile();
           $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $name . '.ps1';
           $text = 'Stop-Service -Name spooler -Force
                   Get-Process PrintIsolationHost | Stop-Process -Force
@@ -552,7 +552,7 @@ public function __construct() {
         }
 
         function resetPrintQueue() {
-            global $settings;
+            $settings = $this->readSettingsFile();
             $this->createPSScript('spool','Stop-Service -Name spooler -Force
                     Get-Process PrintIsolationHost | Stop-Process -Force
                     Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*" -Recurse -Force
