@@ -531,13 +531,41 @@ public function __construct() {
           }
         }
 
+        function createPSExec($script) {
+          global $settings;
+          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1';
+          if(file_exists($filename)) {
+            return file_get_contents($filename, true);
+          } else {
+            $text = '$password = "' . $settings->Password . '" | ConvertTo-SecureString -asPlainText -Force; $cred = New-Object System.Management.Automation.PSCredential("' . $settings->Username . '",$password); Invoke-Command -ComputerName ' . $settings->PrintServer . ' -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $script . '.ps1" -Credential $cred';
+            file_put_contents($filename, $text);
+            return $text;
+          }
+        }
+
+        function createSpoolScript() {
+          global $settings;
+          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'spool.ps1';
+          if(file_exists($filename)) {
+            return file_get_contents($filename, true);
+          } else {
+            $text = 'Stop-Service -Name spooler -Force
+                    Get-Process PrintIsolationHost | Stop-Process -Force
+                    Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*"
+                    Start-Service -Name spooler';
+            file_put_contents($filename, $text);
+            return $text;
+          }
+        }
+
         function resetPrintQueue() {
             global $settings;
+            $this->createSpoolScript();
+            $this->createPSExec("spool");
             if($settings->PrintServer == "") { $settings->PrintServer = "%COMPUTERNAME%"; }
-            shell_exec('sc \\\\' . $settings->PrintServer . ' stop spooler');
-            shell_exec('del %windir%\system32\spool\printers\*.* /q');
-            shell_exec('taskkill /F /IM PrintIsolationHost.exe /T');
-            shell_exec('sc \\\\' . $settings->PrintServer . ' start spooler');
+            shell_exec('PowerShell.exe -ExecutionPolicy Bypass -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1"');
+            unlink(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1');
+            unlink(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'spool.ps1');
         }
 
         function login() {
