@@ -544,8 +544,11 @@ public function __construct() {
           $settings = $this->readSettingsFile();
           $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $name . '.ps1';
           $text = 'Stop-Service -Name spooler -Force
+                  Start-Sleep -s 3
                   Get-Process PrintIsolationHost | Stop-Process -Force
+                  Start-Sleep -s 3
                   Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*"
+                  Start-Sleep -s 3
                   Start-Service -Name spooler';
           file_put_contents($filename, $script);
           return $text;
