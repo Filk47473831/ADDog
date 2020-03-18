@@ -546,8 +546,9 @@ public function __construct() {
           $text = 'Stop-Service -Name spooler -Force
                   Start-Sleep -s 3
                   Get-Process PrintIsolationHost | Stop-Process -Force
+                  Get-Process mmc | Stop-Process -Force
                   Start-Sleep -s 3
-                  Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*"
+                  Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*" -Force
                   Start-Sleep -s 3
                   Start-Service -Name spooler';
           file_put_contents($filename, $script);
