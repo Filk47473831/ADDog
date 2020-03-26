@@ -67,12 +67,12 @@
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputFirstName">First Name</label>
-                  <input required name="inputFirstName" class="<?php if(isset($_POST['inputFirstName']) && $testFirstName !== "") { echo "is-invalid"; } ?> form-control" id="inputFirstName" type="text" placeholder="John" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputFirstName']; } ?>"/>
+                  <input autocomplete="off" required name="inputFirstName" class="<?php if(isset($_POST['inputFirstName']) && $testFirstName !== "") { echo "is-invalid"; } ?> form-control" id="inputFirstName" type="text" placeholder="John" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputFirstName']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testFirstName; } ?></div>
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputLastName">Last Name</label>
-                  <input name="inputLastName" class="<?php if(isset($_POST['inputFirstName']) && $testLastName !== "") { echo "is-invalid"; } ?> form-control" id="inputLastName" type="text" placeholder="Smith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputLastName']; } ?>"/>
+                  <input autocomplete="off" name="inputLastName" class="<?php if(isset($_POST['inputFirstName']) && $testLastName !== "") { echo "is-invalid"; } ?> form-control" id="inputLastName" type="text" placeholder="Smith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputLastName']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testLastName; } ?></div>
                 </div>
                 <p style="cursor:pointer" class="small unselectable" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -81,27 +81,27 @@
                 <div class="collapse" id="collapseExample">
                   <div class="form-group">
                     <label class="small mb-1" for="inputUPNSuffix">UPN Suffix</label>
-                    <input name="inputUPNSuffix" class="form-control" id="inputUPNSuffix" type="text" placeholder="e.g. arunside.school" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUPNSuffix']; } ?>"/>
+                    <input autocomplete="off" name="inputUPNSuffix" class="form-control" id="inputUPNSuffix" type="text" placeholder="e.g. arunside.school" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUPNSuffix']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputEmailAddress">Email Address</label>
-                    <input required name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. jsmith@arunside.school" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
+                    <input autocomplete="off" required name="inputEmailAddress" class="form-control" id="inputEmailAddress" type="text" placeholder="e.g. jsmith@arunside.school" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputEmailAddress']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputHomeDirectory">Home Directory</label>
-                    <input required name="inputHomeDirectory" class="form-control" id="inputHomeDirectory" type="text" placeholder="e.g. \\AS-DC\Staff$\%USERNAME%" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputHomeDirectory']; } ?>"/>
+                    <input autocomplete="off" required name="inputHomeDirectory" class="form-control" id="inputHomeDirectory" type="text" placeholder="e.g. \\AS-DC\Staff$\%USERNAME%" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputHomeDirectory']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputHomeDrive">Home Drive Letter</label>
-                    <input required name="inputHomeDrive" class="form-control" id="inputHomeDrive" type="text" placeholder="e.g. U" maxlength="1" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputHomeDrive']; } ?>"/>
+                    <input autocomplete="off" required name="inputHomeDrive" class="form-control" id="inputHomeDrive" type="text" placeholder="e.g. U" maxlength="1" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputHomeDrive']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputProfilePath">Profile Path</label>
-                    <input name="inputProfilePath" class="form-control" id="inputProfilePath" type="text" placeholder="e.g. \\AS-DC\Profiles$\%USERNAME%" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputProfilePath']; } ?>"/>
+                    <input autocomplete="off" name="inputProfilePath" class="form-control" id="inputProfilePath" type="text" placeholder="e.g. \\AS-DC\Profiles$\%USERNAME%" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputProfilePath']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputScriptPath">Logon Script</label>
-                    <input name="inputScriptPath" class="form-control" id="inputScriptPath" type="text" placeholder="e.g. Staff.bat" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputScriptPath']; } ?>"/>
+                    <input autocomplete="off" name="inputScriptPath" class="form-control" id="inputScriptPath" type="text" placeholder="e.g. Staff.bat" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputScriptPath']; } ?>"/>
                   </div>
                   <div class="form-group">
                     <label class="small mb-1" for="inputGroupDN">Member Group Name's (1 Per Line)</label>
@@ -114,20 +114,20 @@
                   <div id="OUTree">
                     <?php $AD->showOUTree(); ?>
                   </div>
-                  <input required style="border:0px" required class="<?php if(isset($_POST['inputFirstName']) && $testUserOU !== "") { echo "is-invalid"; } ?> form-control mt-3" name="inputUserOU" id="inputUserOU" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUserOU']; } ?>" placeholder="Select target OU for new user">
+                  <input autocomplete="off" required style="border:0px" required class="<?php if(isset($_POST['inputFirstName']) && $testUserOU !== "") { echo "is-invalid"; } ?> form-control mt-3" name="inputUserOU" id="inputUserOU" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUserOU']; } ?>" placeholder="Select target OU for new user">
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testUserOU; } ?></div>
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputUsername">Username</label>
-                  <input required name="inputUsername" class="<?php if(isset($_POST['inputFirstName']) && $testUsername !== "") { echo "is-invalid"; } ?> form-control" id="inputUsername" type="text" placeholder="jsmith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUsername']; } ?>"/>
+                  <input autocomplete="off" required name="inputUsername" class="<?php if(isset($_POST['inputFirstName']) && $testUsername !== "") { echo "is-invalid"; } ?> form-control" id="inputUsername" type="text" placeholder="jsmith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUsername']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testUsername; } ?></div>
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputPassword">Password</label>
-                  <input required name="inputPassword" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="Enter Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPassword']; } ?>"/>
+                  <input autocomplete="off" required name="inputPassword" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="Enter Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPassword']; } ?>"/>
                 </div>
                 <div class="form-group">
-                  <input required name="inputPasswordConf" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPasswordConf" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPasswordConf']; } ?>"/>
+                  <input autocomplete="off" required name="inputPasswordConf" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPasswordConf" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPasswordConf']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testPassword; } ?></div>
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">

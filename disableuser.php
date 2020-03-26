@@ -32,7 +32,7 @@
                       <form action="disableuser" method="POST">
                           <div class="form-group">
                               <label class="small mb-1" for="inputUser">Select User</label>
-                              <input required class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>
+                              <input autocomplete="off" required class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>
                               <input readonly style="margin-top:3px;border:0px;font-size:0.8rem" class="form-control" name="inputUser" id="inputUser-id">
                           </div>
                           <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">

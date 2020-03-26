@@ -45,16 +45,16 @@
                     <form action="resetpw" method="POST">
                         <div class="form-group">
                             <label class="small mb-1" for="inputUser">Select User</label>
-                            <input required class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>
+                            <input autocomplete="off" required class="form-control" id="inputUser" type="text" placeholder="e.g. John Smith" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUser']; } ?>"/>
                             <input readonly style="margin-top:3px;border:0px;font-size:0.8rem" class="form-control" name="inputUser" id="inputUser-id">
                         </div>
                         <div class="form-group">
                             <label class="small mb-1" for="inputPassword">New Password</label>
-                            <input required name="inputPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="New Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputPassword']; } ?>"/>
+                            <input autocomplete="off" required name="inputPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="New Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputPassword']; } ?>"/>
                         </div>
                         <div class="form-group">
                             <label class="small mb-1" for="inputConfPassword">Confirm Password</label>
-                            <input required name="inputConfPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputConfPassword" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputConfPassword']; } ?>"/>
+                            <input autocomplete="off" required name="inputConfPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputConfPassword" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputConfPassword']; } ?>"/>
                             <div class="invalid-feedback"><?php if(isset($_POST['inputPassword'])) { echo $testPassword; } ?></div>
                         </div>
                         <div class="form-check">
