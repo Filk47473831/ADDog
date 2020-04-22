@@ -30,7 +30,7 @@
                   $name = explode(",",$_POST['inputUser']);
                   $name = $name[0];
                   $name = substr($name, 3);
-                  echo '<p>Password Reset Successfully</p><p>' . $name . '\'s new password is: ' . $_POST['inputPassword'] . '</p>
+                  echo '<p>Password Reset Successfully</p><p>' . $name . '\'s new password is: <b>' . $_POST['inputPassword'] . '</b></p>
                       <a href="resetpw"><button class="btn btn-success">Back</button></a>';
                 } else {
                   echo '<p>' . $testPassword . '</p><a href="resetpw"><button class="btn btn-success">Back</button></a>';

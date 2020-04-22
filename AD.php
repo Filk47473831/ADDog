@@ -8,8 +8,10 @@ public $ds = '';
 public $settings = '';
 
 public function __construct() {
-    $this->username = strtolower($_SESSION['username']);
-    $this->admin = $_SESSION['admin'];
+    $this->username = strtolower("Administrator");
+    $this->admin = "Administrator";
+    // $this->username = strtolower($_SESSION['username']);
+    // $this->admin = $_SESSION['admin'];
 }
 
         function connect() {
@@ -213,6 +215,7 @@ public function __construct() {
               foreach($groups as $group){
                 $this->addUsersToGroup($dn,$group);
               }
+              $this->runADSync();
             }
         }
 
@@ -273,7 +276,9 @@ public function __construct() {
                 $errno = ldap_errno($ds);
                 $response = "Password cannot be reset - " . $error . " (" . $errno . ")";
                 return $response;
-                }
+            } else {
+              $this->runADSync();
+            }
         }
 
         function hashPassword($newpassword) {
@@ -369,9 +374,9 @@ public function __construct() {
 
         function readUserTemplatesFile() {
           $userTemplates = [];
-          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "r") or die("Unable to open user templates.");
-          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data") > 0) {
-          $userTemplates = fread($userTemplatesFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data"));
+          $userTemplatesFile = fopen("C:\Program Files (x86)\ADDog\usertemplates.data", "r") or die("Unable to open user templates.");
+          if(filesize("C:\Program Files (x86)\ADDog\usertemplates.data") > 0) {
+          $userTemplates = fread($userTemplatesFile,filesize("C:\Program Files (x86)\ADDog\usertemplates.data"));
           $userTemplates = $this->decryptData($userTemplates);
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
@@ -418,7 +423,7 @@ public function __construct() {
           $userTemplates[$userTemplate['userTemplateName']]['authorisedUsers'] = $userTemplate['authorisedUsers'];
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
-          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
+          $userTemplatesFile = fopen("C:\Program Files (x86)\ADDog\usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
         }
@@ -428,16 +433,16 @@ public function __construct() {
           unset($userTemplates[$userTemplate]);
           $userTemplates = json_encode($userTemplates);
           $userTemplates = $this->encryptData($userTemplates);
-          $userTemplatesFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "usertemplates.data", "w") or die("Unable to open user templates.");
+          $userTemplatesFile = fopen("C:\Program Files (x86)\ADDog\usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
         }
 
         function readSettingsFile() {
           $settings = json_decode('{"Server":"","Domain":"","Username":"","Password":"","SearchOU":""}');
-          $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "r") or die("Unable to open settings.");
-          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data") > 0) {
-          $settings = fread($settingsFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data"));
+          $settingsFile = fopen("C:\Program Files (x86)\ADDog\settings.data", "r") or die("Unable to open settings.");
+          if(filesize("C:\Program Files (x86)\ADDog\settings.data") > 0) {
+          $settings = fread($settingsFile,filesize("C:\Program Files (x86)\ADDog\settings.data"));
           $settings = $this->decryptData($settings);
           $settings = json_decode($settings);
           fclose($settingsFile);
@@ -445,9 +450,9 @@ public function __construct() {
           return $settings;
         }
 
-        function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials",$printServer = "") {
+        function writeSettingsFile($dc,$domain,$username,$password,$searchOU,$passwordMinLength = 0,$loginMessage = "Please login with your network credentials",$printServer = "",$adSyncServer = "") {
           if($loginMessage === "") { $loginMessage = "Please login with your network credentials"; }
-          $settingsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "settings.data", "w") or die("Unable to open settings.");
+          $settingsFile = fopen("C:\Program Files (x86)\ADDog\settings.data", "w") or die("Unable to open settings.");
           $settings = new \stdClass;
           $searchOU = explode("\r\n",$searchOU);
           $settings->Server = $dc;
@@ -458,6 +463,7 @@ public function __construct() {
           $settings->PasswordMinLength = $passwordMinLength;
           $settings->LoginMessage = $loginMessage;
           $settings->PrintServer = $printServer;
+          $settings->ADSyncServer = $adSyncServer;
           $settings = json_encode($settings);
           $settings = $this->encryptData($settings);
           fwrite($settingsFile, $settings);
@@ -465,9 +471,9 @@ public function __construct() {
         }
 
         function readActivityLogFile() {
-          $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "r") or die("Unable to open log.");
-          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log") > 0) {
-          $activities = fread($activityLogFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log"));
+          $activityLogFile = fopen("C:\Program Files (x86)\ADDog\activity.log", "r") or die("Unable to open log.");
+          if(filesize("C:\Program Files (x86)\ADDog\activity.log") > 0) {
+          $activities = fread($activityLogFile,filesize("C:\Program Files (x86)\ADDog\activity.log"));
           $activities = explode("\n",$activities);
           return $activities;
           fclose($activityLogFile);
@@ -486,7 +492,7 @@ public function __construct() {
             $activities = implode("\r\n",$activities);
             }
           }
-          $activityLogFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "activity.log", "w") or die("Unable to open log.");
+          $activityLogFile = fopen("C:\Program Files (x86)\ADDog\activity.log", "w") or die("Unable to open log.");
           fwrite($activityLogFile, $activities);
           fclose($activityLogFile);
         }
@@ -516,7 +522,7 @@ public function __construct() {
         }
 
         function getKey() {
-          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'set.data';
+          $filename = "C:\Program Files (x86)\ADDog\set.data";
           if(file_exists($filename)) {
             return file_get_contents($filename, true);
           } else {
@@ -531,28 +537,19 @@ public function __construct() {
           }
         }
 
-        function createPSExec($script) {
+        function createPSExec($script,$server) {
           $settings = $this->readSettingsFile();
-          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1';
-          $text = '$password = "' . $settings->Password . '" | ConvertTo-SecureString -asPlainText -Force; $cred = New-Object System.Management.Automation.PSCredential("' . $settings->Username . '",$password); Invoke-Command -ComputerName ' . $settings->PrintServer . ' -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $script . '.ps1" -Credential $cred';
+          $filename = 'C:\Program Files (x86)\ADDog\exec.ps1';
+          $text = '$password = "' . $settings->Password . '" | ConvertTo-SecureString -asPlainText -Force; $cred = New-Object System.Management.Automation.PSCredential("' . $settings->Username . '",$password); Invoke-Command -ComputerName ' . $server . ' -File "C:\Program Files (x86)\ADDog\\' . $script . '.ps1" -Credential $cred';
           file_put_contents($filename, $text);
-          shell_exec('PowerShell.exe -ExecutionPolicy Bypass -File "' . substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1"');
-          unlink(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'exec.ps1');
+          shell_exec('PowerShell.exe -ExecutionPolicy Bypass -File "C:\Program Files (x86)\ADDog\exec.ps1"');
+          unlink('C:\Program Files (x86)\ADDog\exec.ps1');
         }
 
         function createPSScript($name,$script) {
           $settings = $this->readSettingsFile();
-          $filename = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . $name . '.ps1';
-          $text = 'Stop-Service -Name spooler -Force
-                  Start-Sleep -s 3
-                  Get-Process PrintIsolationHost | Stop-Process -Force
-                  Get-Process mmc | Stop-Process -Force
-                  Start-Sleep -s 3
-                  Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*.*" -Force
-                  Start-Sleep -s 3
-                  Start-Service -Name spooler';
+          $filename = 'C:\Program Files (x86)\ADDog\\' . $script . '.ps1';
           file_put_contents($filename, $script);
-          return $text;
         }
 
         function resetPrintQueue() {
@@ -561,7 +558,13 @@ public function __construct() {
                     Get-Process PrintIsolationHost | Stop-Process -Force
                     Remove-Item -Path "$env:SystemRoot\System32\spool\PRINTERS\*" -Recurse -Force
                     Start-Service -Name spooler');
-            $this->createPSExec("spool");
+            $this->createPSExec("spool",$settings->PrintServer);
+        }
+
+        function runADSync() {
+            $settings = $this->readSettingsFile();
+            $this->createPSScript('adsync','Start-ADSyncSyncCycle -PolicyType Delta');
+            $this->createPSExec("adsync",$settings->ADSyncServer);
         }
 
         function login() {
@@ -594,30 +597,30 @@ public function __construct() {
 
         function readAuthFile() {
           $auth = "";
-          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data") > 0) {
-          $auth = file_get_contents(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "auth.data", true);
+          if(filesize("C:\Program Files (x86)\ADDog\auth.data") > 0) {
+          $auth = file_get_contents("C:\Program Files (x86)\ADDog\auth.data", true);
           $auth = json_decode($auth, true);
           }
           return $auth;
         }
 
         function writeAuthFile($authList) {
-          $authFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'auth.data';
+          $authFile = "C:\Program Files (x86)\ADDog\auth.data";
           $authList = json_encode($authList);
           file_put_contents($authFile, $authList);
         }
 
         function writeAdminsFile($admins) {
-          $adminsFile = substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . 'admins.data';
+          $adminsFile = "C:\Program Files (x86)\ADDog\admins.data";
           file_put_contents($adminsFile, $admins);
         }
 
 
         function readAdminsFile() {
           $admins = array();
-          if(filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data") > 0) {
-          $adminsFile = fopen(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data", "r");
-          $admins = fread($adminsFile,filesize(substr($_SERVER['DOCUMENT_ROOT'], 0, -3) . "admins.data"));
+          if(filesize("C:\Program Files (x86)\ADDog\admins.data") > 0) {
+          $adminsFile = fopen("C:\Program Files (x86)\ADDog\admins.data", "r");
+          $admins = fread($adminsFile,filesize("C:\Program Files (x86)\ADDog\admins.data"));
           $admins = explode("\n",$admins);
           $admins = array_map('trim', $admins);
           $admins = array_map('strtolower', $admins);

@@ -43,7 +43,7 @@ $settings = $AD->readSettingsFile();
                     <input required name="inputDC" class="form-control" id="inputDC" type="text" placeholder="e.g. A-DC" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDC']; } else { echo $settings->Server; } ?>"/>
                   </div>
                   <div class="form-group">
-                    <label class="small mb-1" for="inputDC">Domain FQDN</label>
+                    <label class="small mb-1" for="inputDomain">Domain FQDN</label>
                     <input required name="inputDomain" class="form-control" id="inputDomain" type="text" placeholder="e.g. ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputDomain']; } else { echo $settings->Domain; } ?>"/>
                   </div>
                   <div class="form-group">
@@ -98,6 +98,10 @@ $settings = $AD->readSettingsFile();
                     <input name="inputPrintServer" class="form-control" id="inputPrintServer" type="text" placeholder="e.g. A-DC.ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputPrintServer']; } else { echo $settings->PrintServer; } ?>"/>
                   </div>
                   <div class="form-group">
+                    <label class="small mb-1" for="inputADSyncServer">AD Sync Server</label>
+                    <input name="inputADSyncServer" class="form-control" id="inputADSyncServer" type="text" placeholder="e.g. A-DC.ASDOMAIN.local" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputADSyncServer']; } else { echo $settings->ADSyncServer; } ?>"/>
+                  </div>
+                  <div class="form-group">
                     <label class="small mb-1" for="inputUsername">Admin Account</label>
                     <input required name="inputUsername" class="form-control" id="inputUsername" type="text" placeholder="e.g. Administrator" value="<?php if(isset($_POST['inputDC'])) { echo $_POST['inputUsername']; } else { echo $settings->Username; } ?>"/>
                   </div>
@@ -112,8 +116,8 @@ $settings = $AD->readSettingsFile();
                     <?php
 
                     if(isset($_POST['inputDC'])) {
-                        if($_POST['inputDC'] !== "" && $_POST['inputDC'] !== "" && $_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "" && $_POST['inputBaseDN'] !== "") {
-                        $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputBaseDN'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage'],$_POST['inputPrintServer']);
+                        if($_POST['inputDC'] !== "" && $_POST['inputDomain'] !== "" && $_POST['inputUsername'] !== "" && $_POST['inputPassword'] !== "" && $_POST['inputBaseDN'] !== "") {
+                        $settings = $AD->writeSettingsFile($_POST['inputDC'],$_POST['inputDomain'],$_POST['inputUsername'],$_POST['inputPassword'],$_POST['inputBaseDN'],$_POST['inputPWMinLength'],$_POST['inputLoginMessage'],$_POST['inputPrintServer'],$_POST['inputADSyncServer']);
                         echo "<p style='color:green'><b>Settings Updated</b></p>";
                       } else {
                         echo "Fields Missing";
