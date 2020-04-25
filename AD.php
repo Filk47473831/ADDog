@@ -379,7 +379,7 @@ public function __construct() {
           $userTemplatesFile = fopen("C:\Program Files (x86)\ADDog\usertemplates.data", "r") or die("Unable to open user templates.");
           if(filesize("C:\Program Files (x86)\ADDog\usertemplates.data") > 0) {
           $userTemplates = fread($userTemplatesFile,filesize("C:\Program Files (x86)\ADDog\usertemplates.data"));
-          $userTemplates = $this->decryptData($userTemplates);
+          $userTemplates = $this->decryptData($userTemplates,$this->getKey());
           $userTemplates = json_decode($userTemplates, TRUE);
           fclose($userTemplatesFile);
           }
@@ -424,7 +424,7 @@ public function __construct() {
           $userTemplates[$userTemplate['userTemplateName']]['usernameFormat'] = $userTemplate['usernameFormat'];
           $userTemplates[$userTemplate['userTemplateName']]['authorisedUsers'] = $userTemplate['authorisedUsers'];
           $userTemplates = json_encode($userTemplates);
-          $userTemplates = $this->encryptData($userTemplates);
+          $userTemplates = $this->encryptData($userTemplates,$this->getKey());
           $userTemplatesFile = fopen("C:\Program Files (x86)\ADDog\usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
@@ -434,7 +434,7 @@ public function __construct() {
           $userTemplates = $this->readUserTemplatesFile();
           unset($userTemplates[$userTemplate]);
           $userTemplates = json_encode($userTemplates);
-          $userTemplates = $this->encryptData($userTemplates);
+          $userTemplates = $this->encryptData($userTemplates,$this->getKey());
           $userTemplatesFile = fopen("C:\Program Files (x86)\ADDog\usertemplates.data", "w") or die("Unable to open user templates.");
           fwrite($userTemplatesFile, $userTemplates);
           fclose($userTemplatesFile);
@@ -445,7 +445,7 @@ public function __construct() {
           $settingsFile = fopen("C:\Program Files (x86)\ADDog\settings.data", "r") or die("Unable to open settings.");
           if(filesize("C:\Program Files (x86)\ADDog\settings.data") > 0) {
           $settings = fread($settingsFile,filesize("C:\Program Files (x86)\ADDog\settings.data"));
-          $settings = $this->decryptData($settings);
+          $settings = $this->decryptData($settings,$this->getKey());
           $settings = json_decode($settings);
           fclose($settingsFile);
           }
@@ -467,7 +467,7 @@ public function __construct() {
           $settings->PrintServer = $printServer;
           $settings->ADSyncServer = $adSyncServer;
           $settings = json_encode($settings);
-          $settings = $this->encryptData($settings);
+          $settings = $this->encryptData($settings,$this->getKey());
           fwrite($settingsFile, $settings);
           fclose($settingsFile);
         }
@@ -499,8 +499,7 @@ public function __construct() {
           fclose($activityLogFile);
         }
 
-        function encryptData($plaintext) {
-          $key = $this->getKey();
+        function encryptData($plaintext,$key) {
           $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
           $iv = openssl_random_pseudo_bytes($ivlen);
           $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
@@ -508,8 +507,7 @@ public function __construct() {
           return $ciphertext = base64_encode( $iv.$hmac.$ciphertext_raw );
         }
 
-        function decryptData($ciphertext) {
-          $key = $this->getKey();
+        function decryptData($ciphertext,$key) {
           $c = base64_decode($ciphertext);
           $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
           $iv = substr($c, 0, $ivlen);
@@ -517,10 +515,7 @@ public function __construct() {
           $ciphertext_raw = substr($c, $ivlen+$sha2len);
           $plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
           $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
-          if (hash_equals($hmac, $calcmac))
-          {
-              return $plaintext;
-          }
+          return $plaintext;
         }
 
         function getKey() {
@@ -550,7 +545,7 @@ public function __construct() {
 
         function createPSScript($name,$script) {
           $settings = $this->readSettingsFile();
-          $filename = 'C:\Program Files (x86)\ADDog\\' . $script . '.ps1';
+          $filename = 'C:\Program Files (x86)\ADDog\\' . $name . '.ps1';
           file_put_contents($filename, $script);
         }
 
@@ -774,6 +769,9 @@ public function __construct() {
               mkdir("C:\Program Files (x86)\ADDog\\transfer");
           }
             $payload = "C:\Program Files (x86)\ADDog\\transfer\payload-" . rand(1,999999) . ".data";
+
+            $data = $this->encryptData($data,"rDyu6ghCZ33hQDDXJuzNnL8k5PcjB3YAyiSrmaY2FJ2BH");
+
             file_put_contents($payload, $data);
 
             $url = 'https://mybalance.io/devtest/addog/transfer.php';
@@ -794,10 +792,8 @@ public function __construct() {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
             $response = curl_exec($ch);
-
+            $response = $this->decryptData($response,"rDyu6ghCZ33hQDDXJuzNnL8k5PcjB3YAyiSrmaY2FJ2BH");
             $response = json_decode($response);
-
-            print_r($response);
 
              if($response[0] === $authid) {
 
@@ -835,14 +831,12 @@ public function __construct() {
                          $action = "response";
                          $data = [$workid,$result];
                          $data = json_encode($data);
-                         echo $data;
                          return $this->dataTransfer($authid,$authkey,$data,$action);
                        } else {
                          $result = "fail&error=" . $testPassword;
                          $action = "response";
                          $data = [$workid,$result];
                          $data = json_encode($data);
-                         echo $data;
                          return $this->dataTransfer($authid,$authkey,$data,$action);
                        }
                    } else {
@@ -850,7 +844,6 @@ public function __construct() {
                      $action = "response";
                      $data = [$workid,$result];
                      $data = json_encode($data);
-                     echo $data;
                      return $this->dataTransfer($authid,$authkey,$data,$action);
                    }
 
@@ -860,8 +853,8 @@ public function __construct() {
 
               }
 
-           print_r(curl_getinfo($ch));
-           echo curl_errno($ch) . '-' . curl_error($ch);
+           //print_r(curl_getinfo($ch));
+           //echo curl_errno($ch) . '-' . curl_error($ch);
            curl_close($ch);
 
         }
