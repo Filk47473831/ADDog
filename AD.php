@@ -160,7 +160,9 @@ public function __construct() {
                 }
               }
             $users .= "]";
-          echo $users;
+            $usersFile = "C:\Program Files (x86)\ADDog\users.data";
+            file_put_contents($usersFile, $users);
+          return $users;
         }
 
         function displayUserTemplates() {
@@ -751,6 +753,116 @@ public function __construct() {
 
             echo '</li>
               </ul>';
+
+        }
+
+        function remoteManagement() {
+          return true;
+        }
+
+        function enableRemoteManagement() {
+          // Remote Management Enabled
+        }
+
+        function disableRemoteManagement() {
+          // Remote Management Disabled
+        }
+
+        function dataTransfer($authid,$authkey,$data,$action) {
+
+          if(!is_dir("C:\Program Files (x86)\ADDog\\transfer")){
+              mkdir("C:\Program Files (x86)\ADDog\\transfer");
+          }
+            $payload = "C:\Program Files (x86)\ADDog\\transfer\payload-" . rand(1,999999) . ".data";
+            file_put_contents($payload, $data);
+
+            $url = 'https://mybalance.io/devtest/addog/transfer.php';
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,
+              array(
+                'authkey' => $authkey,
+                'authid' => $authid,
+                'action' => $action,
+                'data' => curl_file_create(realpath($payload))
+              ));
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+            $response = curl_exec($ch);
+
+            $response = json_decode($response);
+
+            print_r($response);
+
+             if($response[0] === $authid) {
+
+                 $data = $response[1];
+
+                 $workid = $data->workid;
+                 $action = $data->action;
+                 $data = $data->data;
+                 $authid = substr($this->getKey(),0,12);
+
+                 switch ($action) {
+
+                   case "getUsers":
+
+                   $action = "sendingUsers";
+                   $data = $this->searchAD();
+                   $data = $this->updateUsersJSON($data);
+                   return $this->dataTransfer($authid,$authkey,$data,$action);
+
+                   break;
+
+                   case "resetPassword":
+
+                   $data = json_decode($data);
+
+                   $testPassword = $this->testPassword($data->password,$data->password);
+                   $name = explode(",",$data->user);
+                   if($testPassword == "") {
+                       $testPassword = $this->resetPassword($data->user,$data->password,$data->promptnextlogin);
+                       if($name !== "") {
+                         $this->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . ",Remote Management");
+                       }
+                       if($testPassword == "") {
+                         $result = "success";
+                         $action = "response";
+                         $data = [$workid,$result];
+                         $data = json_encode($data);
+                         echo $data;
+                         return $this->dataTransfer($authid,$authkey,$data,$action);
+                       } else {
+                         $result = "fail&error=" . $testPassword;
+                         $action = "response";
+                         $data = [$workid,$result];
+                         $data = json_encode($data);
+                         echo $data;
+                         return $this->dataTransfer($authid,$authkey,$data,$action);
+                       }
+                   } else {
+                     $result = "fail&error=" . $testPassword;
+                     $action = "response";
+                     $data = [$workid,$result];
+                     $data = json_encode($data);
+                     echo $data;
+                     return $this->dataTransfer($authid,$authkey,$data,$action);
+                   }
+
+                   break;
+
+                }
+
+              }
+
+           print_r(curl_getinfo($ch));
+           echo curl_errno($ch) . '-' . curl_error($ch);
+           curl_close($ch);
 
         }
 

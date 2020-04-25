@@ -35,6 +35,20 @@ $settings = $AD->readSettingsFile();
         </div>
       </div>
       <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
+      <div class="card shadow-lg border-0 rounded-lg mt-3 mb-2">
+          <div class="card-body">
+              <p>Remote Management</p>
+              <?php
+              if(isset($_POST['enableRM'])) { $AD->enableRemoteManagement(); }
+              if(isset($_POST['disableRM'])) { $AD->disableRemoteManagement(); }
+              ?>
+              <form action="editsettings" method="POST">
+                  <?php if($AD->remoteManagement()) { echo "<small><p><b>Auth ID:</b> 6f9449eea55b<br><b>Auth Key:</b> rDyu6ghCZ33hQDDXJuzNnL8k5PcjB3YAyiSrmaY2FJ2BH</p></small>"; ?><input type="submit" name="disableRM" class="btn btn-danger" href="#" value="Disable"><?php } else { ?><input type="submit" name="enableRM" class="btn btn-info" href="#" value="Enable"><?php } ?>
+              </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
       <div class="card shadow-lg border-0 rounded-lg mt-3 mb-5">
           <div class="card-body">
                 <form action="editsettings" method="POST">

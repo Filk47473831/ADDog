@@ -78,7 +78,7 @@
 </main>
 <script>
 $( function() {
-  var users = <?php $AD->updateUsersJSON($data); ?>;
+  var users = <?php echo $AD->updateUsersJSON($data); ?>;
 
   $("#inputUser").autocomplete({
     minLength: 0,
