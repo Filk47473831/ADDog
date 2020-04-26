@@ -43,7 +43,7 @@ $settings = $AD->readSettingsFile();
               if(isset($_POST['disableRM'])) { $AD->disableRemoteManagement(); }
               ?>
               <form action="editsettings" method="POST">
-                  <?php if($AD->remoteManagement()) { echo "<small><p><b>Auth ID:</b> 6f9449eea55b<br><b>Auth Key:</b> rDyu6ghCZ33hQDDXJuzNnL8k5PcjB3YAyiSrmaY2FJ2BH</p></small>"; ?><input type="submit" name="disableRM" class="btn btn-danger" href="#" value="Disable"><?php } else { ?><input type="submit" name="enableRM" class="btn btn-info" href="#" value="Enable"><?php } ?>
+                  <?php if($AD->remoteManagement()) { echo "<small><p><b>Auth ID:</b> " . $AD->remoteManagement()->AuthID . "<br><b>Auth Key:</b> " . $AD->remoteManagement()->AuthKey . "</p></small>"; ?><input type="submit" name="disableRM" class="btn btn-danger" href="#" value="Disable"><?php } else { ?><input type="submit" name="enableRM" class="btn btn-info" href="#" value="Enable"><?php } ?>
               </form>
           </div>
         </div>

@@ -752,15 +752,32 @@ public function __construct() {
         }
 
         function remoteManagement() {
-          return true;
+          $filename = 'C:\Program Files (x86)\ADDog\remote.data';
+          if(file_exists($filename)) {
+            $settings = file_get_contents($filename, true);
+            $settings = $this->decryptData($settings,$this->getKey());
+            $settings = json_decode($settings);
+            return $settings;
+          } else {
+            return false;
+          }
         }
 
         function enableRemoteManagement() {
-          // Remote Management Enabled
+          $filename = 'C:\Program Files (x86)\ADDog\remote.data';
+          $settings = new \stdClass;
+          $settings->AuthID = substr($this->getKey(),0,12);
+          $settings->AuthKey = bin2hex(random_bytes(30));
+          $settings = json_encode($settings);
+          $settings = $this->encryptData($settings,$this->getKey());
+          file_put_contents($filename, $settings);
+          exec('schtasks.exe /Create /XML "ADDog_RM.xml" /tn ADDog_RM /RU SYSTEM');
         }
 
         function disableRemoteManagement() {
-          // Remote Management Disabled
+          unlink('C:\Program Files (x86)\ADDog\\remote.data');
+          exec('schtasks.exe /end /TN ADDog_RM');
+          exec('schtasks.exe /delete /TN ADDog_RM /F');
         }
 
         function dataTransfer($authid,$authkey,$data,$action) {
@@ -770,7 +787,7 @@ public function __construct() {
           }
             $payload = "C:\Program Files (x86)\ADDog\\transfer\payload-" . rand(1,999999) . ".data";
 
-            $data = $this->encryptData($data,"rDyu6ghCZ33hQDDXJuzNnL8k5PcjB3YAyiSrmaY2FJ2BH");
+            $data = $this->encryptData($data,$this->remoteManagement()->AuthKey);
 
             file_put_contents($payload, $data);
 
@@ -792,7 +809,7 @@ public function __construct() {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
             $response = curl_exec($ch);
-            $response = $this->decryptData($response,"rDyu6ghCZ33hQDDXJuzNnL8k5PcjB3YAyiSrmaY2FJ2BH");
+            $response = $this->decryptData($response,$this->remoteManagement()->AuthKey);
             $response = json_decode($response);
 
              if($response[0] === $authid) {
@@ -802,7 +819,7 @@ public function __construct() {
                  $workid = $data->workid;
                  $action = $data->action;
                  $data = $data->data;
-                 $authid = substr($this->getKey(),0,12);
+                 $authid = $this->remoteManagement()->AuthID;
 
                  switch ($action) {
 
@@ -856,6 +873,7 @@ public function __construct() {
            //print_r(curl_getinfo($ch));
            //echo curl_errno($ch) . '-' . curl_error($ch);
            curl_close($ch);
+           unlink($payload);
 
         }
 
