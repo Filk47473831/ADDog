@@ -787,6 +787,8 @@ public function __construct() {
           }
             $payload = "C:\Program Files (x86)\ADDog\\transfer\payload-" . rand(1,999999) . ".data";
 
+            error_log($data);
+
             $data = $this->encryptData($data,$this->remoteManagement()->AuthKey);
 
             file_put_contents($payload, $data);
