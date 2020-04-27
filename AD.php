@@ -752,6 +752,8 @@ public function __construct() {
         }
 
         function remoteManagement() {
+          $checkTask = exec('schtasks /query /TN "ADDog_RM"');
+          if($checkTask === "") { return false; }
           $filename = 'C:\Program Files (x86)\ADDog\remote.data';
           if(file_exists($filename)) {
             $settings = file_get_contents($filename, true);
