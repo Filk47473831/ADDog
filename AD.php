@@ -836,6 +836,14 @@ public function __construct() {
 
                    break;
 
+                   case "getUserTemplates":
+
+                   $action = "sendingUserTemplates";
+                   $data = $this->readUserTemplatesFile();
+                   return $this->dataTransfer($authid,$authkey,$data,$action);
+
+                   break;
+
                    case "resetPassword":
 
                    $data = json_decode($data);
