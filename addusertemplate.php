@@ -17,7 +17,6 @@
 
             ?>
               <form action="addusertemplate" method="POST">
-                <?php print_r($AD->readUserTemplatesFile()); ?>
                 <div class="form-group">
                   <label class="small mb-1" for="inputUserTemplateName">Template Name</label>
                   <input required name="inputUserTemplateName" class="form-control" id="inputUserTemplateName" type="text" placeholder="e.g. Staff" value="<?php if(isset($_POST['inputUserTemplateName'])) { echo $_POST['inputUserTemplateName']; } ?>"/>

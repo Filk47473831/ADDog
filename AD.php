@@ -839,7 +839,12 @@ public function __construct() {
                    case "getUserTemplates":
 
                    $action = "sendingUserTemplates";
-                   $data = $this->readUserTemplatesFile();
+                   $userTemplates = $this->readUserTemplatesFile();
+                   $userTemplateNames = [];
+                   foreach($userTemplates as $userTemplate){
+                     $userTemplateNames[] = $userTemplate['name'];
+                   }
+                   $data = json_encode($userTemplateNames);
                    return $this->dataTransfer($authid,$authkey,$data,$action);
 
                    break;
