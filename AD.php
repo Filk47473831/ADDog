@@ -598,6 +598,7 @@ public function __construct() {
           $auth = file_get_contents("C:\Program Files (x86)\ADDog\auth.data", true);
           $auth = json_decode($auth, true);
           }
+          if($auth == NULL) { $auth = array(); }
           return $auth;
         }
 
@@ -622,6 +623,7 @@ public function __construct() {
           $admins = array_map('trim', $admins);
           $admins = array_map('strtolower', $admins);
           fclose($adminsFile);
+          if($admins == NULL) { $admins = array(); }
           return $admins;
           }
         }
@@ -784,12 +786,12 @@ public function __construct() {
 
         function dataTransfer($authid,$authkey,$data,$action) {
 
+          $settings = $this->readSettingsFile();
+
           if(!is_dir("C:\Program Files (x86)\ADDog\\transfer")){
               mkdir("C:\Program Files (x86)\ADDog\\transfer");
           }
             $payload = "C:\Program Files (x86)\ADDog\\transfer\payload-" . rand(1,999999) . ".data";
-
-            error_log($data);
 
             $data = $this->encryptData($data,$this->remoteManagement()->AuthKey);
 
@@ -862,24 +864,48 @@ public function __construct() {
                        }
                        if($testPassword == "") {
                          $result = "success";
-                         $action = "response";
-                         $data = [$workid,$result];
-                         $data = json_encode($data);
-                         return $this->dataTransfer($authid,$authkey,$data,$action);
                        } else {
                          $result = "fail&error=" . $testPassword;
-                         $action = "response";
-                         $data = [$workid,$result];
-                         $data = json_encode($data);
-                         return $this->dataTransfer($authid,$authkey,$data,$action);
                        }
                    } else {
                      $result = "fail&error=" . $testPassword;
+                   }
+
+                   $action = "response";
+                   $data = [$workid,$result];
+                   $data = json_encode($data);
+                   return $this->dataTransfer($authid,$authkey,$data,$action);
+
+                   break;
+
+                   case "addUser":
+
+                   $data = json_decode($data);
+
+                   $addAccount = "";
+                   $testFirstName = $this->testFirstName($data->firstname);
+                   $testLastName = $this->testLastName($data->lastname);
+                   $testUsername = $this->testUsername($data->username);
+                   $testPassword = $this->testPassword($data->password,$data->password);
+
+                   if(($testFirstName == "") && ($testLastName == "") && ($testUsername == "") && ($testPassword == "")) {
+
+                     $userTemplate = $data->usertemplate;
+                     $info = array();
+                     $info["cn"] = $data->firstname . " " . $data->lastname;
+                     $info['givenName'] = $data->firstname;
+                     $info["sn"] = $data->lastname;
+                     $info["sAMAccountName"] = $data->username;
+                     $info["UserPrincipalName"] = $data->username . "@" . $settings->Domain;
+                     $password = $user['inputPassword'];
+                     $addAccount = $this->addUser($userTemplate,$info,$password,null,null);
+
+                     if($addAccount == "") { $result = "success"; } else { $result = "fail&error=" . $addAccount; } } else { $result = "fail&error=" . $testPassword; }
+
                      $action = "response";
                      $data = [$workid,$result];
                      $data = json_encode($data);
                      return $this->dataTransfer($authid,$authkey,$data,$action);
-                   }
 
                    break;
 
