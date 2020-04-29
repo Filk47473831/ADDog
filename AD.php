@@ -903,7 +903,7 @@ public function __construct() {
                      $info["sn"] = $data->lastname;
                      $info["sAMAccountName"] = $data->username;
                      $info["UserPrincipalName"] = $data->username . "@" . $settings->Domain;
-                     $password = $user['inputPassword'];
+                     $password = $data->password;
                      $addAccount = $this->addUser($userTemplate,$info,$password,null,null);
 
                      if($addAccount == "") { $result = "success"; } else { $result = "fail&error=" . $addAccount; } } else { $result = "fail&error=" . $testPassword; }
