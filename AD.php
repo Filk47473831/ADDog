@@ -210,7 +210,11 @@ public function __construct() {
               $response = "Account cannot be added - " . $error . " (" . $errno . ")";
               return $response;
             } else {
-              $this->resetPassword($dn,$password,null);
+              $resetPassword = $this->resetPassword($dn,$password,null);
+              error_log("Resetting Password");
+              error_log($dn);
+              error_log($password);
+              error_log($resetPassword);
               if($userTemplate !== null) {
                 $groups = $group[2];
               }
@@ -715,6 +719,7 @@ public function __construct() {
         function showOUTree() {
           global $ds;
           global $settings;
+          $settings = $this->readSettingsFile();
 
           echo '<ul>
                   <li class="jstree-open">' . $settings->Domain;
