@@ -211,11 +211,6 @@ public function __construct() {
               return $response;
             } else {
               $resetPassword = $this->resetPassword($dn,$password,null);
-              $output = "Resetting Password - CN: " . $dn . " Password: " . $password . " Output: " . $resetPassword;
-
-              $outputFilename = 'C:\Program Files (x86)\ADDog\\output.txt';
-              file_put_contents($outputFilename, $output);
-
               if($userTemplate !== null) {
                 $groups = $group[2];
               }
