@@ -32,6 +32,34 @@ public function __construct() {
           $r = ldap_bind($ds, $user, $psw) or die("Could not bind to AD. Please check your <a href='settings'>Settings</a>.");
         }
 
+        function searchADAll() {
+            global $ds;
+            global $settings;
+
+            $data = [];
+            $count = 0;
+
+            if($this->checkAdminLevel($this->username)) { $searchOU = $settings->SearchOU; } else {
+              $searchOU = $this->getAuthorisedOU($this->username);
+            }
+
+            foreach($searchOU as $dn) {
+              $search = "(&(objectCategory=organizationalPerson)(objectClass=User))";
+              ldap_set_option($ds, LDAP_OPT_SIZELIMIT, 10000);
+              $sr = ldap_search($ds, $dn, $search);
+              $results = ldap_get_entries($ds, $sr);
+              $count = $results["count"] + $count;
+              array_shift($results);
+              foreach($results as $result) {
+                $authUsers = $this->readAuthFile();
+                $adminUsers = $this->readAdminsFile();
+                if(array_key_exists(strtolower($result["samaccountname"][0]),$authUsers) || in_array(strtolower($result["samaccountname"][0]),$adminUsers)) { } else { $data[] = $result; }
+                }
+              }
+              $data['count'] = $count;
+              return $data;
+        }
+
         function searchAD() {
             global $ds;
             global $settings;
@@ -156,7 +184,7 @@ public function __construct() {
             for ($i = 0; $i < $data["count"]; $i++) {
               if(isset($data[$i])) {
                 if($i !== 0) { $users .= ","; }
-                  $users .= '{ "value": "' . $data[$i]["distinguishedname"][0] . '", "label": "' . $data[$i]["cn"][0] . '" }';
+                  $users .= '{ "value": "' . $data[$i]["distinguishedname"][0] . '", "label": "' . $data[$i]["cn"][0] . '", "status": "' . $data[$i]['useraccountcontrol'][0] . '" }';
                 }
               }
             $users .= "]";
@@ -755,8 +783,6 @@ public function __construct() {
         }
 
         function remoteManagement() {
-          $checkTask = exec('schtasks /query /TN "ADDog_RM"');
-          if($checkTask === "") { return false; }
           $filename = 'C:\Program Files (x86)\ADDog\remote.data';
           if(file_exists($filename)) {
             $settings = file_get_contents($filename, true);
@@ -833,7 +859,7 @@ public function __construct() {
                    case "getUsers":
 
                    $action = "sendingUsers";
-                   $data = $this->searchAD();
+                   $data = $this->searchADAll();
                    $data = $this->updateUsersJSON($data);
                    return $this->dataTransfer($authid,$authkey,$data,$action);
 
@@ -901,7 +927,7 @@ public function __construct() {
                      $password = $data->password;
                      $addAccount = $this->addUser($userTemplate,$info,$password,null,null);
 
-                     if($addAccount == "") { $result = "success"; } else { $result = "fail&error=" . $addAccount; } } else { $result = "fail&error=" . $testPassword; }
+                     if($addAccount == "") { $result = "success"; $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",User Added," . $info['givenName'] . " " . $info["sn"] . ",Remote Management"); } else { $result = "fail&error=" . $addAccount; } } else { $result = "fail&error=" . $testPassword; }
 
                      $action = "response";
                      $data = [$workid,$result];
@@ -910,14 +936,62 @@ public function __construct() {
 
                    break;
 
+                   case "removeUser":
+
+                   $data = json_decode($data);
+
+                   $this->removeUser($data->username);
+                   $name = explode(",",$data->username);
+                   $this->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Removed User," . substr($name[0], 3) . ",Remote Management");
+
+                   $result = "success";
+                   $action = "response";
+                   $data = [$workid,$result];
+                   $data = json_encode($data);
+                   return $this->dataTransfer($authid,$authkey,$data,$action);
+
+                   break;
+
+                   case "enableUser":
+
+                   $data = json_decode($data);
+
+                   $this->enableUser($data->username);
+                   $name = explode(",",$data->username);
+                   $this->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Enabled User," . substr($name[0], 3) . ",Remote Management");
+
+                   $result = "success";
+                   $action = "response";
+                   $data = [$workid,$result];
+                   $data = json_encode($data);
+                   return $this->dataTransfer($authid,$authkey,$data,$action);
+
+                   break;
+
+                   case "disableUser":
+
+                   $data = json_decode($data);
+
+                   $this->disableUser($data->username);
+                   $name = explode(",",$data->username);
+                   $this->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Disabled User," . substr($name[0], 3) . ",Remote Management");
+
+                   $result = "success";
+                   $action = "response";
+                   $data = [$workid,$result];
+                   $data = json_encode($data);
+                   return $this->dataTransfer($authid,$authkey,$data,$action);
+
+                   break;
+
                 }
 
               }
 
-           //print_r(curl_getinfo($ch));
-           //echo curl_errno($ch) . '-' . curl_error($ch);
-           curl_close($ch);
+           // print_r(curl_getinfo($ch));
+           // echo curl_errno($ch) . '-' . curl_error($ch);
            unlink($payload);
+           curl_close($ch);
 
         }
 

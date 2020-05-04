@@ -60,6 +60,15 @@
 
             ?>
 
+<?php
+
+$data = $AD->searchADAll();
+
+echo $data[0]['useraccountcontrol'][0];
+echo $data[0]["distinguishedname"][0];
+
+ ?>
+
               <form action="adduser" method="POST" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label class="small mb-1" for="inputUserTemplate">Select User Template</label>
