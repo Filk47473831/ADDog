@@ -1,4 +1,5 @@
 <?php require("header.php"); ?>
+<?php header("Location: /"); ?>
 <main>
     <div class="container-fluid">
         <h3 class="mt-4">Bulk Add Users</h3>
