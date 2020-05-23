@@ -48,15 +48,16 @@
 
                                               if(($testFirstName == "") && ($testLastName == "") && ($testUsername == "") && ($testPassword == "")) {
 
-                                                $userTemplate = $_POST['inputUserTemplate'];
-                                                $info = array();
-                                                $info["cn"] = $user['inputFirstName'] . " " . $user['inputLastName'];
-                                                $info['givenName'] = $user['inputFirstName'];
-                                                $info["sn"] = $user['inputLastName'];
-                                                $info["sAMAccountName"] = $user['inputUsername'];
-                                                $info["UserPrincipalName"] = $user['inputUsername'] . "@" . $settings->Domain;
-                                                $password = $user['inputPassword'];
-                                                $addAccount = $AD->addUser($userTemplate,$info,$password,$_POST['inputUserOU'],null);
+                                                // $userTemplate = $_POST['inputUserTemplate'];
+                                                // $info = array();
+                                                // $info["cn"] = $user['inputFirstName'] . " " . $user['inputLastName'];
+                                                // $info['givenName'] = $user['inputFirstName'];
+                                                // $info["sn"] = $user['inputLastName'];
+                                                // $info["sAMAccountName"] = $user['inputUsername'];
+                                                // $info["UserPrincipalName"] = $user['inputUsername'] . "@" . $settings->Domain;
+                                                // $password = $user['inputPassword'];
+                                                // $addAccount = $AD->addUser($userTemplate,$info,$password,$_POST['inputUserOU'],null);
+                                                $addAccount = "";
 
                                                 if($addAccount == "") {
 

@@ -2,6 +2,58 @@
 require("..\AD.php");
 $AD = new AD;
 
+if(isset($_POST['addUser'])) {
+  $AD->connect();
+  $AD->bind();
+  $user = explode(",", $_POST['addUser']);
+
+  $user['inputFirstName'] = $user[0];
+  $user['inputLastName'] = $user[1];
+  $user['inputUsername'] = $user[2];
+  $user['inputPassword'] = $user[3];
+
+  if(($user['inputFirstName'] !== "") && ($user['inputLastName'] !== "") && ($user['inputUsername'] !== "") && ($user['inputPassword'] !== "")) {
+
+                    $addAccount = "";
+                    $testFirstName = $AD->testFirstName($user['inputFirstName']);
+                    $testLastName = $AD->testLastName($user['inputLastName']);
+                    $testUsername = $AD->testUsername($user['inputUsername']);
+                    $testPassword = $AD->testPassword($user['inputPassword'],$user['inputPassword']);
+
+                    if(($testFirstName == "") && ($testLastName == "") && ($testUsername == "") && ($testPassword == "")) {
+
+                      $userTemplate = $_POST['inputUserTemplate'];
+                      $info = array();
+                      $info["cn"] = $user['inputFirstName'] . " " . $user['inputLastName'];
+                      $info['givenName'] = $user['inputFirstName'];
+                      $info["sn"] = $user['inputLastName'];
+                      $info["sAMAccountName"] = $user['inputUsername'];
+                      $info["UserPrincipalName"] = $user['inputUsername'] . "@" . $settings->Domain;
+                      $password = $user['inputPassword'];
+                      $addAccount = $AD->addUser($userTemplate,$info,$password,$_POST['inputUserOU'],null);
+
+                      if($addAccount == "") {
+
+                          echo 'Added Successfully';
+
+                        } else {
+
+                          echo $addAccount;
+
+                        }
+
+                      } else {
+
+                        echo 'Account cannot be added - ' . $testFirstName . " - " . $testLastName . " - " . $testUsername . " - " . $testPassword;
+
+                      }
+            } else {
+
+              echo 'Account cannot be added - Missing Info';
+
+            }
+}
+
 if(isset($_POST['getUserData'])) {
   $AD->connect();
   $AD->bind();
