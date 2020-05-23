@@ -35,7 +35,8 @@
                       <textarea required class="form-control" id="bulkUsersInput" type="text" rows="10" placeholder="e.g. Chris,Groves,cgroves,Password1234"></textarea>
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <input onclick="addBulkUsers()" type="button" class="btn btn-success" href="#" value="Add Bulk Users">
+                      <input id="addBulkUsersBtn" onclick="addBulkUsers()" type="button" class="btn btn-success" href="#" value="Add Bulk Users">&nbsp;&nbsp;
+                      <div class="invalid-feedback">Invalid Users Found</div>
                     </div>
                 </div>
             </div>
@@ -44,53 +45,85 @@
 </main>
 <script>
 var users = "";
+var user = "";
 var userTemplate = "";
 var userOU = "";
 
 async function addBulkUsers(){
 
+  var error = false;
   userTemplate = document.getElementById("inputUserTemplate").value;
   userOU = document.getElementById("inputUserOU").value;
 
   users = document.getElementById("bulkUsersInput").value;
   users = users.split("\n");
 
-  document.getElementById("addBulkUsersDiv").setAttribute("class", "col-12");
-  var output =
-  `<table width="100%" class="table table-striped table-borderless table-hover small" id="dataTable-bulkUsers">
-          <thead>
-              <tr>
-                  <th scope="col" class="d-none d-sm-table-cell">Name</th>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Status</th>
-              </tr>
-          </thead>
-          <tbody>`;
+  if(users.length < 100) {
+      for(i = 0; i < users.length; i++) {
+        if(users[i] == "") {
+          error = true;
+        } else {
 
-          for(i = 0; i < users.length; i++) {
+          if(users[i].indexOf(",") !== -1) {
+            user = users[i].split(",");
+            for(j = 0; j < users[i].length; j++) {
+              if(user[j] == "") {
+                error = true;
+              }
+            }
+          }
 
-          var user = users[i].split(",");
+        }
+      }
+  } else {
+      error = true;
+    }
+
+if(error == false) {
+
+    document.getElementById("addBulkUsersDiv").setAttribute("class", "col-12");
+    var output =
+    `<table width="100%" class="table table-striped table-borderless table-hover small" id="dataTable-bulkUsers">
+            <thead>
+                <tr>
+                    <th scope="col" class="d-none d-sm-table-cell">Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+            for(i = 0; i < users.length; i++) {
+
+            user = users[i].split(",");
+
+    output +=
+            `<tr id="${i}-row" class="odd gradeX">
+                    <td scope="col" class="d-none d-sm-table-cell">${user[0]} ${user[1]}</td>
+                    <td>${user[2]}</td>
+                    <td>${user[3]}</td>
+                    <td id="${i}-status">...</td>
+                  </tr>`;
+
+                }
 
   output +=
-          `<tr id="${i}-row" class="odd gradeX">
-                  <td scope="col" class="d-none d-sm-table-cell">${user[0]} ${user[1]}</td>
-                  <td>${user[2]}</td>
-                  <td>${user[3]}</td>
-                  <td id="${i}-status">...</td>
-                </tr>`;
+            `</tbody>
+    </table>
+    <a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>`;
 
-              }
+    document.getElementById("addBulkUsersForm").innerHTML = output;
 
-output +=
-          `</tbody>
-  </table>
-  <a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>`;
+      for(i = 0; i < users.length; i++) {
+        addUser(i);
+      }
 
-  document.getElementById("addBulkUsersForm").innerHTML = output;
+    drawTable();
 
-    for(i = 0; i < users.length; i++) {
-      addUser(i);
+    } else {
+      document.getElementById("addBulkUsersBtn").classList.add("is-invalid");
+      document.getElementById("bulkUsersInput").classList.add("is-invalid");
     }
 
 }
