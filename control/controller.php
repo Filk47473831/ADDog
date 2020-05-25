@@ -63,14 +63,13 @@ if(isset($_POST['resetPw'])) {
 
   if($testPassword == "") {
 
-    if(isset($_POST['promptNextLogin'])) { $promptNextLogin = "on"; } else { $promptNextLogin = null; }
-
-        $passwordReset = $AD->resetPassword($username,$_POST['password'],$promptNextLogin);
+        $passwordReset = $AD->resetPassword($username,$_POST['password'],$_POST['promptNextLogin']);
         $name = explode(",",$username);
         if($name !== "") {
           $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
         }
-      echo $passwordReset;
+      //echo $passwordReset;
+      echo $promptNextLogin;
   } else {
     echo $testPassword;
   }

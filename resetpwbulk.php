@@ -41,9 +41,9 @@
                           <input style="border:0px" required class="form-control mt-2" name="inputUserOU" id="inputUserOU" value="" placeholder="Select Target OU from Tree">
                           <p style="margin-left:12px" class="small" id="targetCount"></p>
                         </div>
-                        <div hidden class="form-check">
+                        <div class="form-check">
                           <input type="checkbox" class="form-check-input" id="promptNextLogin">
-                          <label class="form-check-label small unselectable" for="promptNextLogin">Prompt users to change password on next login</label>
+                          <label class="form-check-label small unselectable" for="promptNextLogin">Prompt user to change password on next login (this may not allow the user to login if connecting remotely). This setting will not work if your Administrator has configured the user password never to expire.</label>
                         </div>
                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                             <input id="resetPwBulkBtn" onclick="bulkPwReset()" type="button" class="btn btn-primary" href="#" value="Reset Passwords">&nbsp;&nbsp;
@@ -57,6 +57,7 @@
 <script>
 
 var users = "";
+var promptNextLogin = false;
 
 // document.getElementById("inputPasswordFormat").addEventListener("change", function(){
 //   if(document.getElementById("inputPasswordFormat").value == "4"){
@@ -68,6 +69,7 @@ async function bulkPwReset() {
   var error = false;
   var targetSearchOU = document.getElementById("inputUserOU").value;
   var password = document.getElementById("inputCustomPassword").value;
+  promptNextLogin = document.getElementById("promptNextLogin").checked;
 
   if(password.length < document.getElementById("passwordLength").innerText) { error = "Password must be at least " + document.getElementById("passwordLength").innerText + " character(s) long."; }
   if(targetSearchOU == "") { error = "Please select a target OU"; }
@@ -154,7 +156,8 @@ function drawTable() {
 function resetPw(i, password) {
 
   var result = null;
-  var promptNextLogin = "off";
+  console.log(promptNextLogin);
+  if(promptNextLogin == true) { promptNextLogin = "on"; }
 
   if (window.XMLHttpRequest) {
     xmlhttp = new XMLHttpRequest();

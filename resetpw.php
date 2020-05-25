@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-check">
                           <input name="promptNextLogin" type="checkbox" class="form-check-input" id="promptNextLogin">
-                          <label class="form-check-label small unselectable" for="promptNextLogin">Prompt user to change password on next login (this may not allow the user to login if connecting remotely)</label>
+                          <label class="form-check-label small unselectable" for="promptNextLogin">Prompt user to change password on next login (this may not allow the user to login if connecting remotely). This setting will not work if your Administrator has configured the user password never to expire.</label>
                         </div>
                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                             <input type="submit" class="btn btn-primary" href="#" value="Reset Password">

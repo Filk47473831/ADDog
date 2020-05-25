@@ -329,8 +329,8 @@ public function __construct() {
             global $ds;
             $encoded_password = $this->hashPassword($password);
             $entry = array();
-            if($change === "on") {
-              $entry["pwdlastset"] = 0;
+            if($change == "on") {
+              $entry["pwdLastSet"] = "0";
             }
             $entry["unicodePwd"] = "$encoded_password";
             if(ldap_mod_replace($ds,$user,$entry) === false) {
