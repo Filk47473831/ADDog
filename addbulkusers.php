@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                       <input id="addBulkUsersBtn" onclick="addBulkUsers()" type="button" class="btn btn-success" href="#" value="Add Bulk Users">&nbsp;&nbsp;
-                      <div class="invalid-feedback">Invalid Users Found</div>
+                      <div id="invalid-feedback" class="invalid-feedback">Invalid Users Found</div>
                     </div>
                 </div>
             </div>
@@ -61,24 +61,24 @@ async function addBulkUsers(){
   if(users.length < 100) {
       for(i = 0; i < users.length; i++) {
         if(users[i] == "") {
-          error = true;
+          error = "Missing Line";
         } else {
 
           if(users[i].indexOf(",") !== -1) {
             user = users[i].split(",");
-            if(users.length == 4) {
+            if(user.length == 4) {
             for(j = 0; j < users[i].length; j++) {
               if(user[j] == "") {
-                error = true;
+                error = "Missing Fields";
               }
             }
-          } else { error = true; }
+          } else { error = "Missing Fields"; }
           }
 
         }
       }
   } else {
-      error = true;
+      error = "Too Many Users (Max 100)";
     }
 
 if(error == false) {
@@ -127,6 +127,7 @@ if(error == false) {
     } else {
       document.getElementById("addBulkUsersBtn").classList.add("is-invalid");
       document.getElementById("bulkUsersInput").classList.add("is-invalid");
+      document.getElementById("invalid-feedback").innerText = error;
     }
 
 }
