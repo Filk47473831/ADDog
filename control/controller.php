@@ -54,6 +54,29 @@ if(isset($_POST['addUser'])) {
             }
 }
 
+if(isset($_POST['resetPw'])) {
+  $AD->connect();
+  $AD->bind();
+
+  $username = $AD->getDnFromUsername($_POST['resetPw']);
+  $testPassword = $AD->testPassword($_POST['password'],$_POST['password']);
+
+  if($testPassword == "") {
+
+    if(isset($_POST['promptNextLogin'])) { $promptNextLogin = "on"; } else { $promptNextLogin = null; }
+
+        $passwordReset = $AD->resetPassword($username,$_POST['password'],$promptNextLogin);
+        $name = explode(",",$username);
+        if($name !== "") {
+          $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
+        }
+      echo $passwordReset;
+  } else {
+    echo $testPassword;
+  }
+
+}
+
 if(isset($_POST['getUserData'])) {
   $AD->connect();
   $AD->bind();
@@ -84,6 +107,15 @@ if(isset($_POST['targetSearchOU'])) {
   $AD->bind();
   $data = $AD->getTargetOUCount($_POST['targetSearchOU']);
   echo $data;
+}
+
+if(isset($_POST['targetGetUsersFromOU'])) {
+  $AD->connect();
+  $AD->bind();
+  $searchOU[] = $_POST['targetGetUsersFromOU'];
+  $data = $AD->searchTargetOU($searchOU);
+  $data = $AD->displayUsernames($data);
+  echo json_encode($data);
 }
 
 if(isset($_POST['updateAuthorisedAdmins'])) {

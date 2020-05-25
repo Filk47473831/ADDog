@@ -179,6 +179,38 @@ public function __construct() {
           }
         }
 
+        function displayUsernames($data) {
+          $usernames = [];
+          if($data["count"] === 0) { } else {
+            for ($i = 0; $i < $data["count"]; $i++) {
+                $usernames[] = $data[$i]["samaccountname"][0];
+            }
+          }
+          return $usernames;
+        }
+
+        function getDnFromUsername($username) {
+          global $ds;
+          global $settings;
+
+          $data = "";
+
+          if($this->checkAdminLevel($this->username)) { $searchOU = $settings->SearchOU; } else {
+            $searchOU = $this->getAuthorisedOU($this->username);
+          }
+
+          foreach($searchOU as $dn) {
+          $filter = "(samaccountname={$username})";
+
+          $res = ldap_search($ds, $dn, $filter);
+          $first = ldap_first_entry($ds, $res);
+          $data = ldap_get_dn($ds, $first);
+
+          }
+
+          return $data;
+        }
+
         function updateUsersJSON($data) {
             $users = "[";
             for ($i = 0; $i < $data["count"]; $i++) {

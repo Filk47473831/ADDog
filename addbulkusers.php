@@ -66,11 +66,13 @@ async function addBulkUsers(){
 
           if(users[i].indexOf(",") !== -1) {
             user = users[i].split(",");
+            if(users.length == 4) {
             for(j = 0; j < users[i].length; j++) {
               if(user[j] == "") {
                 error = true;
               }
             }
+          } else { error = true; }
           }
 
         }
@@ -110,14 +112,15 @@ if(error == false) {
 
   output +=
             `</tbody>
-    </table>
-    <a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>`;
+    </table>`;
 
     document.getElementById("addBulkUsersForm").innerHTML = output;
 
       for(i = 0; i < users.length; i++) {
         addUser(i);
       }
+
+    document.getElementById("addBulkUsersForm").innerHTML += `<a href="addbulkusers"><button class="mt-5 btn btn-primary">Back</button></a>`;
 
     drawTable();
 
@@ -158,7 +161,6 @@ function addUser(i) {
     if (this.status == 200) {
       result = this.responseText;
 
-      var response = "";
       var status = i + "-status";
       var row = i + "-row";
 

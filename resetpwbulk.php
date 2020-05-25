@@ -6,44 +6,33 @@
             <li class="breadcrumb-item"><a href="index">Dashboard</a></li>
             <li class="breadcrumb-item active">Bulk Reset User Passwords</li>
         </ol>
-            <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
+            <div id="resetPwBulkDiv" class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
             <div class="card shadow-lg border-0 rounded-lg mt-2">
-                <div class="card-body">
+                <div id="resetPwBulkForm" class="card-body">
 
         <?php
 
         $AD->connect();
         $AD->bind();
 
-        if(isset($_POST['inputUserOU'])) {
-          $testPassword = $AD->testPassword($_POST['inputPassword'],$_POST['inputConfPassword']);
-          if($testPassword == "") {
-            $searchOU = [$_POST['inputUserOU']];
-            $data = $AD->searchTargetOU($searchOU);
-            if(isset($_POST['promptNextLogin'])) { $promptNextLogin = "on"; } else { $promptNextLogin = null; }
-              foreach($data as $user) {
-                $AD->resetPassword($user['dn'],$_POST['inputPassword'],$promptNextLogin);
-                $name = explode(",",$user['dn']);
-                if($name !== "") {
-                  $AD->writeActivityLogFile(gmdate("d-m-y h:i:sa") . ",Password Reset," . substr($name[0], 3) . "," . $_SESSION['username']);
-                }
-              }
-
-              echo '<p>Bulk Password Reset Complete</p>
-              <p><small>Please note that password complexity requirements may have prevented some or all of these resets. Contact your Administrator if your chosen password is not successfully logging the user(s) in.</small></p>
-              <a href="resetpwbulk"><button class="btn btn-success">Back</button></a>';
-          } else {
-
-            echo '<p>Bulk Password Reset Failed</p>
-            <p>' . $testPassword . '</p>
-            <a href="resetpwbulk"><button class="btn btn-success">Back</button></a>';
-
-          }
-        } else {
+        $settings = $AD->readSettingsFile();
 
         ?>
 
-                    <form action="resetpwbulk" method="POST">
+                        <div hidden id="passwordLength"><?php echo $settings->PasswordMinLength; ?></div>
+                        <div class="form-group">
+                            <label class="small mb-1" for="inputPasswordFormat">Select Password Format</label>
+                            <select disabled id="inputPasswordFormat" class="form-control">
+                              <option value="1">Random Simple</option>
+                              <option value="2">Random Complex</option>
+                              <option value="3">3 Random Words</option>
+                              <option selected value="4">Custom</option>
+                            </select>
+                        </div>
+                        <div id="customerPasswordFormGroup" class="form-group">
+                            <label class="small mb-1" for="inputCustomPassword">Custom Password</label>
+                            <input class="form-control" id="inputCustomPassword" type="text" placeholder="Custom Password" value=""/>
+                        </div>
                         <div class="form-group">
                           <label class="small mb-1" for="OUTree">Target OU</label>
                           <div id="OUTree">
@@ -52,32 +41,151 @@
                           <input style="border:0px" required class="form-control mt-2" name="inputUserOU" id="inputUserOU" value="" placeholder="Select Target OU from Tree">
                           <p style="margin-left:12px" class="small" id="targetCount"></p>
                         </div>
-
-                        <div class="form-group">
-                            <label class="small mb-1" for="inputPassword">New Password</label>
-                            <input name="inputPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="New Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputPassword']; } ?>"/>
-                        </div>
-                        <div class="form-group">
-                            <label class="small mb-1" for="inputConfPassword">Confirm Password</label>
-                            <input name="inputConfPassword" class="<?php if(isset($_POST['inputPassword']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputConfPassword" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputPassword'])) { echo $_POST['inputConfPassword']; } ?>"/>
-                            <div class="invalid-feedback"><?php if(isset($_POST['inputPassword'])) { echo $testPassword; } ?></div>
-                        </div>
-                        <div class="form-check">
-                          <input name="promptNextLogin" type="checkbox" class="form-check-input" id="promptNextLogin">
+                        <div hidden class="form-check">
+                          <input type="checkbox" class="form-check-input" id="promptNextLogin">
                           <label class="form-check-label small unselectable" for="promptNextLogin">Prompt users to change password on next login</label>
                         </div>
                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                            <input type="submit" class="btn btn-primary" href="#" value="Reset Passwords">
+                            <input id="resetPwBulkBtn" onclick="bulkPwReset()" type="button" class="btn btn-primary" href="#" value="Reset Passwords">&nbsp;&nbsp;
+                            <div id="invalid-feedback" class="invalid-feedback">Invalid Users Found</div>
                         </div>
-                    </form>
-
-                  <?php } ?>
                 </div>
             </div>
             </div>
     </div>
 </main>
 <script>
+
+var users = "";
+
+// document.getElementById("inputPasswordFormat").addEventListener("change", function(){
+//   if(document.getElementById("inputPasswordFormat").value == "4"){
+//     document.getElementById("customerPasswordFormGroup").removeAttribute("hidden");
+//   }
+// })
+
+async function bulkPwReset() {
+  var error = false;
+  var targetSearchOU = document.getElementById("inputUserOU").value;
+  var password = document.getElementById("inputCustomPassword").value;
+
+  if(password.length < document.getElementById("passwordLength").innerText) { error = "Password must be at least " + document.getElementById("passwordLength").innerText + " character(s) long."; }
+  if(targetSearchOU == "") { error = "Please select a target OU"; }
+
+  if(!error) {
+
+  var output = `<table width="100%" class="table table-striped table-borderless table-hover small" id="dataTable-bulkUsers">
+          <thead>
+              <tr>
+                  <th>Username</th>
+                  <th>Password</th>
+                  <th>Status</th>
+              </tr>
+          </thead>
+          <tbody>`;
+
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+      if(this.responseText == "") { error = true; throw new Error(); }
+
+      users = JSON.parse(this.responseText);
+
+       for(var i = 0; i < users.length; i++) {
+            if(users[i] != null) {
+
+              output +=
+                      `<tr id="${i}-row" class="odd gradeX">
+                              <td>${users[i]}</td>
+                              <td>${password}</td>
+                              <td id="${i}-status">...</td>
+                            </tr>`;
+
+           }
+         }
+       output += `</tbody>
+       </table>`;
+
+       document.getElementById("resetPwBulkDiv").setAttribute("class", "col-12");
+       document.getElementById("resetPwBulkForm").innerHTML = output;
+
+       for(i = 0; i < users.length; i++) {
+         resetPw(i, password);
+       }
+
+       drawTable();
+
+     document.getElementById("resetPwBulkForm").innerHTML += `<a href="resetpwbulk"><button class="mt-5 btn btn-primary">Back</button></a>`;
+
+    }
+  }
+  xmlhttp.open("POST", "control/controller", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("targetGetUsersFromOU=" + targetSearchOU);
+} else {
+  document.getElementById("resetPwBulkBtn").classList.add("is-invalid");
+  document.getElementById("invalid-feedback").innerText = error;
+
+}
+
+}
+
+function drawTable() {
+  $('#dataTable-bulkUsers').dataTable( {
+    "pageLength": 100,
+    "sPaginationType": "listbox",
+    dom: 'Bfrtip',
+    buttons: {
+          buttons: [
+              { extend: 'copy', className: 'btn btn-primary btn-sm' },
+              { extend: 'csv', className: 'btn btn-primary btn-sm' },
+              { extend: 'excel', className: 'btn btn-primary btn-sm' },
+              { extend: 'pdf', className: 'btn btn-primary btn-sm' },
+              { extend: 'print', className: 'btn btn-primary btn-sm' }
+          ]
+      }
+  } );
+}
+
+function resetPw(i, password) {
+
+  var result = null;
+  var promptNextLogin = "off";
+
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onload = function() {
+    if (this.status == 200) {
+      result = this.responseText;
+      var status = i + "-status";
+      var row = i + "-row";
+
+      if(result !== null) {
+        if(result !== "") {
+          document.getElementById(status).innerText = result;
+          document.getElementById(row).style.backgroundColor = "#edd8d8";
+        } else {
+          document.getElementById(status).innerText = "Reset Successfully";
+          document.getElementById(row).style.backgroundColor = "#ddedd8";
+        }
+      }
+
+
+    }
+  }
+  xmlhttp.open("POST", "control/controller", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("resetPw=" + users[i] + "&password=" + password + "&promptNextLogin=" + promptNextLogin);
+
+}
+
 function getTargetOUCount(targetSearchOU){
   if (window.XMLHttpRequest) {
     xmlhttp = new XMLHttpRequest();
