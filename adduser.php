@@ -64,9 +64,6 @@
 
 $data = $AD->searchADAll();
 
-echo $data[0]['useraccountcontrol'][0];
-echo $data[0]["distinguishedname"][0];
-
  ?>
 
               <form action="adduser" method="POST" class="needs-validation" novalidate>
