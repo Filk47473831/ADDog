@@ -120,20 +120,20 @@ $data = $AD->searchADAll();
                   <div id="OUTree">
                     <?php $AD->showOUTree(); ?>
                   </div>
-                  <input autocomplete="off" required style="border:0px" required class="<?php if(isset($_POST['inputFirstName']) && $testUserOU !== "") { echo "is-invalid"; } ?> form-control mt-3" name="inputUserOU" id="inputUserOU" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUserOU']; } ?>" placeholder="Select target OU for new user">
+                  <input required style="border:0px" required class="<?php if(isset($_POST['inputFirstName']) && $testUserOU !== "") { echo "is-invalid"; } ?> form-control mt-3" name="inputUserOU" id="inputUserOU" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUserOU']; } ?>" placeholder="Select target OU for new user">
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testUserOU; } ?></div>
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputUsername">Username</label>
-                  <input autocomplete="off" required name="inputUsername" class="<?php if(isset($_POST['inputFirstName']) && $testUsername !== "") { echo "is-invalid"; } ?> form-control" id="inputUsername" type="text" placeholder="jsmith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUsername']; } ?>"/>
+                  <input autocomplete="new-password" required name="inputUsername" class="<?php if(isset($_POST['inputFirstName']) && $testUsername !== "") { echo "is-invalid"; } ?> form-control" id="inputUsername" type="text" placeholder="jsmith" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputUsername']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testUsername; } ?></div>
                 </div>
                 <div class="form-group">
                   <label class="small mb-1" for="inputPassword">Password</label>
-                  <input autocomplete="off" required name="inputPassword" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="Enter Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPassword']; } ?>"/>
+                  <input autocomplete="new-password" required name="inputPassword" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPassword" type="password" placeholder="Enter Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPassword']; } ?>"/>
                 </div>
                 <div class="form-group">
-                  <input autocomplete="off" required name="inputPasswordConf" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPasswordConf" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPasswordConf']; } ?>"/>
+                  <input autocomplete="new-password" required name="inputPasswordConf" class="<?php if(isset($_POST['inputFirstName']) && $testPassword !== "") { echo "is-invalid"; } ?> form-control" id="inputPasswordConf" type="password" placeholder="Confirm Password" value="<?php if(isset($_POST['inputFirstName'])) { echo $_POST['inputPasswordConf']; } ?>"/>
                   <div class="invalid-feedback"><?php if(isset($_POST['inputFirstName'])) { echo $testPassword; } ?></div>
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
